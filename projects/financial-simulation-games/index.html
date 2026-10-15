@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-rem>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>شبیه‌ساز چت‌محور یادگیری مالی — مباحث مرتبط با پول</title>
+<style>
+/* ===== فونت وزیرمتن (نسبی از assets/) ===== */
+@font-face{font-family:'VzSub';font-weight:400;src:url(assets/vazirmatn-sub-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'VzSub';font-weight:700;src:url(assets/vazirmatn-sub-700.woff2) format('woff2');font-display:swap}
+
+/* ===== تم سرمه‌ای تیره ===== */
+:root{
+  /* پایه: قهوه‌ای رویال عمیق */
+  --bg:#1a0f08;              /* قهوه‌ای اسپرسو خیلی تیره */
+  --bg2:#241608;             /* قهوه‌ای عمیق (هدر) */
+  --card:#2b1a0e;            /* کارت قهوه‌ای */
+  --card2:#3a2413;           /* کارت روشن‌تر (هاور) */
+  --tx:#f0e0c8;              /* متن کرم گرم */
+  --mu:#b89878;              /* متن ملایم کاراملی */
+  --ac:#c9932c;              /* کاراملی-طلایی (تأکید اصلی) */
+  --ac2:#e0b25a;             /* طلایی روشن */
+  --gold:#d4a548;            /* طلایی درخشان */
+  --gold2:#a87a2a;           /* طلایی تیره */
+  --bd:#4a2f18;              /* مرز قهوه‌ای */
+  --bb:#38220f;              /* پس‌زمینه‌ی نرم */
+  --good:#7bc97b;            /* سبز ملایم */
+  --good-bg:rgba(123,201,123,.14);
+  --bad:#e07a6f;             /* قرمز ملایم */
+  --shadow:0 6px 22px rgba(0,0,0,.5);
+  --shadow-h:0 12px 32px rgba(201,147,44,.25);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* حالت روشن (اختیاری، برای کسانی که ترجیح می‌دن) */
+:root[data-theme="light"]{
+  --bg:#f4f7fb; --bg2:#e6eef8; --card:#ffffff; --card2:#f8fafd;
+  --tx:#0d1b2a; --mu:#4a6580;
+  --ac:#1a6fd4; --ac2:#4a9eff;
+  --gold:#b8862a; --gold2:#8b5a2b;
+  --bd:#c9d9ec; --bb:#e8f0fa;
+  --good:#1f9d5c; --good-bg:rgba(31,157,92,.1);
+  --bad:#c62828;
+  --shadow:0 6px 22px rgba(13,27,42,.08);
+  --shadow-h:0 12px 32px rgba(26,111,212,.18);
+}
+
+*{box-sizing:border-box}
+html{font-size:17px;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--tx);
+  font-family:'VzSub',Tahoma,"Segoe UI",sans-serif;
+  line-height:1.9;
+  transition:background .3s,color .3s;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(74,158,255,.10), transparent 45%),
+    radial-gradient(circle at 88% 100%, rgba(224,178,90,.08), transparent 50%);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+#app{max-width:680px;margin:0 auto;padding:18px 16px 80px}
+
+/* ===== هدر ===== */
+.hero{
+  background:linear-gradient(160deg,var(--bg2),var(--card));
+  border:1.5px solid var(--bd);border-radius:24px;
+  padding:26px 18px 22px;text-align:center;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:-50% -30% auto auto;
+  width:240px;height:240px;
+  background:radial-gradient(circle,rgba(224,178,90,.18),transparent 65%);
+  border-radius:50%;
+}
+.hero::after{
+  content:"";position:absolute;inset:auto auto -50% -30%;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(74,158,255,.14),transparent 65%);
+  border-radius:50%;
+}
+.hero .crown{
+  font-size:2.6rem;line-height:1;
+  filter:drop-shadow(0 4px 12px rgba(224,178,90,.4));
+  position:relative;z-index:1;
+}
+.hero h1{
+  margin:10px 0 6px;font-size:1.45rem;
+  color:var(--gold);font-weight:700;line-height:1.55;
+  position:relative;z-index:1;
+  text-shadow:0 2px 12px rgba(224,178,90,.15);
+}
+.hero .sub{
+  color:var(--mu);margin:0;font-size:.92rem;
+  position:relative;z-index:1;
+}
+.hero .divider{
+  width:70px;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  border-radius:2px;margin:16px auto 0;
+  position:relative;z-index:1;
+}
+.hero .prog{
+  margin-top:18px;display:flex;align-items:center;gap:10px;
+  justify-content:center;position:relative;z-index:1;
+}
+.hero .prog .pgt{
+  height:10px;flex:1;max-width:300px;
+  background:var(--bb);
+  border-radius:6px;overflow:hidden;
+  border:1px solid var(--bd);
+  position:relative;
+}
+.hero .prog .pgt i{
+  display:block;height:100%;
+  background:linear-gradient(90deg,var(--ac),var(--gold));
+  transition:width .5s ease;
+  box-shadow:0 0 12px rgba(74,158,255,.5);
+}
+.hero .prog .pn{
+  font-size:.85rem;color:var(--mu);
+  font-weight:700;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ===== کارت معرفی ===== */
+.intro{
+  margin-top:16px;
+  background:var(--card);border:1.5px solid var(--bd);
+  border-radius:18px;padding:16px 18px;
+  color:var(--mu);font-size:.88rem;line-height:1.9;
+}
+.intro b{color:var(--tx)}
+.intro .row-line{display:flex;align-items:flex-start;gap:10px;margin:8px 0}
+.intro .row-line span:first-child{
+  flex:none;font-size:1.1rem;
+  width:1.6rem;text-align:center;
+}
+
+/* ===== مسیر ===== */
+.trail-title{
+  margin:26px 4px 12px;font-size:.95rem;
+  color:var(--mu);font-weight:700;
+  display:flex;align-items:center;gap:10px;
+}
+.trail-title::after{
+  content:"";flex:1;height:1px;
+  background:linear-gradient(90deg,var(--bd),transparent);
+}
+.trail{position:relative;padding-right:4px}
+.trail::before{
+  content:"";position:absolute;top:8px;bottom:8px;
+  right:36px;width:3px;border-radius:2px;
+  background:repeating-linear-gradient(
+    var(--bd) 0 8px,transparent 8px 16px);
+  opacity:.9;z-index:0;
+}
+
+.stop{position:relative;padding-right:82px;margin-bottom:18px;z-index:1}
+.stop .dot{
+  position:absolute;top:16px;right:6px;
+  width:60px;height:60px;border-radius:50%;
+  background:var(--card);border:3px solid var(--ac);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;
+  box-shadow:0 3px 14px rgba(74,158,255,.25);
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.stop .dot .num{
+  position:absolute;top:-6px;right:-6px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#0d1b2a;font-weight:700;
+  font-size:.72rem;line-height:1.7;
+  border-radius:10px;padding:0 8px;
+  border:2.5px solid var(--card);
+  min-width:22px;text-align:center;
+  box-shadow:0 2px 8px rgba(224,178,90,.4);
+}
+.stop.done .dot{border-color:var(--good);box-shadow:0 3px 14px rgba(78,203,143,.3)}
+.stop.done .dot .num{
+  background:linear-gradient(135deg,var(--good),#2f7d55);
+  color:#fff;
+}
+
+.stop .card{
+  background:var(--card);border:1.5px solid var(--bd);
+  border-radius:20px;padding:16px 18px;
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+  position:relative;
+}
+.stop .card:hover{
+  border-color:var(--ac);
+  box-shadow:var(--shadow-h);
+  transform:translateY(-2px);
+}
+.stop.done .card:hover{border-color:var(--good)}
+.stop .card .status{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:700;
+  border-radius:10px;padding:1px 9px;
+  margin-bottom:8px;
+}
+.stop .card .status.new{
+  background:var(--bb);color:var(--mu);
+  border:1px solid var(--bd);
+}
+.stop .card .status.done{
+  background:var(--good-bg);color:var(--good);
+  border:1px solid var(--good);
+}
+.stop .card h2{
+  margin:0 0 6px;font-size:1.08rem;
+  color:var(--tx);font-weight:700;
+}
+.stop .card .desc{
+  color:var(--mu);margin:0 0 12px;
+  font-size:.9rem;line-height:1.85;
+}
+.stop .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.stop .tag{
+  font-size:.72rem;background:var(--bb);
+  border-radius:10px;padding:1px 9px;
+  color:var(--mu);border:1px solid var(--bd);
+}
+.stop .tag.dur{background:transparent;color:var(--mu)}
+.stop .btns{display:flex;gap:8px;flex-wrap:wrap}
+.stop .btn{
+  flex:1;min-width:120px;min-height:46px;
+  border-radius:14px;border:0;font:inherit;font-weight:700;
+  cursor:pointer;padding:8px 14px;transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  text-decoration:none;font-size:.95rem;
+  -webkit-tap-highlight-color:transparent;
+}
+.stop .btn.primary{
+  background:linear-gradient(135deg,var(--ac),#2d7ad4);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(74,158,255,.3);
+}
+.stop .btn.primary:hover{
+  background:linear-gradient(135deg,var(--ac2),var(--ac));
+  box-shadow:0 6px 20px rgba(74,158,255,.45);
+}
+.stop .btn.primary:active{transform:scale(.98)}
+.stop.done .btn.primary{
+  background:linear-gradient(135deg,var(--good),#1f7a4d);
+  box-shadow:0 4px 14px rgba(78,203,143,.3);
+}
+.stop.done .btn.primary:hover{
+  background:linear-gradient(135deg,#5edba0,var(--good));
+}
+.stop .btn.ghost{
+  background:transparent;border:2px solid var(--bd);
+  color:var(--tx);flex:0 0 auto;min-width:auto;padding:8px 14px;
+}
+.stop .btn.ghost:hover{
+  border-color:var(--ac);color:var(--ac);
+  background:rgba(74,158,255,.08);
+}
+
+/* ===== پاورقی ===== */
+.foot{
+  margin-top:28px;text-align:center;color:var(--mu);
+  font-size:.82rem;padding:16px;
+  border-top:1px dashed var(--bd);
+}
+.foot .dot{color:var(--gold);margin:0 6px}
+
+/* ===== مودال ===== */
+.modal{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(5,10,18,.85);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  display:none;flex-direction:column;
+  animation:fade .2s;
+}
+.modal.open{display:flex}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal .bar{
+  background:var(--bg2);
+  border-bottom:1.5px solid var(--bd);
+  padding:10px 14px;display:flex;align-items:center;gap:10px;
+  padding-top:calc(10px + env(safe-area-inset-top,0px));
+}
+.modal .bar b{
+  flex:1;font-size:.95rem;color:var(--tx);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.modal .bar button{
+  min-width:44px;min-height:44px;border-radius:12px;
+  border:1.5px solid var(--bd);background:var(--card);
+  color:var(--tx);font:inherit;cursor:pointer;font-size:1.15rem;
+  transition:.2s;
+}
+.modal .bar button:hover{
+  border-color:var(--ac);color:var(--ac);
+  background:var(--card2);
+}
+.modal iframe{
+  flex:1;width:100%;border:0;background:var(--bg);
+}
+
+/* ===== دکمه‌های شناور ===== */
+.fab{
+  position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  left:16px;z-index:50;
+  display:flex;flex-direction:column;gap:8px;
+}
+.fab button{
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--bd);background:var(--card);
+  color:var(--tx);font-size:1.15rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  transition:.2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.fab button:hover{
+  border-color:var(--ac);color:var(--ac);
+  transform:scale(1.06);
+  box-shadow:0 6px 20px rgba(74,158,255,.4);
+}
+.fab button:active{transform:scale(.94)}
+
+/* ===== انیمیشن ورود ===== */
+@keyframes pop{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+
+/* ===== ریسپانسیو ===== */
+@media(min-width:560px){
+  html{font-size:18px}
+  .trail::before{right:40px}
+  .stop{padding-right:94px}
+  .stop .dot{width:66px;height:66px;font-size:1.8rem;right:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- مودال نمایش بازی -->
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="bar">
+    <b id="mtitle">بازی</b>
+    <button title="باز کردن در تب جدید" aria-label="باز کردن در تب جدید" onclick="openTab()">↗</button>
+    <button title="بستن" aria-label="بستن" onclick="closeModal()">✕</button>
+  </div>
+  <iframe id="mframe" src="about:blank" allow="autoplay; clipboard-write" title="محتوای بازی"></iframe>
+</div>
+
+<!-- دکمه‌های شناور -->
+<div class="fab">
+  <button id="btnTheme" title="تغییر تم" aria-label="تغییر تم" onclick="toggleTheme()">☀️</button>
+</div>
+
+<script>
+/* =========================================================
+   داده‌ی مسیر — همه‌ی آدرس‌ها نسبی از محل index.html
+   بازی‌ها در پوشه‌ی projects/ هستند
+   ========================================================= */
+window.TRAIL = [
+  {
+    n: 0, id: 'scripts', emoji: '🧠',
+    title: 'چهار صدای پول در ذهن تو',
+    desc: 'با چهار اسکریپت پولی آشنا می‌شوی که از کودکی در ذهنت ساخته شده‌اند: اجتناب، پرستش، منزلت و هوشیاری. داستان یک زندگی از ۹ تا ۶۰ سالگی.',
+    tags: ['مقدماتی', 'اسکریپت پولی'],
+    duration: '۱۵ دقیقه',
+    file: 'projects/00-money-scripts.html',
+    key: 'fc_game_scripts'
+  },
+  {
+    n: 1, id: 'game-a', emoji: '💸',
+    title: 'پنج سال، یک حقوق',
+    desc: 'مینا ۳۱ ساله درآمدش دو برابر می‌شود اما ته حساب همان است. می‌فهمی پول کجا رفت، «کافی» یعنی چه و اگر درآمد قطع شود چند ماه دوام می‌آوری.',
+    tags: ['نظم جریان نقد', 'تاب‌آوری'],
+    duration: '۱۵ دقیقه',
+    file: 'projects/01-game-a-panj-sal-yek-hoghoogh.html',
+    key: 'fc_game_a'
+  },
+  {
+    n: 2, id: 'game-b', emoji: '🧭',
+    title: 'بازار در ذهن من',
+    desc: 'با داده‌ی واقعی دو بازار ایران بازی می‌کنی: جهش دلار و سکه ۱۳۹۷ و اوج و ریزش بورس ۱۳۹۹. می‌فهمی وقتی همه می‌خرند یا قیمت ۲۰٪ می‌ریزد چه می‌کنی.',
+    tags: ['سرمایه‌گذاری', 'هیجان بازار'],
+    duration: '۱۵ دقیقه',
+    file: 'projects/02-game-b-bazar-dar-zehn-man.html',
+    key: 'fc_game_b'
+  },
+  {
+    n: 3, id: 'game-c', emoji: '🎀',
+    title: 'همه‌چیز تا عروسی',
+    desc: 'آرش و ساناز بهار ۱۴۰۶ عروسی دارند. عروسی، جهیزیه، ودیعه و وام ازدواج همه سر یک پول رقابت می‌کنند. قیمت‌ها و آمار واقعی‌اند.',
+    tags: ['هدف‌گذاری', 'بودجه‌ریزی'],
+    duration: '۱۵ دقیقه',
+    file: 'projects/03-game-c-hame-chiz-ta-aroosi.html',
+    key: 'fc_game_c'
+  },
+  {
+    n: 4, id: 'game-d', emoji: '🧰',
+    title: 'کارگاه سیستم مالی من',
+    desc: 'با اعداد خودت، در حدود ۱۵ دقیقه یک «کارت سیستم مالی» می‌سازی: سه جعبه‌ی پول، پروفایل شخصی و چند قانون ساده برای تصمیم‌های آینده.',
+    tags: ['سیستم شخصی', 'قانون‌گذاری'],
+    duration: '۱۵ دقیقه',
+    file: 'projects/04-game-d-kargah-system-man.html',
+    key: 'fc_game_d'
+  },
+  {
+    n: 5, id: 'game-e', emoji: '🪞',
+    title: 'آینه‌ی کامل مالی من',
+    desc: 'همه‌ی بازی‌ها کنار هم، در یک نگاه. رادار هشت‌محوره، نقاط کور و توانایی‌های پنهان، و یک برنامه‌ی ۳۰ روزه‌ی شخصی.',
+    tags: ['جمع‌بندی', 'رادار ۸ محوره'],
+    duration: '۵ دقیقه',
+    file: 'projects/05-game-e-ayeneh-kamel.html',
+    key: 'fc_game_e'
+  }
+];
+
+/* =========================================================
+   ابزارها
+   ========================================================= */
+var PD = '۰۱۲۳۴۵۶۷۸۹';
+function fa(s){return String(s).replace(/\d/g,function(d){return PD[d]})}
+function isDone(key){
+  try{ return !!localStorage.getItem(key) }catch(e){ return false }
+}
+function doneCount(){
+  return window.TRAIL.filter(function(g){return isDone(g.key)}).length;
+}
+
+/* =========================================================
+   تم روشن/تاریک — پیش‌فرض: تیره (سرمه‌ای)
+   ========================================================= */
+function currentTheme(){
+  var t = document.documentElement.getAttribute('data-theme');
+  if(t) return t;
+  return 'dark';   // پیش‌فرض تیره
+}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('fc_dash_theme', t) }catch(e){}
+  var b = document.getElementById('btnTheme');
+  if(b) b.textContent = (t === 'dark') ? '☀️' : '🌙';
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', t === 'dark' ? '#0d1b2a' : '#f4f7fb');
+}
+function toggleTheme(){
+  applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+}
+(function initTheme(){
+  try{
+    var t = localStorage.getItem('fc_dash_theme') || 'dark';
+    applyTheme(t);
+  }catch(e){ applyTheme('dark') }
+})();
+
+/* =========================================================
+   رندر
+   ========================================================= */
+function statusHTML(done){
+  return done
+    ? '<span class="status done">✅ انجام شده</span>'
+    : '<span class="status new">🆕 شروع نکردی</span>';
+}
+
+function stopHTML(g, idx){
+  var done = isDone(g.key);
+  return '<div class="stop'+(done?' done':'')+'" data-key="'+g.key+'" style="animation:pop .35s '+ (idx*0.06) +'s both">'
+    + '<div class="dot" aria-hidden="true">'+g.emoji+'<span class="num">'+fa(g.n)+'</span></div>'
+    + '<div class="card">'
+    +   statusHTML(done)
+    +   '<h2>'+g.title+'</h2>'
+    +   '<p class="desc">'+g.desc+'</p>'
+    +   '<div class="meta">'
+    +     g.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')
+    +     '<span class="tag dur">⏱️ '+g.duration+'</span>'
+    +   '</div>'
+    +   '<div class="btns">'
+    +     '<button class="btn primary" data-id="'+g.id+'">'
+    +       (done?'↻ دوباره بازی کن':'▶ شروع بازی')
+    +     '</button>'
+    +     '<a class="btn ghost" href="'+g.file+'" target="_blank" rel="noopener" title="باز کردن در تب جدید">↗ تب جدید</a>'
+    +   '</div>'
+    + '</div>'
+  + '</div>';
+}
+
+function render(){
+  var total = window.TRAIL.length;
+  var d = doneCount();
+  var pct = total ? Math.round(d/total*100) : 0;
+
+  document.getElementById('app').innerHTML =
+    '<header class="hero">'
+    +  '<div class="crown">💎</div>'
+    +  '<h1>شبیه‌ساز چت‌محور یادگیری مالی</h1>'
+    +  '<p class="sub">مباحث مرتبط با پول — مسیر یادگیری از صفر تا آینه‌ی کامل</p>'
+    +  '<div class="divider"></div>'
+    +  '<div class="prog">'
+    +    '<span class="pn" id="pn1">'+fa(d)+' از '+fa(total)+'</span>'
+    +    '<div class="pgt"><i id="pbar" style="width:'+pct+'%"></i></div>'
+    +    '<span class="pn" id="pn2">'+fa(pct)+'٪</span>'
+    +  '</div>'
+    + '</header>'
+
+    + '<section class="intro">'
+    +  '<div class="row-line"><span>🎯</span><span><b>هدف:</b> در ۶ ایستگاه، از شناخت اسکریپت‌های پولی تا ساختن سیستم شخصی، مهارت‌های مالی‌ات را می‌سنجی.</span></div>'
+    +  '<div class="row-line"><span>💬</span><span><b>سبک:</b> همه‌ی بازی‌ها چت‌محور و داستانی‌اند؛ در هر مرحله تصمیم می‌گیری و بازخورد می‌گیری.</span></div>'
+    +  '<div class="row-line"><span>⏱️</span><span><b>زمان:</b> هر بازی حدود ۱۵ دقیقه؛ کل مسیر حدود ۸۰ دقیقه.</span></div>'
+    + '</section>'
+
+    + '<h3 class="trail-title">🗺️ مسیر یادگیری</h3>'
+    + '<main class="trail" id="trail">'
+    +   window.TRAIL.map(stopHTML).join('')
+    + '</main>'
+
+    + '<footer class="foot">'
+    +   '🎓 آموزشی است <span class="dot">·</span> توصیه‌ی مالی نیست'
+    +   '<br>نتایج همه‌ی بازی‌ها روی همین دستگاه ذخیره می‌شود'
+    + '</footer>';
+}
+
+/* =========================================================
+   به‌روزرسانی جزئی — بدون بازسازی کل صفحه
+   ========================================================= */
+function refreshTicks(){
+  var total = window.TRAIL.length;
+  var d = doneCount();
+  var pct = total ? Math.round(d/total*100) : 0;
+
+  var bar = document.getElementById('pbar');
+  if(bar) bar.style.width = pct + '%';
+  var pn1 = document.getElementById('pn1');
+  if(pn1) pn1.textContent = fa(d) + ' از ' + fa(total);
+  var pn2 = document.getElementById('pn2');
+  if(pn2) pn2.textContent = fa(pct) + '٪';
+
+  var nodes = document.querySelectorAll('.stop');
+  window.TRAIL.forEach(function(g, idx){
+    var el = nodes[idx];
+    if(!el) return;
+    var done = isDone(g.key);
+    var wasDone = el.classList.contains('done');
+    if(done === wasDone) return;
+    el.classList.toggle('done', done);
+    var status = el.querySelector('.status');
+    if(status){
+      status.className = 'status ' + (done ? 'done' : 'new');
+      status.textContent = done ? '✅ انجام شده' : '🆕 شروع نکردی';
+    }
+    var btn = el.querySelector('.btn.primary');
+    if(btn) btn.textContent = done ? '↻ دوباره بازی کن' : '▶ شروع بازی';
+  });
+}
+
+/* =========================================================
+   باز کردن بازی در iframe
+   ========================================================= */
+function openGame(id){
+  var g = window.TRAIL.filter(function(x){return x.id===id})[0];
+  if(!g) return;
+  document.getElementById('mtitle').textContent = g.emoji + ' ' + g.title;
+  document.getElementById('mframe').src = g.file;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.body.style.paddingRight =
+    (window.innerWidth - document.documentElement.clientWidth) + 'px';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('mframe').src = 'about:blank';
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  setTimeout(refreshTicks, 60);
+}
+function openTab(){
+  var src = document.getElementById('mframe').src;
+  if(src && src !== 'about:blank') window.open(src, '_blank');
+}
+
+/* =========================================================
+   رویدادها
+   ========================================================= */
+document.getElementById('app').addEventListener('click', function(e){
+  var b = e.target.closest('.btn.primary');
+  if(!b) return;
+  var id = b.getAttribute('data-id');
+  if(id) openGame(id);
+});
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeModal();
+});
+
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+window.addEventListener('storage', function(e){
+  if(e.key && e.key.indexOf('fc_') === 0) refreshTicks();
+});
+
+window.addEventListener('focus', function(){
+  if(!document.getElementById('modal').classList.contains('open')) refreshTicks();
+});
+
+document.addEventListener('visibilitychange', function(){
+  if(!document.hidden && !document.getElementById('modal').classList.contains('open')) refreshTicks();
+});
+
+/* =========================================================
+   راه‌اندازی
+   ========================================================= */
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-rem>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>آینه‌ی کامل مالی من</title>
+<style>
+/* فونت وزیرمتن (Vazirmatn، مجوز OFL) فقط با حروف فارسی لازم، داخل فایل */
+@font-face{font-family:'VzSub';font-weight:400;src:url(assets/vazirmatn-sub-400.woff2) format('woff2')}
+@font-face{font-family:'VzSub';font-weight:700;src:url(assets/vazirmatn-sub-700.woff2) format('woff2')}
+:root{--bg:#faf6ee;--card:#fff;--tx:#1f1a14;--mu:#5a5046;--ac:#a85f0a;--bd:#d9ccb6;--bb:#f1e9da;--bad:#b3261e;--good:#1f7a4d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a16;--card:#2a251f;--tx:#f7f0e4;--mu:#cbbfae;--ac:#e0a040;--bd:#4a4033;--bb:#38302a}}
+:root[data-theme="dark"]{--bg:#1d1a16;--card:#2a251f;--tx:#f7f0e4;--mu:#cbbfae;--ac:#e0a040;--bd:#4a4033;--bb:#38302a}
+*{box-sizing:border-box}
+html{font-size:19px;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'VzSub',Tahoma,'Segoe UI',sans-serif;font-size:1rem;line-height:2.05;transition:background .8s}
+#app{max-width:600px;margin:0 auto;padding:1rem .9rem 4rem}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:.85rem;gap:.5rem}
+.fsz button{min-width:2.3rem;min-height:2.3rem;border:1.5px solid var(--bd);background:var(--card);border-radius:.6rem;font-weight:700}
+.card{background:var(--card);border:1.5px solid var(--bd);border-radius:1.1rem;padding:1.1rem;margin:.9rem 0}
+.big{font-size:3.4rem;text-align:center;line-height:1.2;animation:pop .5s}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes blink{50%{opacity:.4}}
+h1{margin:.3rem 0;text-align:center;font-size:1.5rem}
+p{margin:.5rem 0}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{display:block;width:100%;min-height:3.2rem;padding:.7rem;border-radius:.9rem;border:0;background:var(--ac);color:#fff;font-weight:700;margin-top:.9rem}
+.btn:disabled{opacity:.45}
+.btn.sec{background:transparent;border:2px solid var(--ac);color:var(--tx)}
+.ch{display:block;width:100%;text-align:right;min-height:3.2rem;padding:.7rem .9rem;margin:.55rem 0;border-radius:.9rem;border:2px solid var(--bd);background:var(--card)}
+.ch:hover{border-color:var(--ac)}
+.ch.on,.hc.on{border-color:var(--ac);background:var(--bb)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.hc{border:2px solid var(--bd);border-radius:.9rem;background:var(--card);padding:.6rem .4rem;text-align:center;min-height:3.2rem}
+.bb{display:flex;gap:.6rem;align-items:flex-start;margin:.8rem 0;animation:pop .4s}
+.bb>span{font-size:1.7rem;line-height:1.5}
+.bb small{display:block;font-weight:700;color:var(--mu);font-size:.8rem}
+.bb p{margin:0;background:var(--bb);border-radius:.9rem;padding:.4rem .8rem .5rem}
+.goal{background:#fff4d6;border:1.5px solid #e6c36a;border-radius:.9rem;padding:.5rem .8rem;margin:.6rem 0;color:#3b2f10;font-size:.92rem}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .goal{background:#3b3017;border-color:#7a6224;color:#f7e9c4}}
+:root[data-theme="dark"] .goal{background:#3b3017;border-color:#7a6224;color:#f7e9c4}
+.q{border-top:2px dashed var(--bd);margin-top:.9rem;padding-top:.7rem}
+.pr{color:var(--ac);font-weight:700}
+.rx{border-right:5px solid var(--ac);padding:.2rem .8rem;margin-top:.8rem;animation:pop .4s}
+.w{text-align:center;color:var(--mu)}
+.sm{font-size:.82rem;color:var(--mu)}
+.hint{text-align:center;color:var(--mu);animation:blink 1.6s infinite;margin-top:1rem}
+.pg{height:.55rem;border-radius:.3rem;background:var(--bd);margin:.3rem 0 .5rem;overflow:hidden}.pg i{display:block;height:100%;background:var(--ac);transition:width .6s}
+.row{display:flex;justify-content:space-between;align-items:center;margin:.5rem 0;gap:.5rem}
+.row button{width:2.6rem;height:2.6rem;border-radius:50%;border:2px solid var(--bd);background:var(--card);font-size:1.3rem}
+input[type=range]{width:100%;height:2rem;accent-color:var(--ac)}
+input[type=text]{width:100%;font:inherit;font-size:1.1rem;padding:.55rem .7rem;border:2px solid var(--bd);border-radius:.7rem;background:var(--card);color:var(--tx)}
+.fld{display:block;margin:.8rem 0}.fld .hint2{display:block;color:var(--mu);font-size:.82rem}
+.tb{width:100%;border-collapse:collapse;font-size:.9rem}.tb td,.tb th{padding:.3rem .4rem;border-bottom:1px solid var(--bd);text-align:center}
+.pos{background:var(--bb);border-radius:.8rem;padding:.4rem .8rem;font-size:.92rem;margin:.5rem 0}
+.bad{color:var(--bad);font-weight:700}.ok{color:var(--good);font-weight:700}
+.chk{display:flex;gap:.4rem;justify-content:center;font-size:.8rem;color:var(--mu);margin:.2rem 0}
+.shimg{width:100%;border-radius:.9rem;border:1.5px solid var(--bd)}
+textarea{width:100%;height:9rem;font:inherit;border-radius:.7rem;border:2px solid var(--bd);background:var(--card);color:var(--tx);padding:.5rem}
+.ov{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx);animation:fi .4s}
+.ov.out{opacity:0;transition:opacity .4s}
+.ov h2{margin:.5rem 0 0}.ov p{color:var(--mu);margin:0}
+.em{position:relative;width:140px;height:140px;font-size:110px;text-align:center;line-height:140px}
+.em span{position:absolute;inset:0}
+.em .o{animation:fo 1s .5s forwards}
+.em .n{opacity:0;animation:ageup 1s 1.2s forwards}
+@keyframes fo{to{opacity:0;transform:scale(.3) rotate(-30deg)}}
+@keyframes ageup{0%{opacity:0;transform:scale(.3) rotate(30deg)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes fi{from{opacity:0}}
+a.btn{text-decoration:none;text-align:center}
+@media (prefers-reduced-motion:reduce){.hint{animation:none}}
+.rad{width:100%;max-width:380px;display:block;margin:.4rem auto}
+.rad text{fill:var(--tx)}
+.bx{border-top:1.5px solid var(--bd);padding-top:.5rem;margin-top:.6rem}.bx.off{opacity:.6}
+.tg{font-size:.78rem;padding:.1rem .5rem;border-radius:1rem;font-weight:700}
+.tg.bl{background:#ffe3c2;color:#6b3200}.tg.hs{background:#d8f0dd;color:#14502f}.tg.eq{background:var(--bb);color:var(--mu)}
+.bl2{display:flex;align-items:center;gap:.5rem;font-size:.85rem;margin:.2rem 0}.bl2 span{width:5.2rem;flex:none;color:var(--mu)}.bl2 em{width:3rem;flex:none;font-style:normal;text-align:left}
+.tr{position:relative;flex:1;height:.8rem;background:var(--bb);border-radius:.4rem;overflow:hidden}
+.tr i{position:absolute;right:0;top:0;bottom:0;display:block;border-radius:.4rem}.tr i.s{background:var(--mu);opacity:.65}.tr i.b{background:var(--ac)}
+.tr u{position:absolute;right:70%;top:0;bottom:0;width:2px;background:var(--tx);opacity:.7}
+.chs{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}.chp{font-size:.8rem;border:1.5px solid var(--bd);border-radius:1rem;padding:0 .6rem}.chp.on{background:var(--bb);border-color:var(--ac)}
+.gl.off{opacity:.6}
+.pl{display:flex;gap:.6rem;align-items:flex-start;margin:.6rem 0}.pl input{width:1.4rem;height:1.4rem;margin-top:.6rem;accent-color:var(--ac)}
+summary{cursor:pointer;margin:.6rem 0}
+</style>
+<script src="assets/ui.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var PD='۰۱۲۳۴۵۶۷۸۹';
+function fa(n){return String(n).replace(/\d/g,function(d){return PD[d]})}
+function dig(s){return String(s).replace(/[۰-۹]/g,function(c){return PD.indexOf(c)}).replace(/[٠-٩]/g,function(c){return '٠١٢٣٤٥٦٧٨٩'.indexOf(c)})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function fsz(d){var v=Math.max(17,Math.min(26,(parseInt(localStorage.getItem('fc_fs'))||19)+d));document.documentElement.style.fontSize=v+'px';try{localStorage.setItem('fc_fs',v)}catch(e){}}
+try{var f0=parseInt(localStorage.getItem('fc_fs'));if(f0)document.documentElement.style.fontSize=f0+'px'}catch(e){}
+function g2j(gy,gm,gd){var gdm=[0,31,59,90,120,151,181,212,243,273,304,334];var gy2=gm>2?gy+1:gy;var days=355666+365*gy+Math.floor((gy2+3)/4)-Math.floor((gy2+99)/100)+Math.floor((gy2+399)/400)+gd+gdm[gm-1];var jy=-1595+33*Math.floor(days/12053);days%=12053;jy+=4*Math.floor(days/1461);days%=1461;if(days>365){jy+=Math.floor((days-1)/365);days=(days-1)%365}var jm=days<186?1+Math.floor(days/31):7+Math.floor((days-186)/30);var jd=1+(days<186?days%31:(days-186)%30);return [jy,jm,jd]}
+var MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+function jdate(t){var d=new Date(t),j=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());return fa(j[2])+' '+MN[j[1]-1]+' '+fa(j[0])}
+
+/* محورها: هر بازی دو محور */
+var AX=[
+{id:'cf',g:'a',n:'نظم جریان نقد',e:'💵',w:'دخل و خرج را می‌بینی و مهارش می‌کنی',tip:'بازی ۱'},
+{id:'rs',g:'a',n:'تاب‌آوری ماه‌های سخت',e:'🛟',w:'برای روز بد ذخیره و برنامه داری',tip:'بازی ۱'},
+{id:'hd',g:'b',n:'استقلال از هیجان جمع',e:'🧍',w:'در بازار داغ دنبال جمعیت نمی‌روی',tip:'بازی ۲'},
+{id:'cm',g:'b',n:'آرامش در افت',e:'🌊',w:'وقتی قیمت می‌ریزد سرد تصمیم می‌گیری',tip:'بازی ۲'},
+{id:'cl',g:'c',n:'شفافیت هزینه',e:'🔍',w:'هزینه‌ی واقعی هدف بزرگ را می‌دانی',tip:'بازی ۳'},
+{id:'sh',g:'c',n:'سپر و برنامه‌ی هدف',e:'🛡️',w:'برای هدف بزرگ برنامه‌ی ماه‌به‌ماه داری',tip:'بازی ۳'},
+{id:'hz',g:'d',n:'جور کردن پول با زمان',e:'⏳',w:'پول هر کار را بر اساس زمان لازمش جدا می‌کنی',tip:'بازی ۴'},
+{id:'sy',g:'d',n:'قانون به‌جای حال‌وهوا',e:'📋',w:'با قانون از پیش نوشته تصمیم می‌گیری',tip:'بازی ۴'}];
+var GM={a:{k:'fc_game_a',t:'🧾 بازی ۱ · پنج سال یک حقوق',f:function(r){return [[r.selfCf,r.cf],[null,r.rs]]}},
+b:{k:'fc_game_b',t:'📈 بازی ۲ · بازار در ذهن من',f:function(r){return [[r.selfHd,r.hd],[r.selfCm,r.cm]]}},
+c:{k:'fc_game_c',t:'💍 بازی ۳ · همه‌چیز تا عروسی',f:function(r){return [[r.selfCl,r.cl],[r.selfSh,r.sh]]}},
+d:{k:'fc_game_d',t:'🧰 بازی ۴ · کارگاه سیستم من',f:function(r){return [[r.selfHz,r.hz],[r.selfCm,r.cm!=null&&r.sy!=null?Math.round((r.cm+r.sy)/2):r.sy]]}}};
+var GL=['a','b','c','d'];
+var DATA={},DEMO=false;
+function num(x){return typeof x=='number'&&isFinite(x)?Math.max(0,Math.min(100,Math.round(x))):null}
+function load(){DATA={};var imp=lsGet('fc_dash_data')||{};GL.forEach(function(g){var r=lsGet(GM[g].k)||imp[g];if(r&&typeof r=='object')DATA[g]=r});var s=lsGet('fc_game_s')||imp.s;if(s&&typeof s=='object')DATA.s=s}
+function demoData(){return {a:{cf:72,rs:48,selfCf:85},b:{hd:41,cm:66,selfHd:70,selfCm:45},c:{cl:55,sh:38,selfCl:50,selfSh:75},d:{hz:80,sy:58,selfHz:60,cm:62,selfCm:40},s:{a:35,w:70,s:45,v:55}}}
+function vals(){var src=DEMO?demoData():DATA,out=[];AX.forEach(function(a){out.push({a:a,b:null,s:null})});GL.forEach(function(g,gi){var r=src[g];if(!r)return;var p;try{p=GM[g].f(r)}catch(e){return}for(var j=0;j<2;j++){var o=out[gi*2+j];o.s=num(p[j][0]);o.b=num(p[j][1])}});return out}
+function importCodes(txt){var n=0,imp=lsGet('fc_dash_data')||{};String(txt).split(/[\s,\n]+/).forEach(function(c){c=c.trim();if(!c)return;var o=null;try{o=JSON.parse(decodeURIComponent(escape(atob(c))))}catch(e){try{o=JSON.parse(c)}catch(e2){}}
+ if(o&&typeof o=='object'&&GL.indexOf(o.g)>=0){var g=o.g;delete o.g;delete o.v;imp[g]=o;n++}else if(o&&o.g=='s'){delete o.g;delete o.v;imp.s=o;n++}});
+ lsSet('fc_dash_data',imp);load();return n}
+function haveCount(){return GL.filter(function(g){return DATA[g]}).length}
+function avgB(v){var a=v.filter(function(x){return x.b!=null});return a.length?Math.round(a.reduce(function(s,x){return s+x.b},0)/a.length):null}
+
+/* تاریخچه */
+function hist(){return lsGet('fc_dash_hist')||[]}
+function snap(v){if(DEMO)return;var b=avgB(v);if(b==null)return;var h=hist(),last=h[h.length-1],key=JSON.stringify(v.map(function(x){return x.b}));if(last&&last.key==key)return;h.push({t:Date.now(),avg:b,key:key,v:v.map(function(x){return x.b})});lsSet('fc_dash_hist',h.slice(-6))}
+
+/* رادار */
+function pt(i,r,R,cx,cy){var a=-Math.PI/2+i*2*Math.PI/8;return [cx+Math.cos(a)*R*r/100,cy+Math.sin(a)*R*r/100]}
+function radar(v,forCanvas){var W=340,cx=170,cy=170,R=105,s='<svg viewBox="0 0 340 340" class="rad" role="img" aria-label="نمودار راداری هشت محور">';
+ [25,50,75,100].forEach(function(l){var p=[];for(var i=0;i<8;i++)p.push(pt(i,l,R,cx,cy).join(','));s+='<polygon points="'+p.join(' ')+'" fill="none" stroke="var(--bd)" stroke-width="'+(l==70||l==75?1.5:1)+'"/>'});
+ for(var i=0;i<8;i++){var e=pt(i,100,R,cx,cy);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="var(--bd)"/>';var l=pt(i,128,R,cx,cy);s+='<text x="'+l[0]+'" y="'+(l[1]+7)+'" text-anchor="middle" font-size="22">'+AX[i].e+'</text>'}
+ var sp=[],bp=[];v.forEach(function(x,i){sp.push(pt(i,x.s==null?0:x.s,R,cx,cy).join(','));bp.push(pt(i,x.b==null?0:x.b,R,cx,cy).join(','))});
+ if(v.some(function(x){return x.s!=null}))s+='<polygon points="'+sp.join(' ')+'" fill="none" stroke="var(--mu)" stroke-width="2.5" stroke-dasharray="6 5"/>';
+ s+='<polygon points="'+bp.join(' ')+'" fill="var(--ac)" fill-opacity=".28" stroke="var(--ac)" stroke-width="3"/>';
+ v.forEach(function(x,i){if(x.b!=null){var p=pt(i,x.b,R,cx,cy);s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5" fill="var(--ac)"/>'}});
+ return s+'</svg>'}
+
+function bars(v){return v.map(function(x){var a=x.a;if(x.b==null)return '<div class="bx off"><b>'+a.e+' '+a.n+'</b><div class="sm">هنوز اندازه‌گیری نشده — '+a.tip+' را بازی کن.</div></div>';
+ var gap=x.s==null?null:x.s-x.b,tag='';
+ if(gap!=null){if(gap>=15)tag='<span class="tg bl">نقطه‌ی کور</span>';else if(gap<=-15)tag='<span class="tg hs">توانایی پنهان</span>';else tag='<span class="tg eq">تصور ≈ رفتار</span>'}
+ return '<div class="bx"><b>'+a.e+' '+a.n+'</b> '+tag+'<div class="sm">'+a.w+'</div>'+
+ (x.s!=null?'<div class="bl2"><span>تصور من</span><div class="tr"><i class="s" style="width:'+x.s+'%"></i><u></u></div><em>'+fa(x.s)+'٪</em></div>':'')+
+ '<div class="bl2"><span>رفتار من</span><div class="tr"><i class="b" style="width:'+x.b+'%"></i><u></u></div><em>'+fa(x.b)+'٪</em></div></div>'}).join('')}
+
+/* صدای ریشه */
+var VN={a:['اجتناب از پول','🙈'],w:['پرستش پول','✨'],s:['منزلت با پول','👑'],v:['هوشیاری نسبت به پول','🔎']};
+var VH={a:'وقتی پول سخت می‌شود احتمالاً دورش را خط می‌کشی؛ این می‌تواند باعث شود نظم دخل‌وخرج یا آمادگی روز بد عقب بیفتد.',w:'وقتی فکر می‌کنی «با پول بیشتر همه‌چیز حل می‌شود» ممکن است تصمیم‌ها هیجانی‌تر شوند، مثلاً دنبال بازار داغ رفتن.',s:'وقتی ارزشت را با پولت می‌سنجی ممکن است برای چشم دیگران خرج کنی؛ این به شفافیت هزینه و برنامه‌ی هدف ضربه می‌زند.',v:'نگرانی و هوشیاری بالا اگر از حد بگذرد ممکن است در افت قیمت‌ها آرامشت را بگیرد، هرچند معمولاً کمک به برنامه‌ریزی هم می‌کند.'};
+function root(){var s=(DEMO?demoData():DATA).s;if(!s)return '<div class="card"><b>🎙️ صدای ریشه‌ای</b><p class="sm">برای دیدن ارتباط الگوهایت با «صدای پولی» ذهنت، بازی «اسکریپت‌های پولی» را بازی کن؛ بعد از آن اینجا فرضیه‌ها ظاهر می‌شوند. (اگر نسخه‌ای از آن بازی نتیجه را نمی‌نویسد، این بخش خالی می‌ماند.)</p></div>';
+ var k=['a','w','s','v'].sort(function(x,y){return (s[y]||0)-(s[x]||0)})[0];
+ var h='<div class="card"><b>🎙️ صدای ریشه‌ای</b><p>قوی‌ترین صدای تو در بازی اسکریپت‌های پولی: <span class="pr">'+VN[k][1]+' '+VN[k][0]+'</span> ('+fa(s[k])+'٪)</p>';
+ h+='<p class="pos">'+VH[k]+'</p><p class="sm">این یک <b>فرضیه</b> است نه حکم. اگر با زندگی‌ات جور درمی‌آید، همان را با نمودارهای بالا مقایسه کن؛ اگر نه، کنارش بگذار.</p>';
+ return h+'</div>'}
+
+/* برنامه ۳۰ روزه */
+var ACT={cf:['۷ روز، هر خرج را همان لحظه در یادداشت گوشی بنویس.','اول ماه یک سقف برای «خرج‌های دلبخواهی» تعیین کن.','پایان هر هفته ۵ دقیقه مرور کن: کجا از برنامه جلو زدم؟'],
+rs:['مبلغ یک ماه خرج ضروری را حساب کن و بنویس.','هر بار که پول به دستت می‌رسد، همان روز مبلغ کوچکی (حتی ۵٪) کنار بگذار.','یک «حساب جدا برای روز بد» باز کن که کارتش دم دست نباشد.'],
+hd:['قبل از هر خرید سرمایه‌ای ۲۴ ساعت صبر کن و دلیلت را بنویس.','هر وقت همه از یک چیز حرف می‌زنند، از خودت بپرس: «اگر کسی نمی‌گفت، باز هم می‌خریدم؟»','فهرستی از «دلیل‌های خوب خرید» خودت بنویس که با حرف دیگران ربطی نداشته باشد.'],
+cm:['از قبل بنویس: «اگر دارایی‌ام ۲۰٪ افت کرد، من کاری نمی‌کنم مگر ...».','در افت قیمت‌ها ۴۸ ساعت بدون فروش بمان و بعد تصمیم بگیر.','فقط پولی را سرمایه‌گذاری کن که تا چند سال لازمش نداری.'],
+cl:['برای هدف بزرگ‌ات هزینه‌ها را در ۵ ردیف بنویس و قیمت روز هر کدام را پیدا کن.','یک ردیف «بقیه‌ی خرج‌های ریز» با ۱۰ تا ۲۰٪ اضافه بگذار.','هزینه‌ها را با تورم سال بعد دوباره حساب کن، نه فقط امروز.'],
+sh:['هدف را به ماه تقسیم کن: مبلغ کل ÷ تعداد ماه‌ها.','یک تاریخ و یک مبلغ ثابت برای پس‌انداز ماهانه انتخاب کن.','اگر ماهی نتوانستی، جبرانش را همان ماه بعد در برنامه بنویس، نه اینکه رهایش کنی.'],
+hz:['پول‌هایت را در سه جعبه بنویس: کمتر از ۱ سال / ۱ تا ۵ سال / بیشتر از ۵ سال.','پولی که ظرف یک سال لازم است را جدا از سرمایه‌گذاری بلندمدت نگه دار.','برای هر پول یک «تاریخ مصرف» بنویس.'],
+sy:['۳ قانون کوتاه بنویس («اگر ... آنگاه ...») و جایی ببین که ببینی‌شان.','قبل از تصمیم بزرگ مالی، قانون‌ها را بلند بخوان.','ماهی یک بار قانون‌ها را با آنچه واقعاً کردی مقایسه کن.']};
+function pickPlan(v){var k=v.filter(function(x){return x.b!=null}).sort(function(a,b){return a.b-b.b}).slice(0,2);if(!k.length)return [];var o=[];
+ if(k.length==1){ACT[k[0].a.id].forEach(function(t){o.push({ax:k[0].a.id,t:t})});return o.slice(0,3)}
+ o.push({ax:k[0].a.id,t:ACT[k[0].a.id][0]},{ax:k[0].a.id,t:ACT[k[0].a.id][1]},{ax:k[1].a.id,t:ACT[k[1].a.id][0]});return o}
+function axN(id){for(var i=0;i<AX.length;i++)if(AX[i].id==id)return AX[i].e+' '+AX[i].n;return id}
+function planHTML(v){var p=pickPlan(v);if(!p.length)return '<p class="sm">بعد از انجام حداقل یک بازی، برنامه‌ی سی‌روزه‌ات اینجا ساخته می‌شود.</p>';
+ var saved=lsGet('fc_dash_plan'),h='<p>۳ کار کوچک، فقط برای دو محوری که الان بیشترین جا برای رشد دارند:</p>';
+ p.forEach(function(x,i){var on=saved&&saved.done&&saved.done[i];h+='<label class="pl"><input type="checkbox" '+(on?'checked':'')+' onchange="tick('+i+',this.checked)"><span><b>'+axN(x.ax)+'</b><br>'+esc(x.t)+'</span></label>'});
+ var d=saved&&saved.start?saved.start:null;
+ h+=d?'<p class="pos">شروع: '+jdate(d)+' · بازآزمایی پیشنهادی: <b>'+jdate(d+30*864e5)+'</b>. آن روز همین بازی‌ها را دوباره انجام بده و داشبورد را با قبل مقایسه کن.</p>':'<button class="btn" onclick="startPlan()">▶️ شروع برنامه‌ی ۳۰ روزه</button>';
+ return h}
+function startPlan(){var p=lsGet('fc_dash_plan')||{};p.start=Date.now();p.done=p.done||{};lsSet('fc_dash_plan',p);render()}
+function tick(i,c){var p=lsGet('fc_dash_plan')||{start:null,done:{}};p.done=p.done||{};p.done[i]=c;lsSet('fc_dash_plan',p)}
+
+/* اشتراک */
+function summary(v){var parts=[];var s=v.filter(function(x){return x.b!=null}),bl=v.filter(function(x){return x.s!=null&&x.b!=null&&x.s-x.b>=15}),hs=v.filter(function(x){return x.s!=null&&x.b!=null&&x.s-x.b<=-15});
+ var t='🪞 آینه‌ی کامل مالی من\n';s.forEach(function(x){t+=x.a.e+' '+x.a.n+': '+fa(x.b)+'٪\n'});
+ if(bl.length)t+='\n🔸 نقطه‌ی کور: '+bl.map(function(x){return x.a.n}).join('، ');
+ if(hs.length)t+='\n💪 توانایی پنهان: '+hs.map(function(x){return x.a.n}).join('، ');
+ return t+'\n\nآموزشی است، توصیه‌ی مالی نیست. — شهر ابزار مالی'}
+function cardCanvas(v){var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d');x.fillStyle='#faf6ee';x.fillRect(0,0,1080,1350);x.direction='rtl';x.textAlign='center';
+ x.fillStyle='#1f1a14';x.font='bold 54px VzSub,Tahoma,sans-serif';x.fillText('🪞 آینه‌ی کامل مالی من',540,110);
+ var cx=540,cy=500,R=290;function P(i,r){var a=-Math.PI/2+i*Math.PI/4;return [cx+Math.cos(a)*R*r/100,cy+Math.sin(a)*R*r/100]}
+ x.strokeStyle='#d9ccb6';x.lineWidth=2;[25,50,75,100].forEach(function(l){x.beginPath();for(var i=0;i<8;i++){var p=P(i,l);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.closePath();x.stroke()});
+ for(var i=0;i<8;i++){var e=P(i,100);x.beginPath();x.moveTo(cx,cy);x.lineTo(e[0],e[1]);x.stroke();var l=P(i,122);x.font='46px sans-serif';x.fillStyle='#1f1a14';x.fillText(AX[i].e,l[0],l[1]+16)}
+ if(v.some(function(q){return q.s!=null})){x.setLineDash([16,12]);x.strokeStyle='#5a5046';x.lineWidth=5;x.beginPath();v.forEach(function(q,i){var p=P(i,q.s==null?0:q.s);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath();x.stroke();x.setLineDash([])}
+ x.beginPath();v.forEach(function(q,i){var p=P(i,q.b==null?0:q.b);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath();x.fillStyle='rgba(168,95,10,.3)';x.fill();x.strokeStyle='#a85f0a';x.lineWidth=6;x.stroke();
+ x.fillStyle='#5a5046';x.font='32px VzSub,Tahoma,sans-serif';x.fillText('خط پُر = رفتار من    خط‌چین = تصور من',540,880);
+ var y=950;x.font='bold 36px VzSub,Tahoma,sans-serif';x.fillStyle='#1f1a14';
+ var bl=v.filter(function(q){return q.s!=null&&q.b!=null&&q.s-q.b>=15}),hs=v.filter(function(q){return q.s!=null&&q.b!=null&&q.s-q.b<=-15});
+ if(bl.length){x.fillText('🔸 نقطه‌ی کور: '+bl.slice(0,2).map(function(q){return q.a.n}).join('، '),540,y);y+=62}
+ if(hs.length){x.fillText('💪 توانایی پنهان: '+hs.slice(0,2).map(function(q){return q.a.n}).join('، '),540,y);y+=62}
+ var b=avgB(v);if(b!=null){x.fillText('میانگین رفتار: '+fa(b)+'٪',540,y);y+=62}
+ x.fillStyle='#5a5046';x.font='28px VzSub,Tahoma,sans-serif';x.fillText('آموزشی است، توصیه‌ی مالی نیست · شهر ابزار مالی',540,1290);return c}
+function msg(t){var e=document.getElementById('msg');if(e){e.textContent=t;e.style.display='block'}}
+function shNative(){var v=vals(),t=summary(v),c=cardCanvas(v);c.toBlob(function(b){try{var f=new File([b],'my-financial-mirror.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:t}).catch(function(){});else if(navigator.share)navigator.share({text:t}).catch(function(){});else msg('مرورگر منوی اشتراک را ندارد؛ تصویر را ذخیره کن و در برنامه‌ات بفرست.')}catch(e){msg('ارسال مستقیم ممکن نشد؛ تصویر را ذخیره کن.')}})}
+function shDl(){var c=cardCanvas(vals());var a=document.createElement('a');a.download='my-financial-mirror.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();msg('تصویر ذخیره شد ✅')}
+function pageUrl(){return /^https?:/.test(location.href)?location.href.split('#')[0]:''}
+function shCopy(){var t=summary(vals()),fb=function(){var e=document.getElementById('cpa');e.innerHTML='<textarea id="cpt" readonly></textarea>';var a=document.getElementById('cpt');a.value=t;a.select();msg('متن را انتخاب کن و کپی کن.')};try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){msg('کپی شد ✅')},fb);else fb()}catch(e){fb()}}
+function doImport(){var n=importCodes(document.getElementById('codes').value);msg(n?fa(n)+' نتیجه وارد شد ✅':'کد معتبری پیدا نشد. کد را کامل از انتهای بازی کپی کن.');if(n)setTimeout(render,600)}
+function toggleDemo(){DEMO=!DEMO;render()}
+function clearAll(){if(!confirm('همه‌ی نتیجه‌های ذخیره‌شده‌ی بازی‌ها و داشبورد پاک شود؟'))return;try{Object.keys(localStorage).filter(function(k){return /^fc_(game|dash)/.test(k)}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}DATA={};DEMO=false;render()}
+
+function gallery(v){var src=DEMO?demoData():DATA;return GL.map(function(g,gi){var r=src[g];var a=v[gi*2],b=v[gi*2+1];
+ if(!r)return '<div class="card gl off"><b>'+GM[g].t+'</b><p class="sm">هنوز انجام نشده. با انجام آن، دو محور از هشت محور کامل می‌شود.</p></div>';
+ function mini(x){return '<div class="bl2"><span>'+x.a.n+'</span><div class="tr"><i class="b" style="width:'+(x.b||0)+'%"></i></div><em>'+(x.b==null?'—':fa(x.b)+'٪')+'</em></div>'}
+ return '<div class="card gl"><b>'+GM[g].t+'</b>'+mini(a)+mini(b)+'</div>'}).join('')}
+
+function render(){load();var v=vals();snap(v);var n=DEMO?4:haveCount(),b=avgB(v),h=hist(),app=document.getElementById('app');
+ var delta='';if(!DEMO&&h.length>=2){var d=h[h.length-1].avg-h[h.length-2].avg;delta='<p class="sm w">نسبت به نتیجه‌ی قبلی ('+jdate(h[h.length-2].t)+'): '+(d>0?'<span class="ok">▲ '+fa(d)+' واحد بهتر</span>':d<0?'<span class="bad">▼ '+fa(-d)+' واحد پایین‌تر</span>':'بدون تغییر')+'</p>'}
+ var chips=GL.map(function(g){var ok=DEMO||DATA[g];return '<span class="chp '+(ok?'on':'')+'">'+(ok?'✅':'⬜')+' '+GM[g].t.split('·')[0]+'</span>'}).join('');
+ app.innerHTML='<div class="top"><span>🪞 بازی ۵ از ۵</span><span class="fsz"></span></div>'+
+ '<div class="card"><div class="big">🪞</div><h1>آینه‌ی کامل</h1><p class="w">همه‌ی بازی‌ها کنار هم، در یک نگاه</p>'+(DEMO?'<p class="pos">حالت نمونه: داده‌های زیر ساختگی‌اند، فقط برای دیدن شکل داشبورد.</p>':'')+'</div>'+
+ '<div class="goal">🎯 <b>در این بازی چه می‌فهمی؟</b> هشت توانایی مالی‌ات را یکجا می‌بینی؛ می‌فهمی کجا «فکر می‌کنی خوبی ولی رفتارت چیز دیگری می‌گوید» (نقطه‌ی کور) و کجا «بهتر از تصورت عمل می‌کنی» (توانایی پنهان)؛ و یک برنامه‌ی ۳۰ روزه می‌گیری. هیچ نمره‌ی قبولی یا ردی در کار نیست.</div>'+
+ '<div class="card"><b>📂 نتیجه‌های تو</b><div class="chs">'+chips+'</div><p class="sm">'+(n?fa(n)+' بازی از ۴ بازی انجام شده است.':'هنوز نتیجه‌ای پیدا نشد. بازی‌ها را انجام بده، یا کد پروفایل را زیر وارد کن، یا حالت نمونه را ببین.')+'</p>'+
+ '<details><summary>کد پروفایل دارم (اگر بازی‌ها در این مرورگر خودکار نمایش داده نشدند)</summary><p class="sm">در پایان هر بازی «کد پروفایل» را کپی کن و اینجا بچسبان؛ هر کد در یک خط. فعلاً بازی ۴ کد نشان می‌دهد؛ نسخه‌های قبلی با هم‌خانه بودن در یک مرورگر خودکار می‌خوانند.</p><textarea id="codes" placeholder="کدها را اینجا بچسبان"></textarea><button class="btn sec" onclick="doImport()">وارد کردن</button></details>'+
+ '<button class="btn sec" onclick="toggleDemo()">'+(DEMO?'↩ برگشت به نتیجه‌ی واقعی من':'👀 دیدن حالت نمونه')+'</button><p id="msg" class="pos" style="display:none"></p></div>'+
+ (b==null&&!DEMO?'':
+ '<div class="card"><b>🕸️ رادار هشت‌گانه</b>'+radar(v)+'<div class="chk"><span>▬ رفتار من</span><span>┅ تصور من</span></div><p class="sm w">هر چه نقطه از مرکز دورتر، آن توانایی در رفتارت قوی‌تر دیده شده است. میانگین رفتار: <b>'+fa(b)+'٪</b></p>'+delta+'</div>'+
+ '<div class="card"><b>📊 تصور در برابر رفتار</b><p class="sm">خط عمودی روی نوار = هدف آموزشی ۷۰٪ (یک راهنمای ساده، نه استاندارد علمی). «نقطه‌ی کور» یعنی تصورت از رفتارت حداقل ۱۵ واحد بالاتر بوده؛ «توانایی پنهان» یعنی رفتارت حداقل ۱۵ واحد بهتر از تصورت بوده.</p>'+bars(v)+'</div>'+
+ '<div class="card"><b>🖼️ گالری بازی‌ها</b></div>'+gallery(v)+root()+
+ '<div class="card"><b>🗓️ برنامه‌ی ۳۰ روزه</b>'+planHTML(v)+'</div>'+
+ '<div class="card"><b>📤 اشتراک‌گذاری</b><p class="sm">فقط درصدها و برچسب‌ها در تصویر هست؛ بدون اسم و بدون مبلغ.</p>'+
+ '<button class="btn" onclick="shNative()">📲 ارسال تصویر (منوی گوشی)</button>'+
+ '<a class="btn sec" target="_blank" rel="noopener" href="https://t.me/share/url?url='+encodeURIComponent(pageUrl()||' ')+'&text='+encodeURIComponent(summary(v))+'">✈️ تلگرام (متن)</a>'+
+ '<a class="btn sec" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(summary(v)+(pageUrl()?'\n'+pageUrl():''))+'">💬 واتس‌اپ (متن)</a>'+
+ '<button class="btn sec" onclick="shDl()">⬇️ ذخیره‌ی تصویر</button><button class="btn sec" onclick="shCopy()">📋 کپی متن</button><div id="cpa"></div>'+
+ '<p class="sm">برای بله، ایتا، روبیکا و ... تصویر را ذخیره کن و از داخل خود برنامه بفرست؛ دکمه‌ی مستقیم آن‌ها را راستی‌آزمایی نکرده‌ایم.</p></div>')+
+ '<div class="card"><b>ℹ️ نکته‌های صادقانه</b><p class="sm">این ابزار آموزشی است و توصیه‌ی مالی یا سرمایه‌گذاری نیست. درصدها از چند سناریوی کوتاه ساخته شده‌اند و تشخیص قطعی نیستند. اگر نتیجه‌ها را از چند روز یا چند بار بازی بگیری، معنادارتر می‌شوند.</p></div>'+
+ '<button class="btn sec" onclick="clearAll()">🗑️ پاک کردن همه‌ی نتیجه‌ها از این مرورگر</button>';
+ window.scrollTo({top:0})}
+render();
+
+</script>
+</body>
+</html>

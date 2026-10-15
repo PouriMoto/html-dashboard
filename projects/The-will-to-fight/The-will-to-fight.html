@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ارادهٔ جنگیدن</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* پیش‌فرض: همه چیز قابل مشاهده */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  background:#0a0a12;
+  color:#f0f0f0;
+  line-height:2.1;
+  overflow-x:hidden;
+}
+.bg{
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(201,168,76,.12),transparent 55%),
+    linear-gradient(160deg,#0f0f1a 0%,#0a0a12 60%,#08060a 100%);
+}
+.pbar{
+  position:fixed;top:0;right:0;width:0;height:4px;
+  background:linear-gradient(to left,#c9a84c,#f0d878);
+  z-index:999;box-shadow:0 0 15px rgba(201,168,76,.6);
+}
+section{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:4rem 1.4rem;position:relative;overflow:hidden;
+}
+.wrap{max-width:850px;width:100%;margin:0 auto;position:relative;z-index:5}
+
+/* تایپوگرافی با کنتراست بالا */
+h1{
+  font-size:clamp(2rem,7.5vw,4rem);
+  font-weight:900;color:#ffffff;
+  line-height:1.3;margin-bottom:1.4rem;
+  text-shadow:0 2px 20px rgba(0,0,0,.8);
+}
+h1 .gold{
+  background:linear-gradient(120deg,#e6c85c,#f5e08a,#e6c85c);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 40px rgba(230,200,92,.5);
+}
+h2{
+  font-size:clamp(1.5rem,5.5vw,2.4rem);
+  font-weight:800;color:#f0d878;
+  margin-bottom:1.2rem;line-height:1.4;
+  text-shadow:0 0 25px rgba(240,216,120,.3);
+}
+h3{
+  font-size:clamp(1.05rem,3vw,1.3rem);
+  font-weight:700;color:#e6c85c;margin-bottom:.5rem;
+}
+p{
+  font-size:clamp(1.05rem,2.5vw,1.2rem);
+  font-weight:400;color:#e8e8e8;
+  margin-bottom:1.3rem;text-align:justify;
+  line-height:2.1;
+  text-shadow:0 1px 8px rgba(0,0,0,.6);
+}
+.hl{color:#f0d878;font-weight:700}
+
+.badge{
+  display:inline-block;font-size:.78rem;color:#e6c85c;
+  letter-spacing:6px;font-weight:600;
+  padding:.5rem 1.2rem;margin-bottom:1.5rem;
+  border:1px solid rgba(230,200,92,.4);
+  border-radius:40px;background:rgba(230,200,92,.08);
+}
+.sub{
+  font-size:clamp(1rem,2.6vw,1.2rem);
+  color:#cccccc;font-weight:400;line-height:2;
+}
+.scroll{
+  position:absolute;bottom:2rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;
+  gap:.5rem;color:#aaa;font-size:.75rem;letter-spacing:3px;z-index:6;
+}
+.sline{
+  width:1px;height:40px;
+  background:linear-gradient(#e6c85c,transparent);
+  animation:sp 2.2s infinite;
+}
+@keyframes sp{0%,100%{opacity:.3}50%{opacity:1}}
+
+.div{
+  width:70px;height:2px;margin:1.5rem 0;
+  background:linear-gradient(to left,#e6c85c,transparent);
+  transform-origin:right;
+  box-shadow:0 0 12px rgba(230,200,92,.5);
+}
+.quote{
+  font-size:clamp(1.1rem,2.9vw,1.5rem);
+  color:#ffffff;font-style:italic;font-weight:400;
+  border-right:3px solid #e6c85c;
+  padding:1rem 1.4rem 1rem 0;
+  margin:2rem 0;line-height:2;
+  background:linear-gradient(to left,rgba(230,200,92,.08),transparent);
+  border-radius:0 12px 12px 0;
+}
+.qa{
+  font-size:.9rem;color:#b0b0b0;
+  margin-top:.7rem;font-style:normal;
+}
+.box{
+  background:linear-gradient(135deg,rgba(230,200,92,.12),rgba(230,200,92,.03));
+  border-right:3px solid #e6c85c;
+  padding:1.5rem 1.6rem;margin:2rem 0;
+  border-radius:0 16px 16px 0;
+}
+.box p{color:#f5f5f5;margin-bottom:0}
+
+.mini{
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid rgba(230,200,92,.3);
+  border-radius:16px;padding:1.5rem 1.4rem;
+  position:relative;overflow:hidden;
+}
+.mini::before{
+  content:'';position:absolute;top:0;right:0;
+  width:3px;height:100%;
+  background:linear-gradient(180deg,#e6c85c,transparent);
+}
+.mini .ic{font-size:1.9rem;display:block;margin-bottom:.6rem}
+.mini p{font-size:.98rem;color:#d8d8d8;margin:0;text-align:right}
+
+.stat{
+  font-size:clamp(3.5rem,13vw,6rem);
+  font-weight:900;color:#e6c85c;line-height:1;
+  display:block;letter-spacing:-.04em;
+  text-shadow:0 0 40px rgba(230,200,92,.5);
+}
+.slabel{
+  font-size:1rem;color:#b8b8b8;
+  line-height:1.8;display:block;margin-top:.5rem;
+}
+.term{
+  background:#0d0d14;
+  border:1px solid #2a2a3a;
+  border-radius:14px;
+  padding:1.5rem 1.4rem 1.3rem;
+  font-family:'Courier New',monospace;
+  direction:ltr;text-align:left;margin:2rem 0;
+  position:relative;
+}
+.term::before{
+  content:'● ● ●';position:absolute;
+  top:.7rem;left:1rem;color:#444;
+  font-size:.68rem;letter-spacing:4px;
+}
+.tl{
+  color:#7ee07e;font-size:.9rem;
+  margin-bottom:.5rem;padding-top:.8rem;
+}
+.tl:first-child{padding-top:1.4rem}
+.tp{color:#e6c85c;font-weight:bold;margin-left:.4rem}
+.to{color:#aaa}
+.te{color:#ff6b6b}
+
+.grid2{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.1rem;margin:1.8rem 0;
+}
+.author{
+  display:flex;align-items:center;gap:1.2rem;
+  margin:1.8rem 0;padding:1.3rem 1.5rem;
+  background:linear-gradient(135deg,rgba(230,200,92,.12),rgba(230,200,92,.02));
+  border-radius:18px;
+  border:1px solid rgba(230,200,92,.3);
+}
+.avatar{
+  width:70px;height:70px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:2px solid #e6c85c;
+  box-shadow:0 0 25px rgba(230,200,92,.5);
+  background:#222;
+}
+.ai h3{margin:0 0 .2rem;font-size:1.05rem;color:#f0d878}
+.ai p{font-size:.88rem;color:#b0b0b0;margin:0}
+
+.final{
+  font-size:clamp(1.4rem,4.5vw,2.3rem);
+  font-weight:800;color:#f0d878;
+  text-align:center;line-height:1.8;
+  text-shadow:0 0 45px rgba(240,216,120,.4);
+}
+.final span{display:block}
+.final .gold{
+  background:linear-gradient(120deg,#e6c85c,#f5e08a,#e6c85c);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+footer{
+  padding:3rem 1.5rem;text-align:center;
+  color:#888;font-size:.85rem;
+  border-top:1px solid #1a1a2a;line-height:2;
+}
+
+/* تصاویر */
+#hero{position:relative}
+.hero-img{
+  position:absolute;inset:0;z-index:1;
+  overflow:hidden;pointer-events:none;
+}
+.hero-img img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:.35;
+  filter:blur(2px) brightness(.5);
+  transform:scale(1.05);
+}
+.hero-ov{
+  position:absolute;inset:0;z-index:2;
+  background:
+    radial-gradient(ellipse at center,rgba(10,10,18,.5),rgba(10,10,18,.9) 75%),
+    linear-gradient(to top,rgba(10,10,18,.95),transparent 45%);
+}
+#hero .wrap{z-index:5}
+
+.intro-s{
+  position:relative;min-height:100vh;
+  padding:0;display:flex;align-items:flex-end;
+}
+.intro-img{position:absolute;inset:0;overflow:hidden}
+.intro-img img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:.4;filter:brightness(.55);
+}
+.intro-ov{
+  position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to top,#0a0a12 0%,rgba(10,10,18,.7) 50%,rgba(10,10,18,.85));
+}
+.intro-cap{
+  position:relative;z-index:5;
+  max-width:800px;margin:0 auto;width:100%;
+  padding:5rem 1.6rem 4rem;text-align:center;
+}
+.intro-cap p{text-align:center;color:#e8e8e8}
+
+/* خطوط متن: در حالت عادی همیشه قابل مشاهده‌اند.
+   فقط GSAP در زمان اجرای انیمیشن آن‌ها را جابه‌جا می‌کند. */
+.line{
+  display:block;
+}
+.li{
+  display:inline-block;
+}
+html.js-on .line{
+  overflow:hidden;
+  padding-bottom:.08em;
+}
+html.js-on .li{
+  will-change:transform;
+}
+
+@media(max-width:768px){
+  .grid2{grid-template-columns:1fr}
+  section{padding:3rem 1.2rem;min-height:auto}
+  #hero{min-height:100vh}
+  .author{flex-direction:column;text-align:center}
+  .term{padding:1.1rem .9rem;font-size:.82rem}
+  .tl{font-size:.78rem}
+  .mini{padding:1.2rem 1.1rem}
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a0a12}
+::-webkit-scrollbar-thumb{background:linear-gradient(#c9a84c,#e6c85c);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="pbar" id="pbar"></div>
+
+<!-- HERO -->
+<section id="hero">
+<div class="hero-img">
+  <img id="heroImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPLBrrB6vBxKbXEzajdq--0LAnMl3XmKV_Avqc9xmqewwtVRzuE4rXej5V&s=10" alt="">
+</div>
+<div class="hero-ov"></div>
+<div class="wrap" style="text-align:center">
+<div class="badge"><span class="line"><span class="li">The Will to Fight</span></span></div>
+<h1>
+<span class="line"><span class="li">پیروزی در نبرد</span></span>
+<span class="line"><span class="li">به <span class="gold">ارادهٔ جنگیدن</span> است</span></span>
+<span class="line"><span class="li">نه فناوری‌های پیشرفته</span></span>
+</h1>
+<p class="sub">
+<span class="line"><span class="li">تعهد به ارزش‌های بنیادین و عزم جمعی</span></span>
+<span class="line"><span class="li">می‌توانند نتیجۀ محتوم جنگ‌ها را عوض کنند</span></span>
+</p>
+</div>
+<div class="scroll"><span>SCROLL</span><div class="sline"></div></div>
+</section>
+
+<!-- INTRO IMAGE -->
+<section class="intro-s">
+<div class="intro-img">
+  <img id="introImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPLBrrB6vBxKbXEzajdq--0LAnMl3XmKV_Avqc9xmqewwtVRzuE4rXej5V&s=10" alt="">
+</div>
+<div class="intro-ov"></div>
+<div class="intro-cap">
+<h2><span class="line"><span class="li">وقتی محاسبات اشتباه می‌شوند</span></span></h2>
+<p>
+<span class="line"><span class="li">در بسیاری از جنگ‌ها، کارشناسان پیش‌بینی می‌کنند</span></span>
+<span class="line"><span class="li">که توازن قوا یک‌طرفه است و طرف ضعیف تاب مقاومت ندارد.</span></span>
+<span class="line"><span class="li">اما در عمل، این پیش‌بینی‌ها گاه نادرست از آب درمی‌آیند.</span></span>
+</p>
+</div>
+</section>
+
+<!-- AUTHOR -->
+<section>
+<div class="wrap">
+<div class="author">
+<img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5wLzCdtNLuPm1xlOEHmy3wtu17Tj9ISPFtRN56oF3wiAL2zAeUDfYU4qqdbZa5ZVaqkia&s" alt="اسکات آتران">
+<div class="ai"><h3>اسکات آتران</h3><p>انسان‌شناس و عصب‌شناس دانشگاه میشیگان</p></div>
+</div>
+<h2><span class="line"><span class="li">معمای جنگ</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">اسکات آتران این شکاف میان برآوردهای مادی</span></span>
+<span class="line"><span class="li">و واقعیت میدان نبرد را بررسی کرده است.</span></span>
+</p>
+<div class="box"><p>
+<span class="line"><span class="li">طرف ضعیف‌تر گاهی از چنان اراده و عزمی برخوردار است</span></span>
+<span class="line"><span class="li">که در دشوارترین شرایط نیز از میدان خارج نمی‌شود.</span></span>
+</p></div>
+</div>
+</section>
+
+<!-- THERMOPYLAE -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">ترموپیل، ۴۸۰ پیش از میلاد</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">لئونیداس، پادشاه اسپارت، با گروهی کوچک</span></span>
+<span class="line"><span class="li">در برابر حملۀ عظیم ایرانیان ایستاد.</span></span>
+</p>
+<div class="quote">
+<span class="line"><span class="li">«ترجیح می‌دهم به جای فرمانروایی بر کل یونان،</span></span>
+<span class="line"><span class="li">جانم را فدای یونان کنم.»</span></span>
+<div class="qa">— لئونیداس</div>
+</div>
+<p>
+<span class="line"><span class="li">خشایارشاه نوشت: «تسلیم شوید.»</span></span>
+<span class="line"><span class="li">لئونیداس پاسخ داد: «بیایید و آن‌ها را بگیرید.»</span></span>
+</p>
+<div class="mini">
+<span class="ic">🏛️</span>
+<h3>چرا ترموپیل مهم است؟</h3>
+<p>لئونیداس می‌دانست شکست خواهد خورد، اما هدفش ایجاد اسطوره‌ای بود که یونان را متحد کند. ارادهٔ جنگیدن می‌تواند شکست را به پیروزی راهبردی تبدیل کند.</p>
+</div>
+</div>
+</section>
+
+<!-- PATTERN -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">الگویی در تاریخ</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">مؤثرترین رزمندگان، کنشگران فداکاری بودند</span></span>
+<span class="line"><span class="li">که با تعهد به ارزش‌های مقدس متحد شدند.</span></span>
+</p>
+<div class="grid2">
+<div class="mini"><span class="ic">🇷🇺</span><h3>ناپلئون و هیتلر</h3><p>حملۀ به روسیه نمونهٔ شکست برتری مادی در برابر ارادهٔ مدافعان است.</p></div>
+<div class="mini"><span class="ic">🇮🇶</span><h3>عراق و افغانستان</h3><p>تهاجم آمریکا با وجود برتری مطلق، به شکست راهبردی انجامید.</p></div>
+</div>
+<p>
+<span class="line"><span class="li">کسانی که برای آرمان خود فداکاری می‌کنند،</span></span>
+<span class="line"><span class="li">اغلب بر نیروهایی که بر انگیزه‌های مادی تکیه دارند غلبه کرده‌اند.</span></span>
+</p>
+</div>
+</section>
+
+<!-- MYTHS -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">افسانه‌ها زنده می‌مانند</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">حتی وقتی شکست می‌خورند، دلاوری کسانی که ارادهٔ جنگیدن دارند</span></span>
+<span class="line"><span class="li">تبدیل به افسانه می‌شود.</span></span>
+</p>
+<div class="grid2">
+<div class="mini"><span class="ic">🏔️</span><h3>مسادا</h3><p>یهودیان تحت فرمان العازار تا آخرین نفس جنگیدند.</p></div>
+<div class="mini"><span class="ic">🏭</span><h3>آزوف‌استال</h3><p>مدافعان ماریوپول به نماد مقاومت اوکراین تبدیل شدند.</p></div>
+</div>
+<div class="quote">
+<span class="line"><span class="li">«من مهمات می‌خواهم، نه راه فرار.»</span></span>
+<div class="qa">— ولودیمیر زلنسکی</div>
+</div>
+</div>
+</section>
+
+<!-- DATA -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">علم اراده</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">تیم آتران مطالعاتی روی سربازان افغانستان، عراق و اوکراین انجام داده است.</span></span>
+</p>
+<div class="term">
+<div class="tl"><span class="tp">$</span> <span class="to">assessment: Kyiv falls in 3 days</span></div>
+<div class="tl"><span class="tp">$</span> <span class="to">reality: resistance continues today</span></div>
+<div class="tl"><span class="tp">$</span> <span class="te">result: will to fight underestimated</span></div>
+</div>
+<div class="quote">
+<span class="line"><span class="li">«من ارادهٔ آن‌ها برای جنگیدن را دست‌کم گرفته بودم.»</span></span>
+<div class="qa">— ژنرال اسکات بریر</div>
+</div>
+</div>
+</section>
+
+<!-- AFGHANISTAN -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">درس افغانستان</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">بریتانیا دریافت که هر تلاش برای اشغال دائمی قبایل</span></span>
+<span class="line"><span class="li">صرفاً به اتحاد آن‌ها در برابر نیروی خارجی می‌انجامد.</span></span>
+</p>
+<span class="stat">۱۶,۰۰۰</span>
+<span class="slabel">سرباز بریتانیایی-هندی که در جنگ اول افغانستان نابود شدند</span>
+<div class="quote" style="margin-top:1.6rem">
+<span class="line"><span class="li">«انجام مکرر کاری واحد با انتظار نتیجه‌ای متفاوت.»</span></span>
+<div class="qa">— تعریف جنون سیاسی</div>
+</div>
+</div>
+</section>
+
+<!-- UKRAINE -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">اوکراین</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">نیرومندترین عامل آمادگی برای فداکاری،</span></span>
+<span class="line"><span class="li">میزان پیوند هویت شخصی با اوکراین است.</span></span>
+</p>
+<div class="grid2">
+<div class="mini"><span class="ic">💛</span><h3>پیوند هویتی</h3><p>احساس یکپارچگی با کشور و باور به اقتدار معنوی آن.</p></div>
+<div class="mini"><span class="ic">🇪🇺</span><h3>آزادی و دموکراسی</h3><p>قوی‌ترین شاخص برای پیش‌بینی آمادگی فداکاری.</p></div>
+</div>
+<div class="quote">
+<span class="line"><span class="li">«من هرگز مشابه ارادۀ جنگیدنِ اوکراینی‌ها را ندیده‌ام.»</span></span>
+<div class="qa">— داگلاس استون، سرتیپ بازنشستۀ آمریکایی</div>
+</div>
+</div>
+</section>
+
+<!-- LESSON -->
+<section>
+<div class="wrap">
+<h2><span class="line"><span class="li">درس نهایی</span></span></h2>
+<div class="div"></div>
+<p>
+<span class="line"><span class="li">اگر به عوامل غیرمادی توجه جدی نشود،</span></span>
+<span class="line"><span class="li">پیروزی در جنگ بسیار دشوار است.</span></span>
+</p>
+<div class="box"><p>
+<span class="line"><span class="li">چارلز داروین این فضایل را «بسیار ارجمند، یا حتی مقدس» نامید.</span></span>
+</p></div>
+</div>
+</section>
+
+<!-- FINAL -->
+<section>
+<div class="wrap">
+<div class="final">
+<span class="line"><span class="li">پیروزی در نبرد نهایتاً</span></span>
+<span class="line"><span class="li">به <span class="gold">ارادۀ جنگیدن</span> ربط دارد،</span></span>
+<span class="line"><span class="li">نه فناوری‌های پیشرفته.</span></span>
+</div>
+</div>
+</section>
+
+<footer>
+<p>برگرفته از مقالۀ اسکات آتران — دانشگاه میشیگان</p>
+<p style="margin-top:.4rem;font-size:.78rem;color:#666">ترجمۀ محمد مهدی‌پور | ترجمان</p>
+<p style="margin-top:.4rem;font-size:.78rem;color:#666">ساخت و طراحی: پوریا باقرزاده</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* اگر GSAP لود شد، انیمیشن‌ها را فعال کن */
+if(window.gsap && window.ScrollTrigger){
+  document.documentElement.classList.add('js-on');
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* progress bar */
+  gsap.to('#pbar',{width:'100%',ease:'none',scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:.3}});
+
+  /* خطوط متن: مبدأ و مقصد صریح‌اند تا متن در موقعیت پایین گیر نکند.
+     خطوط پایانی از این حلقه کنار گذاشته شده‌اند تا انیمیشن دوبل نشود. */
+  document.querySelectorAll('.li:not(.final .li)').forEach(el=>{
+    gsap.fromTo(el,
+      { yPercent: 110 },
+      {
+        yPercent: 0,
+        duration: .8,
+        ease: 'power3.out',
+        clearProps: 'transform',
+        scrollTrigger: {
+          trigger: el.closest('.line') || el,
+          start: 'top 92%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      }
+    );
+  });
+
+  /* کارت‌ها */
+  gsap.utils.toArray('.mini').forEach(c=>{
+    gsap.from(c,{opacity:0,y:30,duration:.7,ease:'power3.out',
+      scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}});
+  });
+
+  /* نقل‌قول‌ها */
+  gsap.utils.toArray('.quote').forEach(q=>{
+    gsap.from(q,{opacity:0,x:25,duration:.7,ease:'power3.out',
+      scrollTrigger:{trigger:q,start:'top 90%',toggleActions:'play none none none'}});
+  });
+
+  /* باکس‌ها */
+  gsap.utils.toArray('.box').forEach(b=>{
+    gsap.from(b,{opacity:0,x:-25,duration:.7,ease:'power3.out',
+      scrollTrigger:{trigger:b,start:'top 90%',toggleActions:'play none none none'}});
+  });
+
+  /* ترمینال */
+  gsap.from('.term',{opacity:0,y:25,duration:.7,ease:'power3.out',
+    scrollTrigger:{trigger:'.term',start:'top 90%'}});
+  gsap.from('.tl',{opacity:0,x:-15,duration:.5,stagger:.15,ease:'power3.out',
+    scrollTrigger:{trigger:'.term',start:'top 86%'}});
+
+  /* عدد */
+  gsap.from('.stat',{opacity:0,scale:.5,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:'.stat',start:'top 90%'}});
+
+  /* خطوط جداکننده */
+  gsap.utils.toArray('.div').forEach(d=>{
+    gsap.from(d,{scaleX:0,duration:.7,ease:'power3.out',
+      scrollTrigger:{trigger:d,start:'top 90%'}});
+  });
+
+  /* کارت نویسنده */
+  gsap.from('.author',{opacity:0,y:25,duration:.7,ease:'power3.out',
+    scrollTrigger:{trigger:'.author',start:'top 90%'}});
+
+  /* پیام پایانی */
+  gsap.fromTo('.final .li',
+    { yPercent: 110 },
+    {
+      yPercent: 0,
+      duration: .9,
+      stagger: .15,
+      ease: 'power3.out',
+      clearProps: 'transform',
+      scrollTrigger: {
+        trigger: '.final',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      }
+    }
+  );
+
+  /* پس‌زمینه هیرو */
+  gsap.to('#heroImg',{yPercent:18,ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('#hero .wrap',{yPercent:-30,opacity:0,ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+}
+</script>
+</body>
+</html>

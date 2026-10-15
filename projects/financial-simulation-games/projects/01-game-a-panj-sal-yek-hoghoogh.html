@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>پنج سال، یک حقوق</title>
+<script src="assets/howler.min.js"></script>
+<style>
+:root{--bg:#faf6ee;--card:#fff;--tx:#2b2620;--mu:#7a7165;--ac:#d98a2b;--bd:#e6dccb;--bb:#f1e9da;--bad:#b23a26;--good:#2b7a5b;--mid:#c27a12;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a16;--card:#2a251f;--tx:#f3ece0;--mu:#a89d8e;--bd:#3e362c;--bb:#38302a}}
+:root[data-theme="dark"]{--bg:#1d1a16;--card:#2a251f;--tx:#f3ece0;--mu:#a89d8e;--bd:#3e362c;--bb:#38302a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;line-height:1.9;transition:background .8s}
+#app{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin:14px 0}
+.big{font-size:64px;text-align:center;line-height:1.2;animation:pop .5s}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes blink{50%{opacity:.35}}
+h1{margin:6px 0;text-align:center}
+p{margin:8px 0}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{display:block;width:100%;padding:12px;border-radius:14px;border:0;background:var(--ac);color:#fff;font-weight:bold;margin-top:14px}
+.btn:disabled{opacity:.4}
+.btn.sec{background:transparent;border:1.5px solid var(--ac);color:var(--tx)}
+.ch{display:block;width:100%;text-align:right;padding:12px 14px;margin:8px 0;border-radius:14px;border:1.5px solid var(--bd);background:var(--card)}
+.ch:hover{border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hc{border:2px solid var(--bd);border-radius:16px;background:var(--card);padding:12px 8px;text-align:center}
+.hc.on{border-color:var(--ac)}
+.bb{display:flex;gap:10px;align-items:flex-start;margin:12px 0;animation:pop .4s}
+.bb>span{font-size:28px;line-height:1.4}
+.bb small{display:block;font-weight:bold;color:var(--mu);font-size:13px}
+.bb p{margin:0;background:var(--bb);border-radius:14px;padding:6px 12px 8px}
+.q{border-top:1px dashed var(--bd);margin-top:14px;padding-top:12px}
+.pr{color:var(--ac);font-weight:bold}
+.rx{border-right:4px solid var(--ac);padding:4px 12px;margin-top:12px;animation:pop .4s}
+.w{text-align:center;color:var(--mu)}
+.hint{text-align:center;color:var(--mu);animation:blink 1.6s infinite;margin-top:16px}
+.pg{height:8px;border-radius:4px;background:var(--bd);margin:6px 0 10px;overflow:hidden}.pg i{display:block;height:100%;background:var(--ac)}
+.row{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.row button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);font-size:20px}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.hero{background:#14283d;color:#fff;border-radius:20px;padding:18px 14px 8px;margin:12px 0;text-align:center}
+.hero .tag{display:inline-block;padding:2px 14px;border-radius:999px;font-weight:700;font-size:14px;background:var(--mid)}
+.hero.bad .tag{background:var(--bad)}.hero.good .tag{background:var(--good)}
+.hero .hb{font-size:72px;font-weight:800;line-height:1.1;color:#e0a21b}
+.hero p{color:#cfd8e0;margin:2px 0}
+svg{width:100%;height:auto;display:block}
+.bar{transform-box:fill-box;transform:scaleY(0);animation:grow .5s ease-out forwards}
+@keyframes grow{to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar{animation:none;transform:none}.hint{animation:none}}
+.shimg{width:100%;border-radius:14px;border:1px solid var(--bd)}
+textarea{width:100%;height:140px;font:inherit;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px}
+.ov{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx);animation:fi .4s}
+.ov.out{opacity:0;transition:opacity .4s}
+.ov h2{margin:8px 0 0}.ov p{color:var(--mu);margin:0}
+.em{position:relative;width:140px;height:140px;font-size:110px;text-align:center;line-height:140px}
+.em span{position:absolute;inset:0}
+.em .o{animation:fo 1s .5s forwards}
+.em .n{opacity:0;animation:ageup 1s 1.2s forwards}
+@keyframes fo{to{opacity:0;transform:scale(.3) rotate(-30deg)}}
+@keyframes ageup{0%{opacity:0;transform:scale(.3) rotate(30deg)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes fi{from{opacity:0}}
+</style>
+<script src="assets/ui.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+function fa(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
+function m1(n){return fa(Math.round(n*10)/10)}
+function wav(n,d){d=d||.15;var r=8000,o=[];n.forEach(function(f){var L=r*d;for(var i=0;i<L;i++)o.push(128+Math.round(60*Math.sin(2*Math.PI*f*i/r)*(1-i/L)))});
+var b=new Uint8Array(44+o.length),v=new DataView(b.buffer),s=function(p,t){for(var i=0;i<t.length;i++)b[p+i]=t.charCodeAt(i)};
+s(0,'RIFF');v.setUint32(4,36+o.length,true);s(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,r,true);v.setUint32(28,r,true);v.setUint16(32,1,true);v.setUint16(34,8,true);s(36,'data');v.setUint32(40,o.length,true);b.set(o,44);
+var t='';b.forEach(function(x){t+=String.fromCharCode(x)});return 'data:audio/wav;base64,'+btoa(t)}
+var DEF={click:[[660],.07],pop:[[500,600],.06],tick:[[300],.05],good:[[392,523,659],.16],bad:[[247,196],.2],storm:[[196,165,131],.25],win:[[523,659,784,1047],.18]};
+var SND={},muted=false;
+function play(k){if(muted||!window.Howl)return;try{if(!SND[k])SND[k]=new Howl({src:[wav(DEF[k][0],DEF[k][1])],format:['wav'],volume:.5});SND[k].play()}catch(e){}}
+
+var AX={cf:['💸','انضباط جریان نقدی'],rs:['🛟','تاب‌آوری']};
+var R='راوی',T='مینا (در دلت)',MD='مهدی‌یار';
+var ST=[{n:'سال‌های رشد',e:'🌱',age:'سال اول تا پنجم',c:['#fff1cc','#3b3017']},
+{n:'وقتی «کافی» نیست',e:'🏔️',age:'سال پنجم',c:['#e0f3df','#1b2f21']},
+{n:'روز تعدیل',e:'⛈️',age:'یک سه‌شنبه‌ی بد',c:['#dfe6ee','#1c2430']},
+{n:'بازسازی',e:'🌅',age:'سه ماه بعد',c:['#fde5d3','#35241a']},
+{n:'آینه',e:'🪞',age:'پایان قصه',c:['#f4efe0','#2a2820']}];
+var PR={choice:'حالا به این پرسش پاسخ بده:',timed:'⏱️ حالا سریع به این پرسش پاسخ بده (۱۵ ثانیه وقت داری):',slider:'حالا این اسلایدر را مشخص کن:',self:'حالا سه حدس درباره‌ی خودت را مشخص کن:',cards:'حالا برای هر مورد تصمیم بگیر:',alloc:'حالا سهم‌ها را تقسیم کن:',lab:'حالا شبیه‌سازی را اجرا کن:',whatif:'حالا هر سه تغییر را امتحان کن:',jump:'حالا بازه‌ی زمانی را انتخاب کن:'};
+
+var M=[
+{st:0,e:'🌱',dm:[],t:'self',d:[
+ ['📖',R,'مینا ۳۱ ساله است و پنج سال از اولین روز کارش در یک شرکت می‌گذرد. امشب دورهمی خانوادگی است و همه فکر می‌کنند او «آدم منظم و پولداری» شده.'],
+ ['🧑','سینا (پسرخاله)','«مینا، شنیدم حقوقت تقریباً دو برابر شده! حتماً کلی هم پس‌انداز کرده‌ای، نه؟»'],
+ ['👩‍🦳','مادر','«مینا همیشه حساب‌کتاب‌دار بوده. من نگران نیستم؛ اگر یک روز کارش هم قطع شود، چند ماه راحت می‌رسد.»'],
+ ['🧑‍🏫',MD,'«قبل از شروع قصه، سه حدس ساده درباره‌ی خودت بزن. آخر قصه با هم می‌سنجیم. قضاوتی در کار نیست.»']],
+ q:'سه حدس درباره‌ی خودت',k:'این حدس‌ها نگه داشته می‌شوند. هدف قضاوت نیست؛ آخر قصه می‌بینی فاصله‌ی تصورت با رفتار واقعی‌ات چقدر است.'},
+{st:0,e:'🎉',dm:['cf'],t:'choice',d:[
+ ['📖',R,'سال دوم. مینا ارتقا گرفته و حقوقش از ۳۰ به ۳۶ میلیون می‌رسد؛ شش میلیون اضافه در هر ماه.'],
+ ['👩‍🦰','سیما (همکار)','«ارتقا مبارک! یک شام بیرون که می‌ارزد؛ بالاخره زحمتش را کشیدی.»'],
+ ['🧑‍🏫',MD,'«شش میلیون اضافه یک تصمیم ساده می‌خواهد: هر ماه این پول کجا برود؟»'],
+ ['👩‍💼',T,'«نمی‌خواهم مثل مادرم همیشه نگران باشم، ولی نمی‌خواهم فقط حساب‌کتاب هم بکنم.»']],
+ q:'شش میلیونِ اضافه‌ی هر ماه کجا برود؟',o:[['همه‌اش را خرج ارتقای زندگی می‌کنم؛ حقم است.',{cf:0},.3],['یک‌سومش پس‌انداز، بقیه ارتقا.',{cf:1},.45],['نصفش پس‌انداز خودکار، نصف دیگر لذت.',{cf:3},.7],['همه‌اش پس‌انداز؛ هیچ لذتی.',{cf:2},.8]],
+ k:'پولِ تازه یا قبل از عادت‌شدن به خرج می‌رود پس‌انداز، یا در هزینه‌های ثابت حل می‌شود. اولین ماه بعد از ارتقا مهم‌ترین ماه است.'},
+{st:0,e:'📊',dm:['cf'],t:'cards',d:[
+ ['📖',R,'سال دوم تا پنجم. هر سال یک «ثابتِ تازه» به در می‌زند و هر کدام کوچک و منطقی به نظر می‌رسد.'],
+ ['🧑‍🏫',MD,'«هر کدام را جدا ببین؛ درست و غلط ندارد. فقط آخرش را نگاه کن.»']],
+ q:'هر پیشنهاد را قبول می‌کنی؟',c:[['خانه‌ی بزرگ‌تر با اجاره‌ی بیشتر',5],['ماشین بهتر با قسط ماهانه',6],['اشتراک‌ها، رستوران و دورهمی‌های بیشتر',4],['سفر و گوشی و لباسِ سطح بالاتر هر سال',5]],
+ k:'درآمد دو برابر شد، اما هر «ثابتِ تازه» پله‌ای بود که پایین نیامد. به این «سبک‌زندگیِ خزنده» (Lifestyle Creep) می‌گویند. مسئله درآمد نبود؛ نرخ پس‌انداز بود.'},
+{st:0,e:'🔎',dm:['cf'],t:'choice',d:[
+ ['🧑‍🏫',MD,'«نمودار را دیدی. حالا سؤال اصلی: پول مینا کجا رفت؟»'],
+ ['👩‍💼',T,'«درآمدم دو برابر شده ولی ته حساب همان است. یعنی من بد خرج کرده‌ام؟»']],
+ q:'ریشه‌ی مشکل چیست؟',o:[['درآمدم هنوز کم است.',{cf:0}],['خرج بزرگی نکردم؛ فقط ثابت‌ها پله‌پله بالا رفتند.',{cf:3}],['تورم همه‌چیز را خورد؛ کاری از من برنمی‌آمد.',{cf:1}]],
+ k:'جواب دوم دقیق‌تر است: ثابت‌ها (اجاره، قسط، اشتراک) بعد از پذیرفته‌شدن برنمی‌گردند. تورم واقعی است، ولی نرخ پس‌انداز را تصمیم‌ها عوض می‌کنند.'},
+{st:1,e:'🧑',dm:['cf'],t:'choice',d:[
+ ['📖',R,'سال پنجم. سینا، دوستِ دوران دانشگاه، بعد از مدت‌ها زنگ می‌زند. درآمد او سه برابر شده است.'],
+ ['🧑','سینا','«راستش را بگویم؟ درآمدم سه برابر شده ولی هنوز احساس می‌کنم کم است. هر ماه فکر می‌کنم با کمی بیشتر همه‌چیز درست می‌شود.»'],
+ ['🧑','سینا','«تو چطور؟ اگر پولت دو برابر شود، مطمئنی مشکلت حل می‌شود؟»']],
+ q:'جواب سینا را چه می‌دهی؟',o:[['بله؛ فقط کمی بیشتر لازم است.',{cf:0}],['نمی‌دانم؛ بیا اول بنویسیم «کافی» یعنی چه عددی.',{cf:3}],['پول بیشتر فقط مشکل را بزرگ‌تر می‌کند؛ ولش کن.',{cf:1}]],
+ k:'وقتی «کافی» عدد ندارد، هر پله‌ی تازه بعد از مدتی عادی می‌شود (سازگاری لذتی) و خط پایان جلوتر می‌رود.'},
+{st:1,e:'🎯',dm:['cf'],t:'slider',d:function(){var c=ctx();return [['🧑‍🏫',MD,'«سینا یک سؤال ساده پرسید که کمتر کسی جواب می‌دهد: چقدر برای تو کافی است؟»'],['📖',R,'درآمد فعلی مینا ماهی '+fa(Math.round(c.I))+' میلیون و هزینه‌هایش ماهی '+fa(Math.round(c.E))+' میلیون است.']]},
+ q:'ماهانه چند میلیون برایت «کافی» است؟',
+ k:'عدد «کافی» را یک بار بنویس و هر سال بازنگری کن. عددی که روی کاغذ نیست، با هر ارتقا جابه‌جا می‌شود.'},
+{st:1,e:'🚗',dm:['cf'],t:'timed',def:0,d:[
+ ['🏪','فروشنده‌ی ماشین','«خانم مینا، ماشین بهتر با ۳۰٪ تخفیف و اقساط راحت؛ فقط تا امشب.»'],
+ ['👩‍🦰','سیما','«بگیر! همه‌ی همکارها در این سطح ماشین دارند.»'],
+ ['📖',R,'ساعت ۶ عصر است و فروشنده منتظر جواب.']],
+ q:'چه می‌کنی؟',o:[['همین حالا قرارداد را امضا می‌کنم.',{cf:0}],['می‌گویم ۲۴ ساعت فکر می‌کنم.',{cf:3}],['نه؛ ماشین فعلی را نگه می‌دارم.',{cf:2}]],
+ k:'فشار زمانِ فروش، تصمیم را از برنامه جدا می‌کند. قانون ۲۴ ساعت یعنی خرید بزرگ همان روز امضا نمی‌شود.'},
+{st:1,e:'📝',dm:['cf'],t:'choice',d:[
+ ['🧑‍🏫',MD,'«هر بار که درآمد بالا می‌رود، یک قانون ساده می‌تواند ثابت‌ها را کنترل کند.»'],
+ ['👩‍💼',T,'«اگر قبل از رسیدن ارتقای بعدی، قاعده‌ای از خودم بنویسم...»'],
+ ['📖',R,'فردا صبح، ایمیلی از منابع انسانی در صندوق مینا نشسته است.']],
+ q:'قانون ارتقای مینا چه باشد؟',o:[['از هر ارتقا فقط نصفش به خرج ثابت برود.',{cf:3}],['فقط وقتی ذخیره‌ی ۳ ماهه‌ام کامل شد.',{cf:2}],['قانونی نمی‌نویسم؛ ببینیم چه می‌شود.',{cf:0}]],
+ k:'قانون ارتقا یعنی تصمیم را قبل از رسیدن پول می‌گیری، وقتی هیجان کم است.'},
+{st:2,e:'📩',dm:['rs'],t:'choice',snd:'storm',d:function(){var c=ctx();return [
+ ['📖',R,'صبح یک سه‌شنبه. ایمیل: «جلسه‌ی فوری، ساعت ۱۰». مینا بوی خبر بد را حس می‌کند.'],
+ ['🧑‍💼','آقای رضایی (منابع انسانی)','«متأسفانه شرکت ناچار به تعدیل نیرو شده. همکاری شما از پایان همین ماه تمام می‌شود.»'],
+ ['👩‍💼',T,'«ماهی '+fa(Math.round(c.I))+' میلیون... و ماه بعد صفر.»'],
+ ['🧑‍🏫',MD,'«نفس بکش. رفتار ۲۴ ساعت اول، مسیر بعدی را می‌سازد.»']]},
+ q:'اولین واکنش مینا چیست؟',o:[['دو هفته به حساب‌ها نگاه نمی‌کنم.',{rs:0}],['به همه خبر می‌دهم تا کمک کنند.',{rs:1}],['همین الان حساب می‌کنم چند ماه می‌رسد.',{rs:3}]],
+ k:'اولین واکنش به شوک درآمدی معمولاً از جنس هیجان است. کسی که زود شمارش می‌کند، دقیقاً می‌داند چقدر زمان دارد.'},
+{st:2,e:'🧮',dm:['rs'],t:'lab',d:function(){var c=ctx();return [
+ ['🧑‍🏫',MD,'«بیا با اعداد خودِ مینا حساب کنیم، نه با حدس.»'],
+ ['📖',R,'هزینه‌ی ماهانه‌ی مینا '+fa(Math.round(c.E))+' میلیون و پس‌انداز نقدش حدود '+fa(Math.round(c.S0))+' میلیون است. این اعداد از تصمیم‌هایی آمده‌اند که تا اینجا گرفتی.'],
+ ['⚙️','فرض‌های آموزشی','درآمد از ماه اول صفر است، تورم سالانه ۴۰٪ فرض شده و یک خرج ناگهانی در ماه سوم می‌رسد. این توصیه‌ی مالی نیست.']]},
+ q:'پول مینا چند ماه می‌رسد؟',k:'ماه‌های دوام = پس‌انداز نقد ÷ هزینه‌ی ماهانه‌ای که با تورم بالا می‌رود. هر خرج ناگهانی هم از این زمان کم می‌کند.'},
+{st:2,e:'☎️',dm:['rs'],t:'choice',d:[
+ ['👩','ندا (خواهر)','«مینا، صدایت گرفته است. چیزی شده؟»'],
+ ['👩‍💼',T,'«اگر بگویم نگران می‌شوند؛ اگر نگویم تنها می‌مانم.»'],
+ ['👩‍🦳','مادر','«هر چه هست، با هم حلش می‌کنیم.»']],
+ q:'مینا چه می‌کند؟',o:[['پنهان می‌کنم تا خودم حلش کنم.',{rs:0}],['فقط به یک نفر می‌گویم.',{rs:1}],['شفاف می‌گویم و با هم یک برنامه‌ی ۳ ماهه می‌چینیم.',{rs:3}]],
+ k:'تاب‌آوری فقط پول نیست؛ شبکه‌ی حمایت، اطلاعات و برنامه هم ماه‌های دوام را بیشتر می‌کنند.'},
+{st:2,e:'🔁',dm:[],t:'whatif',d:[
+ ['🧑‍🏫',MD,'«حالا شگفت‌انگیزترین بخش: همان سال را با تغییرهایی که می‌توانستی از قبل بدهی، دوباره ببین.»']],
+ q:'هر سه تغییر را امتحان کن.',k:'صندوق اضطراری، درآمد جانبی و کاهش هزینه هر کدام زمان می‌خرند؛ ولی صندوق از قبل بزرگ‌ترین اثر را دارد، چون وقتی بحران رسیده، ساختنش سخت است.'},
+{st:3,e:'💼',dm:['cf'],t:'timed',def:0,d:[
+ ['📖',R,'سه ماه بعد. مینا کار تازه‌ای با حقوق ۴۵ میلیون پیدا کرده است. اولین حقوق امروز واریز شده.'],
+ ['👩‍🦰','سیما','«بیا امشب جشن بگیریم! تازه کار پیدا کردی.»'],
+ ['🧑‍🏫',MD,'«هر ماه همین لحظه، تصمیم است: اول خرج یا اول پس‌انداز؟»']],
+ q:'روز حقوق، پول اول به کجا می‌رود؟',o:[['اول خرج؛ هرچه ماند پس‌انداز.',{cf:0}],['اول پس‌انداز، به‌صورت دستی.',{cf:2}],['انتقال خودکار در همان روز حقوق.',{cf:3}]],
+ k:'پس‌اندازی که به اراده وابسته باشد، آخر ماه معمولاً چیزی از آن نمی‌ماند. «اول پس‌انداز» خودکار، تصمیم را از آن لحظه برمی‌دارد.'},
+{st:3,e:'🧩',dm:['cf'],t:'alloc',d:[
+ ['🧑‍🏫',MD,'«سیستمی بساز که به اراده وابسته نباشد. حقوق ۴۵ میلیونی را ده سهمِ ۴٫۵ میلیونی ببین.»'],
+ ['👩‍💼',T,'«این بار می‌خواهم هم امنیت داشته باشم، هم زندگی.»']],
+ q:'ده سهم را بین چهار پاکت تقسیم کن.',it:[['💸 پس‌انداز و صندوق خودکار'],['🏠 هزینه‌های ثابت'],['🛒 خرج روزمره'],['🎈 لذت و جشن']],
+ sc:function(a){var s=a[0],c=(s>=2&&s<=4)?3:((s==1||s==5)?2:(s==0?0:1));if(a[3]==0)c=Math.max(c-1,0);return {cf:c}},
+ k:'سیستم خوب هم پس‌انداز دارد هم لذت؛ سیستمی که هیچ لذتی نداشته باشد معمولاً بعد از چند ماه رها می‌شود.'},
+{st:3,e:'⏳',dm:[],t:'jump',d:[
+ ['🧑‍🏫',MD,'«ببین اگر این سیستم را راه بیندازی چه می‌شود. مقایسه با ماهی که فقط «هر چه ماند، پس‌انداز» را می‌گذاشتی.»'],
+ ['📝',R,'این یک سناریو است، نه پیش‌گویی.']],
+ q:'کدام بازه را می‌خواهی ببینی؟',k:'تفاوت دو مسیر در ماه اول دیده نمی‌شود؛ مثل سود مرکب، اثرش در سال‌ها خودش را نشان می‌دهد.'}
+];
+
+var S,X,I,G,CI,AL,TM,TO,RN=0,CUR=-1,CHATON=false,WI,JT,EV=[],app=document.getElementById('app');
+function ev(t,v){EV.push({event_type:t,lesson_id:'game-a',scene_index:I,timestamp:Date.now(),value:v})}
+function ap(d,dm){for(var k in d)S[k]+=d[k];for(var j=0;j<dm.length;j++)X[dm[j]]+=3}
+function pc(k){return X[k]?Math.round(S[k]/X[k]*100):0}
+var CAmt=[5,6,4,5];
+function ctx(){var inc=[],exp=[],sv=[],tot=0;
+ for(var i=0;i<5;i++){var a=0;for(var j=0;j<4;j++)if(G.CA[j]&&j+1<=i)a+=CAmt[j];
+  var ic=30*Math.pow(1.2,i),ex=22*Math.pow(1.12,i)+a;inc.push(ic);exp.push(ex);sv.push(ic-ex);tot+=Math.max(ic-ex,0)*12}
+ return {inc:inc,exp:exp,sv:sv,S0:tot*G.keep,E:exp[4],I:inc[4]}}
+function run(S0,E,o){o=o||{};var mi=Math.pow(1.4,1/12)-1,bal=S0,h=[],fail=0;
+ for(var m=1;m<=12;m++){var p=Math.pow(1+mi,m),ex=E*(o.cut?1-o.cut:1)*p,sh=(m==3)?.8*E*p:0,inc=(o.side&&m>=2)?o.side:0;bal+=inc-ex-sh;h.push({m:m,bal:bal,sh:m==3});if(bal<0){fail=m;break}}
+ return {h:h,fail:fail,months:fail?fail-1:12,S0:S0}}
+function lifeChart(c){var W=360,H=200,top=26,bot=22,hh=H-top-bot,mx=Math.max.apply(null,c.inc),y=function(a){return top+(mx-a)/mx*hh},b=top+hh;
+ var s='<svg viewBox="0 0 360 200" role="img" aria-label="درآمد و هزینه در پنج سال">';
+ for(var i=0;i<5;i++){var gx=W-34-i*68,iy=y(c.inc[i]),ey=y(c.exp[i]),rate=Math.round(c.sv[i]/c.inc[i]*100);
+  s+='<rect class="bar" style="animation-delay:'+i*90+'ms;transform-origin:50% 100%" x="'+(gx-26)+'" y="'+iy+'" width="24" height="'+(b-iy)+'" rx="3" fill="#4fb58a"/><rect class="bar" style="animation-delay:'+(i*90+60)+'ms;transform-origin:50% 100%" x="'+(gx+2)+'" y="'+ey+'" width="24" height="'+(b-ey)+'" rx="3" fill="#e0624a"/><text x="'+gx+'" y="16" text-anchor="middle" font-size="12" fill="currentColor">'+fa(rate)+'٪</text><text x="'+gx+'" y="'+(H-6)+'" text-anchor="middle" font-size="11" fill="currentColor">سال '+fa(i+1)+'</text>'}
+ return s+'</svg><p class="w" style="font-size:13px;margin:0">سبز: درآمد · قرمز: هزینه · عدد بالای هر سال: نرخ پس‌انداز</p>'}
+function runChart(o){var W=360,H=190,top=24,bot=22,hh=H-top-bot,n=12,bw=20,gap=(W-n*bw)/(n+1),v=o.h.map(function(x){return x.bal}),mx=Math.max(o.S0,1),mn=Math.min.apply(null,[0].concat(v)),rg=mx-mn,y=function(a){return top+(mx-a)/rg*hh},y0=y(0);
+ var s='<svg viewBox="0 0 360 190" role="img" aria-label="موجودی هر ماه"><line x1="0" x2="360" y1="'+y0+'" y2="'+y0+'" stroke="#6f8296"/>';
+ for(var i=0;i<n;i++){var x=W-gap-(i+1)*bw-i*gap,d=o.h[i];
+  if(d){var yy=y(d.bal),up=d.bal>=0,yt=Math.min(yy,y0),hh2=Math.max(Math.abs(yy-y0),2);
+   s+='<rect class="bar" style="animation-delay:'+i*70+'ms;transform-origin:50% '+(up?'100%':'0%')+'" x="'+x+'" y="'+yt+'" width="'+bw+'" height="'+hh2+'" rx="3" fill="'+(up?'#4fb58a':'#e0624a')+'"/>';
+   if(d.sh)s+='<text x="'+(x+bw/2)+'" y="16" text-anchor="middle" font-size="15">🔧</text>'}
+  else s+='<rect x="'+x+'" y="'+(y0-2)+'" width="'+bw+'" height="4" rx="2" fill="#3b516a"/>';
+  s+='<text x="'+(x+bw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="#9fb0c0">'+fa(i+1)+'</text>'}
+ return s+'</svg>'}
+function hero(o,lab){var m=o.months,kind=m>=6?'good':m>=3?'mid':'bad',tag=m>=6?'امن':m>=3?'لنگان':'زنگ خطر';
+ return '<div class="hero '+kind+'"><span class="tag">'+tag+'</span><div class="hb">'+(o.fail?'ماه '+fa(m):'+۱۲ ماه')+'</div><p>'+(lab||(o.fail?'پولِ مینا بعد از '+fa(m)+' ماه تمام شد':'مینا تا ۱۲ ماه دوام آورد'))+'</p>'+runChart(o)+'<p style="font-size:13px;color:#9fb0c0">موجودی هر ماه · 🔧 خرج ناگهانی</p></div>'}
+
+function dark(){var t=document.documentElement.getAttribute('data-theme');return t?t=='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function paint(s){if(s<0)document.documentElement.style.removeProperty('--bg');else document.documentElement.style.setProperty('--bg',ST[s].c[dark()?1:0])}
+function hdr(){var n=Math.min(I+1,16);return '<div class="top"><span>💸 پنج سال، یک حقوق</span><span>'+fa(n)+' از ۱۶</span><button onclick="muteT(this)" style="background:none;border:0">'+(muted?'🔇':'🔊')+'</button></div><div class="pg"><i style="width:'+(n*100/16)+'%"></i></div>'}
+function muteT(b){muted=!muted;b.textContent=muted?'🔇':'🔊'}
+function hub(){CUR=-1;CHATON=false;paint(-1);
+ app.innerHTML='<div class="card"><div class="big">💸</div><h1>پنج سال، یک حقوق</h1><p>قسمت اول «تا کی دوام می‌آوری؟». مینا ۳۱ ساله است و درآمدش در پنج سال دو برابر شده. در چهار فصل می‌فهمی پولش کجا رفت، «کافی» یعنی چه، اگر درآمدش قطع شود چند ماه دوام می‌آورد، و چطور سیستمی بسازد که به اراده وابسته نباشد.</p><div class="grid"><div class="hc"><div style="font-size:34px">👩‍💼</div><b>مینا</b><small>کارمند، ۳۱ ساله</small></div><div class="hc"><div style="font-size:34px">🧑‍🏫</div><b>مهدی‌یار</b><small>راهنمای تو</small></div></div><p class="w">حدود ۱۲ تا ۱۵ دقیقه · شبیه‌سازی آموزشی است و توصیه‌ی مالی نیست.</p><button class="btn" onclick="go()">شروع قصه ←</button></div>'}
+function go(){I=0;S={cf:0,rs:0};X={cf:0,rs:0};G={keep:.5,CA:[0,0,0,0],s1:5,s2:4,s3:3,lab:0};CUR=-1;EV=[];r(0)}
+function age(s,cb){var o=document.createElement('div');o.className='ov';o.style.background=ST[s].c[dark()?1:0];
+ o.innerHTML='<div class="em"><span class="o">'+(CUR<0?'✨':ST[CUR].e)+'</span><span class="n">'+ST[s].e+'</span></div><h2>'+(CUR<0?'':'ادامه‌ی قصه... ')+ST[s].n+'</h2><p>'+ST[s].age+'</p>';
+ document.body.appendChild(o);paint(s);play(s==2?'storm':'good');CHATON=false;var d=false;
+ function end(){if(d)return;d=true;o.classList.add('out');setTimeout(function(){o.remove();cb()},400)}
+ o.onclick=end;setTimeout(end,3000)}
+function getD(m){return typeof m.d=='function'?m.d():m.d.slice()}
+function bub(l){return '<div class="bb"><span>'+l[0]+'</span><div><small>'+l[1]+'</small><p>'+l[2]+'</p></div></div>'}
+function head(m){var s=ST[m.st];return '<div class="top"><span>'+s.e+' '+s.n+' · '+s.age+'</span><span>ماژول '+fa(I+1)+' از ۱۶</span></div>'}
+function r(n){clearInterval(TM);var m=M[I];
+ if(n==0&&m.st!==CUR){var s=m.st;CHATON=false;age(s,function(){CUR=s;r2(0)});return}
+ r2(n)}
+function r2(n){RN=n;clearInterval(TM);var m=M[I],D=getD(m),inter=n>=D.length;CHATON=!inter;play(m.snd&&n==0?m.snd:'pop');
+ var h=hdr()+'<div class="card">'+head(m)+(n==0?'<div class="big">'+m.e+'</div>':'')+D.slice(0,Math.min(n+1,D.length)).map(bub).join('');
+ if(inter)h+='<div class="q"><p class="pr">👉 '+PR[m.t]+'</p><p><b>'+m.q+'</b></p><div id="ui">'+ui(m)+'</div></div>';
+ else h+='<p class="hint">👆 برای ادامه‌ی گفتگو روی صفحه بزن</p>';
+ app.innerHTML=h+'</div>';if(inter&&m.t=='timed')timer(m);
+ setTimeout(function(){window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})},60)}
+document.addEventListener('click',function(e){if(!CHATON||e.target.closest('button'))return;r2(RN+1)});
+document.addEventListener('keydown',function(e){if(CHATON&&(e.key==' '||e.key=='Enter')){e.preventDefault();r2(RN+1)}});
+function slr(id,mn,mx,v,lab,sfx){sfx=sfx||'';return '<div class="row"><b>'+lab+'</b><span id="'+id+'v">'+fa(v)+sfx+'</span></div><input id="'+id+'" type="range" min="'+mn+'" max="'+mx+'" value="'+v+'" oninput="document.getElementById(\''+id+'v\').textContent=fa(this.value)+\''+sfx+'\'">'}
+function opts(m){return m.o.map(function(o,j){return '<button class="ch" onclick="pk('+j+')">'+o[0]+'</button>'}).join('')}
+function ui(m){
+ if(m.t=='choice')return opts(m);
+ if(m.t=='timed')return '<div class="pg"><i id="tb" style="width:100%"></i></div><p class="w" id="tc">'+fa(15)+' ثانیه</p>'+opts(m);
+ if(m.t=='self')return slr('s1',1,10,5,'من چقدر پس‌اندازگرم؟ (۱ تا ۱۰)')+slr('s2',0,12,4,'اگر فردا درآمدم قطع شود، چند ماه دوام می‌آورم؟',' ماه')+slr('s3',1,5,3,'هرچه درآمدم بیشتر شود، پس‌اندازم هم بیشتر می‌شود. (۱ مخالف … ۵ موافق)')+'<button class="btn" onclick="ss()">ثبت حدس‌ها</button>';
+ if(m.t=='slider'){var c=ctx();return slr('sl',30,150,Math.round(c.E*1.3),'عدد «کافی» تو',' میلیون')+'<button class="btn" onclick="sv()">ثبت</button>'}
+ if(m.t=='cards'){CI=0;return cardUI()}
+ if(m.t=='alloc'){AL=[0,0,0,0];return allocUI()}
+ if(m.t=='lab')return '<button class="btn" onclick="lab()">▶ اجرای شبیه‌سازی ماه‌به‌ماه</button>';
+ if(m.t=='whatif'){WI={};return wiUI()}
+ if(m.t=='jump'){JT=-1;return jumpUI()}}
+function timer(m){TO=0;var t0=Date.now(),L=15000;TM=setInterval(function(){var left=L-(Date.now()-t0),b=document.getElementById('tb'),c=document.getElementById('tc');if(b)b.style.width=Math.max(left/L,0)*100+'%';if(c)c.textContent=fa(Math.max(Math.ceil(left/1000),0))+' ثانیه';if(left<=0){clearInterval(TM);TO=1;pk(m.def)}},100)}
+function pk(j){clearInterval(TM);var m=M[I],o=m.o[j];ap(o[1],m.dm);if(o[2]!==undefined)G.keep=o[2];ev('choice_made',{m:I,j:j,to:TO});fin(o[0])}
+function ss(){G.s1=+document.getElementById('s1').value;G.s2=+document.getElementById('s2').value;G.s3=+document.getElementById('s3').value;ev('guess_submitted',{self:G.s1,months:G.s2,belief:G.s3});fin('پس‌اندازگری '+fa(G.s1)+' از ۱۰ · دوام '+fa(G.s2)+' ماه · باور '+fa(G.s3)+' از ۵')}
+function sv(){var m=M[I],v=+document.getElementById('sl').value,c=ctx(),E=c.E,d=v<=E*1.15?3:v<=E*1.4?2:v<=E*1.8?1:0;ap({cf:d},m.dm);ev('choice_made',{m:I,v:v});fin(fa(v)+' میلیون در ماه',lifeNote(v,c))}
+function lifeNote(v,c){return '<p>هزینه‌ی فعلی مینا '+fa(Math.round(c.E))+' میلیون است. «کافیِ» تو '+fa(Math.round(v/c.E*100))+'٪ آن است'+(v>c.E*1.4?'؛ یعنی خط پایان از همین حالا جلوتر از وضعیت فعلی است.':'؛ یعنی هنوز نزدیک به زندگی فعلی‌ات است.')+'</p>'}
+function cardUI(){var c=M[I].c[CI];return '<p class="w" style="font-size:18px">«'+c[0]+'»</p><p class="w">+'+fa(c[1])+' میلیون خرج ثابت در ماه</p><div class="grid"><button class="hc" onclick="cd(1)">👍 قبول می‌کنم</button><button class="hc" onclick="cd(0)">👎 فعلاً نه</button></div><p class="w">'+fa(CI+1)+' از ۴</p>'}
+function cd(y){G.CA[CI]=y;X.cf+=3;if(!y)S.cf+=3;CI++;play('tick');if(CI>=M[I].c.length){var c=ctx();ev('choice_made',{m:I,CA:G.CA});fin('پنج سال گذشت.','<div class="card" style="margin:10px 0">'+lifeChart(c)+'<p>نرخ پس‌انداز: سال اول '+fa(Math.round(c.sv[0]/c.inc[0]*100))+'٪ ← سال پنجم '+fa(Math.round(c.sv[4]/c.inc[4]*100))+'٪</p></div>')}else document.getElementById('ui').innerHTML=cardUI()}
+function allocUI(){var m=M[I],t=AL.reduce(function(a,b){return a+b},0);return m.it.map(function(x,j){return '<div class="row"><span>'+x[0]+'</span><span><button onclick="al('+j+',-1)">−</button> <b>'+fa(AL[j])+'</b> <button onclick="al('+j+',1)">+</button></span></div>'}).join('')+'<p class="w">باقی‌مانده: '+fa(10-t)+' سهم</p><button class="btn" '+(t==10?'':'disabled')+' onclick="ad()">ثبت تقسیم</button>'}
+function al(j,d){var t=AL.reduce(function(a,b){return a+b},0);if(AL[j]+d<0||t+d>10)return;AL[j]+=d;play('tick');document.getElementById('ui').innerHTML=allocUI()}
+function ad(){var m=M[I];ap(m.sc(AL),m.dm);G.AL=AL.slice();ev('choice_made',{m:I,AL:AL});fin('پس‌انداز '+fa(AL[0])+' · ثابت '+fa(AL[1])+' · روزمره '+fa(AL[2])+' · لذت '+fa(AL[3]))}
+function lab(){var c=ctx(),o=run(c.S0,c.E);G.lab=o.months;G.c0=c;var d=o.months>=6?3:o.months>=4?2:o.months>=2?1:0;ap({rs:d},M[I].dm);play(o.months>=3?'good':'bad');ev('choice_made',{m:I,months:o.months});
+ var gap=G.s2-o.months;
+ fin(o.fail?'پول مینا '+fa(o.months)+' ماه دوام آورد.':'مینا بیش از ۱۲ ماه دوام آورد.',hero(o)+'<p>در ابتدای قصه حدس زدی <b>'+fa(G.s2)+' ماه</b>؛ شبیه‌سازی می‌گوید <b>'+(o.fail?fa(o.months):'بیش از ۱۲')+' ماه</b>.'+(gap>=2?' فکر می‌کردی بیشتر دوام می‌آوری؛ این طبیعی است، چون خرج ناگهانی و تورم در حدس‌ها معمولاً دیده نمی‌شوند.':gap<=-2?' دوامت بیشتر از تصورت بود.':' حدست نزدیک بود.')+'</p>')}
+function wiUI(){var c=G.c0||ctx(),b=run(c.S0,c.E),it=[['fund','🏦 اگر صندوق ۳ ماه هزینه داشتی',function(){return run(Math.max(c.S0,3*c.E),c.E)}],['side','💼 اگر از ماه دوم ماهی ۱۵ میلیون درآمد جانبی داشتی',function(){return run(c.S0,c.E,{side:15})}],['cut','✂️ اگر ۲۰٪ هزینه‌ها را کم می‌کردی',function(){return run(c.S0,c.E,{cut:.2})}]];
+ var h='<p class="w">وضع فعلی: <b>'+(b.fail?fa(b.months)+' ماه':'بیش از ۱۲ ماه')+'</b></p>';
+ it.forEach(function(x,j){var done=WI[x[0]];h+='<button class="ch" onclick="wi(\''+x[0]+'\','+j+')">'+(done?'✔ ':'')+x[1]+(done?' ← <b>'+(done.fail?fa(done.months)+' ماه':'بیش از ۱۲ ماه')+'</b>':'')+'</button>'});
+ if(Object.keys(WI).length==3)h+='<div class="rx">💡 '+M[I].k+'</div><button class="btn" onclick="nx()">ادامه ←</button>';
+ wiUI.it=it;return h}
+function wi(k,j){var o=wiUI.it[j][2]();WI[k]=o;play('good');ev('choice_made',{m:I,whatif:k,months:o.months});document.getElementById('ui').innerHTML=wiUI()}
+function jumpUI(){var H=[['۶ ماه بعد',6],['۲ سال بعد',24],['۵ سال بعد',60]],u=4.5,s1=AL?0:0;var a=G.AL||[3,3,3,1],sv1=a[0]*u,sv2=2.25,ess=Math.max((a[1]+a[2])*u,1);
+ var h='<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+H.map(function(t,j){return '<button class="hc'+(j==JT?' on':'')+'" onclick="jt('+j+')">'+t[0]+'</button>'}).join('')+'</div>';
+ if(JT>=0){var mm=H[JT][1],A=sv1*mm,B=sv2*mm;h+='<div class="card" style="border-color:#3a9d5d"><b>⚖️ با سیستم خودکار تو</b><p>پس‌انداز: '+m1(A)+' میلیون = '+m1(A/ess)+' ماه هزینه‌ی ضروری</p></div><div class="card" style="border-color:#d0583a"><b>🔥 اگر «هرچه ماند، پس‌انداز»</b><p>پس‌انداز: '+m1(B)+' میلیون = '+m1(B/ess)+' ماه هزینه‌ی ضروری</p></div>'}
+ else h+='<p class="w">یک بازه را انتخاب کن. (بدون احتساب سود و تورم؛ فقط ساده‌ترین حساب)</p>';
+ if(G.jv&&G.jv.length==3)h+='<div class="rx">💡 '+M[I].k+'</div><button class="btn" onclick="nx()">🪞 دیدن آینه</button>';return h}
+function jt(j){JT=j;G.jv=G.jv||[];if(G.jv.indexOf(j)<0)G.jv.push(j);play('pop');document.getElementById('ui').innerHTML=jumpUI()}
+function fin(t,ex){clearInterval(TM);var m=M[I];play('click');CHATON=false;
+ app.innerHTML=hdr()+'<div class="card">'+head(m)+'<p><b>'+m.q+'</b></p>'+(TO?'<p class="w">⏱️ وقت تمام شد؛ ذهن به عادتش برگشت و این هم یک انتخاب بود.</p>':'')+'<p>✔ '+t+'</p>'+(ex||'')+'<div class="rx">💡 '+m.k+'</div><button class="btn" onclick="nx()">ادامه ←</button></div>';TO=0}
+function nx(){I++;if(I>=15)age(4,function(){CUR=4;pre()});else r(0)}
+function pre(){I=15;CHATON=false;G.jv=null;
+ app.innerHTML=hdr()+'<div class="card"><div class="big">🪞</div><h1>یک سؤال آخر</h1><p class="w">قبل از دیدن آینه:</p>'+slr('b2',1,5,3,'هرچه درآمدم بیشتر شود، پس‌اندازم هم بیشتر می‌شود. (۱ مخالف … ۵ موافق)')+'<button class="btn" onclick="mirror()">نمایش آینه ←</button></div>'}
+function cmp(lab,sp,bp,su,bu,txt){return '<div class="card"><b>'+lab+'</b><div class="row"><span>تصور تو</span><b>'+su+'</b></div><div class="pg"><i style="width:'+sp+'%;background:#8fa2b5"></i></div><div class="row"><span>رفتار تو</span><b>'+bu+'</b></div><div class="pg"><i style="width:'+bp+'%"></i></div><p>'+txt+'</p></div>'}
+function gapTxt(d,t){return d>=t?'🔦 <b>نقطه‌ی کور:</b> خودت را بهتر از رفتارت می‌بینی. این شرم‌آور نیست؛ بیشتر خرج‌های ریز دیده نمی‌شوند.':d<=-t?'💪 <b>قدرت پنهان:</b> رفتارت بهتر از تصورت است. به خودت اعتماد بیشتری بده.':'🎯 تصورت و رفتارت نزدیک‌اند؛ خودت را خوب می‌شناسی.'}
+function share(){var t='💸 پنج سال، یک حقوق\nپس‌اندازگری: تصور '+fa(G.s1*10)+'٪ ← رفتار '+fa(pc('cf'))+'٪\nدوام در بحران: تصور '+fa(G.s2)+' ماه ← شبیه‌سازی '+(G.lab>=12?'+۱۲':fa(G.lab))+' ماه'+(G.cm?'\nتعهدم: '+G.cm:'')+'\nتو چند ماه دوام می‌آوری؟';return t}
+function cardImg(){try{var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d'),F='Tahoma,sans-serif';x.fillStyle='#14283d';x.fillRect(0,0,1080,1350);x.direction='rtl';x.textAlign='center';
+ x.fillStyle='#e0a21b';x.font='bold 60px '+F;x.fillText('پنج سال، یک حقوق',540,140);x.font='160px sans-serif';x.fillText('💸',540,330);
+ x.fillStyle='#cfd8e0';x.font='46px '+F;x.fillText('تصور من از دوامم',540,450);x.fillStyle='#8fa2b5';x.font='bold 120px '+F;x.fillText(fa(G.s2)+' ماه',540,580);
+ x.fillStyle='#cfd8e0';x.font='46px '+F;x.fillText('شبیه‌سازی می‌گوید',540,700);x.fillStyle='#e0a21b';x.font='bold 170px '+F;x.fillText((G.lab>=12?'+۱۲':fa(G.lab))+' ماه',540,870);
+ x.fillStyle='#cfd8e0';x.font='44px '+F;x.fillText('پس‌اندازگری: تصور '+fa(G.s1*10)+'٪ ← رفتار '+fa(pc('cf'))+'٪',540,1000);
+ x.fillStyle='#fff';x.font='bold 48px '+F;x.fillText('تو چند ماه دوام می‌آوری؟',540,1180);x.fillStyle='#8fa2b5';x.font='30px '+F;x.fillText('شبیه‌سازی آموزشی؛ توصیه‌ی مالی نیست',540,1290);
+ return c.toDataURL('image/png')}catch(e){return ''}}
+function cp(){var t=share(),fb=function(){document.getElementById('cpa').innerHTML='<textarea id="cpt" readonly></textarea>';var a=document.getElementById('cpt');a.value=t;a.select();document.getElementById('cpm').textContent='متن را انتخاب کن و کپی کن.'};
+ try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){document.getElementById('cpm').textContent='کپی شد ✅'},fb);else fb()}catch(e){fb()}}
+var CM=['انتقال خودکار ۱۰٪ حقوق در روز واریز','نوشتن عدد «کافی» برای خودم','محاسبه‌ی ماه‌های دوام خودم با اعداد واقعی'];
+function cmx(j){G.cm=CM[j];play('good');document.getElementById('cmt').innerHTML=cmUI()}
+function cmUI(){return '<p><b>🤝 یک تعهد کوچک برای هفته‌ی آینده</b></p>'+CM.map(function(t,j){return '<button class="ch" onclick="cmx('+j+')">'+(G.cm==t?'✅ ':'')+t+'</button>'}).join('')}
+function mirror(){play('win');G.b2=+document.getElementById('b2').value;var c=G.c0||ctx(),cf=pc('cf'),rs=pc('rs'),lab=Math.min(G.lab,12),b1=G.s3,b2=G.b2;
+ try{localStorage.setItem('fc_game_a',JSON.stringify({cf:cf,rs:rs,selfCf:G.s1*10,labMonths:G.lab,claimMonths:G.s2,belief:[b1,b2]}))}catch(e){}
+ ev('completion',{cf:cf,rs:rs});
+ var bt=b2<b1?'ذهنت عوض شد: درآمد بیشتر به‌تنهایی پس‌انداز نمی‌آورد؛ تصمیم می‌آورد.':(b1<=2?'از اول هم می‌دانستی که درآمد بیشتر خودبه‌خود پس‌انداز نمی‌شود.':'هنوز فکر می‌کنی درآمد بیشتر یعنی پس‌انداز بیشتر. نمودار فصل اول را دوباره ببین: نرخ پس‌انداز، نه درآمد، تعیین‌کننده بود.');
+ var img=cardImg(),dc=G.s1*10-cf,dm=G.s2-lab,note=(dc>=20||dm>=2)?'بیشتر آدم‌ها دوام و پس‌انداز خودشان را بیشتر از واقعیت می‌بینند، چون خرج‌های ریز و شوک‌ها در ذهن ثبت نمی‌شوند. دیدنِ این فاصله اولین قدمِ پر کردنش است.':(dc<=-20||dm<=-2)?'رفتارت از آنچه فکر می‌کردی بهتر بود. حالا که می‌دانی، می‌توانی با اطمینان بیشتری تصمیم بگیری.':'تصورت و رفتارت نزدیک بودند. حالا وقت آن است که هر دو را بهتر کنی.';
+ app.innerHTML=hdr()+'<div class="card"><div class="big">🪞</div><h1>آینه‌ی مینا، و تو</h1><p class="w">تصور تو در برابر رفتار تو</p></div>'+
+ cmp('💸 پس‌اندازگری',G.s1*10,cf,fa(G.s1*10)+'٪',fa(cf)+'٪',gapTxt(G.s1*10-cf,20))+
+ cmp('🛟 دوام در بحران',Math.round(G.s2/12*100),Math.round(lab/12*100),fa(G.s2)+' ماه',(G.lab>=12?'+۱۲':fa(G.lab))+' ماه',gapTxt((G.s2-lab)*8,16)+' <span class="w">(تاب‌آوری رفتاری تو در تصمیم‌های بحران: '+fa(rs)+'٪)</span>')+
+ '<div class="card"><b>🧠 باور تو</b><p>قبل: '+fa(b1)+' از ۵ ← بعد: '+fa(b2)+' از ۵</p><p>'+bt+'</p></div>'+
+ '<div class="card"><b>📈 نمودار زندگی مینا</b>'+lifeChart(c)+'</div>'+
+ '<div class="card"><div class="row"><b>🧑‍🏫 یادداشت مهدی‌یار</b></div><p>'+note+'</p></div>'+
+ '<div class="card" id="cmt">'+cmUI()+'</div>'+
+ '<div class="card"><p><b>📤 کارت نتیجه‌ی تو</b></p>'+(img?'<img class="shimg" src="'+img+'" alt="کارت نتیجه"><p class="w">عکس را نگه دار (یا راست‌کلیک کن) و ذخیره کن.</p>':'')+'<button class="btn" onclick="cp()">📋 کپی متن نتیجه</button><div id="cpa"></div><p class="w" id="cpm"></p></div>'+
+ '<div class="card"><p><b>⏭️ قسمت بعد</b></p><p>«شبی که بازار لرزید»؛ یک شب پرتنش که در آن می‌فهمی وقتی همه می‌خرند یا قیمت ۲۰٪ می‌ریزد، چه می‌کنی. به‌زودی.</p><p class="w">📝 این بازی ابزار تشخیص نیست؛ آینه‌ای برای فکر کردن است.</p></div><button class="btn sec" onclick="hub()">↻ دوباره بازی کن</button>';
+ window.scrollTo({top:0})}
+hub();
+</script>
+</body>
+</html>

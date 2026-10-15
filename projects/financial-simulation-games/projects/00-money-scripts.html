@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>چهار صدای پول در ذهن تو</title>
+<script src="assets/howler.min.js"></script>
+<style>
+:root{--bg:#faf6ee;--card:#fff;--tx:#2b2620;--mu:#7a7165;--ac:#d98a2b;--bd:#e6dccb;--bb:#f1e9da;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a16;--card:#2a251f;--tx:#f3ece0;--mu:#a89d8e;--bd:#3e362c;--bb:#38302a}}
+:root[data-theme="dark"]{--bg:#1d1a16;--card:#2a251f;--tx:#f3ece0;--mu:#a89d8e;--bd:#3e362c;--bb:#38302a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;line-height:1.9;transition:background .8s}
+#app{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin:14px 0}
+.big{font-size:64px;text-align:center;line-height:1.2;animation:pop .5s}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes blink{50%{opacity:.35}}
+h1{margin:6px 0;text-align:center}
+p{margin:8px 0}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{display:block;width:100%;padding:12px;border-radius:14px;border:0;background:var(--ac);color:#fff;font-weight:bold;margin-top:14px}
+.btn:disabled{opacity:.4}
+.ch{display:block;width:100%;text-align:right;padding:12px 14px;margin:8px 0;border-radius:14px;border:1.5px solid var(--bd);background:var(--card)}
+.ch:hover{border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hc{border:2px solid var(--bd);border-radius:16px;background:var(--card);padding:12px 8px;text-align:center}
+.hc.on{border-color:var(--ac)}
+.hc small{display:block;color:var(--mu)}
+.bb{display:flex;gap:10px;align-items:flex-start;margin:12px 0;animation:pop .4s}
+.bb>span{font-size:28px;line-height:1.4}
+.bb small{display:block;font-weight:bold;color:var(--mu);font-size:13px}
+.bb p{margin:0;background:var(--bb);border-radius:14px;padding:6px 12px 8px}
+.q{border-top:1px dashed var(--bd);margin-top:14px;padding-top:12px}
+.pr{color:var(--ac);font-weight:bold}
+.rx{border-right:4px solid var(--ac);padding:4px 12px;margin-top:12px;animation:pop .4s}
+.w{text-align:center;color:var(--mu)}
+.hint{text-align:center;color:var(--mu);animation:blink 1.6s infinite;margin-top:16px}
+.pg{height:8px;border-radius:4px;background:var(--bd);margin:10px 0;overflow:hidden}.pg i{display:block;height:100%;background:var(--ac)}
+.lab{display:flex;justify-content:space-between;font-size:13px;color:var(--mu)}
+.row{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.row button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);font-size:20px}
+input[type=range]{width:100%}
+.jc{border-radius:14px;padding:8px 12px;margin:10px 0;border:1.5px solid;animation:pop .4s}
+.jc.bad{border-color:#d0583a;background:rgba(208,88,58,.08)}.jc.ok{border-color:#3a9d5d;background:rgba(58,157,93,.08)}
+.letter{line-height:2.1}.letter p{margin:10px 0}
+.shimg{width:100%;border-radius:14px;border:1px solid var(--bd)}
+textarea{width:100%;height:150px;font:inherit;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px}
+.ov{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx);animation:fi .4s}
+.ov.out{opacity:0;transition:opacity .4s}
+.ov h2{margin:8px 0 0}.ov p{color:var(--mu);margin:0}
+.em{position:relative;width:140px;height:140px;font-size:110px;text-align:center;line-height:140px}
+.em span{position:absolute;inset:0}
+.em .o{animation:fo 1s .5s forwards}
+.em .n{opacity:0;animation:ageup 1s 1.2s forwards}
+@keyframes fo{to{opacity:0;transform:scale(.3) rotate(-30deg)}}
+@keyframes ageup{0%{opacity:0;transform:scale(.3) rotate(30deg)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes fi{from{opacity:0}}
+</style>
+<script src="assets/ui.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+function fa(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
+function wav(n,d){d=d||.15;var r=8000,o=[];n.forEach(function(f){var L=r*d;for(var i=0;i<L;i++)o.push(128+Math.round(60*Math.sin(2*Math.PI*f*i/r)*(1-i/L)))});
+var b=new Uint8Array(44+o.length),v=new DataView(b.buffer),s=function(p,t){for(var i=0;i<t.length;i++)b[p+i]=t.charCodeAt(i)};
+s(0,'RIFF');v.setUint32(4,36+o.length,true);s(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,r,true);v.setUint32(28,r,true);v.setUint16(32,1,true);v.setUint16(34,8,true);s(36,'data');v.setUint32(40,o.length,true);b.set(o,44);
+var t='';b.forEach(function(x){t+=String.fromCharCode(x)});return 'data:audio/wav;base64,'+btoa(t)}
+var DEF={click:[[660],.07],pop:[[500,600],.06],tick:[[300],.05],good:[[392,523,659],.16],win:[[523,659,784,1047],.18]};
+var SND={},muted=false;
+function play(k){if(muted||!window.Howl)return;try{if(!SND[k])SND[k]=new Howl({src:[wav(DEF[k][0],DEF[k][1])],format:['wav'],volume:.5});SND[k].play()}catch(e){}}
+
+var V={a:['🙈','اجتناب از پول','Money Avoidance'],w:['🤩','پرستش پول','Money Worship'],s:['👑','منزلت با پول','Money Status'],v:['🛡️','هوشیاری نسبت به پول','Money Vigilance']};
+function vo(k,t){return [V[k][0],V[k][1],t]}
+var R='راوی',T='تو (در دلت)',U='تو';
+var ST=[{n:'کودکی',e:'🧒',age:'۹ سالگی',c:['#fff1cc','#3b3017']},{n:'نوجوانی',e:'🧑‍🎓',age:'۱۴ سالگی',c:['#dcecfb','#1a2a3a']},{n:'جوانی',e:'🧑‍💼',age:'۲۴ تا ۲۷ سالگی',c:['#e0f3df','#1b2f21']},{n:'بزرگسالی',e:'🧔',age:'۳۰ سالگی',c:['#f1e2f4','#2d2036']},{n:'یک سال بعد',e:'🌅',age:'۳۱ سالگی',c:['#fde5d3','#35241a']},{n:'نامه از آینده',e:'🧓',age:'۶۰ سالگی',c:['#f4efe0','#2a2820']}];
+var ECH={a:'«فعلاً نگاه نکن؛ بعداً درستش می‌کنیم.»',w:'«یک کم بیشتر که باشد، همه‌چیز آرام می‌شود.»',s:'«مهم است دیگران چطور می‌بینند.»',v:'«اول مطمئن شو که خطری در راه نیست.»'};
+var Z={
+a:['نگاه مستقیم به پول برایت راحت است؛ مراقب باش این نگاه به وسواس نرسد و آرامشت را نگیرد.','با «نگاه‌کردن» به پول رابطه‌ی متعادلی داری.','وقتی پول می‌آید گاهی نگاه را برمی‌گردانی. هفته‌ای یک قرار ثابت ۱۵ دقیقه‌ای با حساب، هزینه‌اش کم و آرامشش زیاد است.'],
+w:['پول برایت ابزاری کم‌صداست؛ شاید جا برای هدف‌گذاری و رشد بیشتری داری.','پول را ابزاری ارزشمند می‌دانی نه هدف؛ همین را نگه دار.','صدای «بیشتر» بلند است. یک عدد «کافی» بنویس تا رشد جایی برای ایستادن داشته باشد.'],
+s:['به تصویر بیرونی کم اهمیت می‌دهی؛ مراقب باش لذت و تعلق را قربانی نکنی.','دیده‌شدن و لذت سهم معقولی در زندگی‌ات دارند.','تصویر بیرونی بر تصمیم‌هایت اثر زیادی دارد. سهم ثابت ۱۰٪ برای لذت بهتر از قرض برای نمایش است.'],
+v:['احتیاط کم‌صداست؛ صندوق اضطراری ۶ ماهه و بیمه شروع خوبی است.','حاشیه‌ی امن در حد خوبی داری.','ترس نگهبان خوبی است ولی راننده‌ی بدی. بگذار بخشی از پول زندگی کند.']};
+var ZN=['کم‌صدا','متعادل','پرصدا'];
+var PR={choice:'حالا به این پرسش پاسخ بده:',timed:'⏱️ حالا سریع به این پرسش پاسخ بده (۱۵ ثانیه وقت داری):',slider:'حالا این اسلایدر را مشخص کن:',cards:'حالا برای هر جمله بگو شبیه توست یا نه:',alloc:'حالا بسته‌ها را بین پاکت‌ها تقسیم کن:',jump:'حالا یک صدا و یک بازه‌ی زمانی انتخاب کن و هر دو مسیر را ببین:',mixer:'حالا با اسلایدرها صدای ایده‌آل هر کدام را مشخص کن:'};
+
+var M=[
+{st:0,e:'🌙',dm:'awsv',d:[
+ ['📖',R,'شب پاییزی است. تو نه‌ساله‌ای و برای آب‌خوردن از اتاقت بیرون آمده‌ای، اما صدای آشپزخانه تو را پشت در نگه می‌دارد.'],
+ ['👩','مادر','«اجاره‌ی این ماه را از کجا بیاوریم؟ صاحب‌خانه دو بار زنگ زده. ما باید یاد بگیریم همیشه یک پس‌انداز داشته باشیم، نه اینکه هر ماه نفس‌نفس بزنیم!»'],
+ ['👨','پدر','«بس کن! جلوی بچه‌ها از پول حرف نزن. فردا یک راهی پیدا می‌شود.»'],
+ ['👩','مادر','«فردا، فردا... بچه‌ها همه‌چیز را می‌فهمند.»'],
+ ['🧒',T,'قلبت تند می‌زند. نمی‌دانی چرا، ولی حس می‌کنی پول چیزی است که خانه را ناآرام می‌کند. همین شب در ذهنت چهار صدا بیدار می‌شود و هر کدام درس خودش را برمی‌دارد.']],
+ t:'choice',q:'کدام جمله بیشتر در ذهنت ماند؟',o:[['«بهتر است به پول فکر نکنم؛ دعوا می‌آورد.»',{a:3}],['«باید پول زیاد داشته باشم تا دیگر ترسی نباشد.»',{w:3}],['«نباید کسی ببیند که ما سختی داریم.»',{s:3}],['«بدون ذخیره، هر لحظه همه‌چیز می‌ریزد.»',{v:3}]],
+ k:'به این «اسکریپت پول» (Money Script) می‌گویند: باوری ناخودآگاه که از تجربه‌ی کودکی ساخته می‌شود، نه از حساب‌وکتاب. هر چهار برداشت منطقی‌اند و هیچ‌کدام بد یا خوب نیست.'},
+{st:0,e:'🎒',dm:'as',d:[
+ ['🧑‍🏫','معلم','«بچه‌ها، ثبت‌نام اردوی علمی تا فردا است. عزیزم، تو چرا هنوز ثبت‌نام نکرده‌ای؟»'],
+ ['👧','همکلاسی','«حتماً پول ندارند!» (می‌خندد)'],
+ ['📖',R,'گوش‌هایت داغ می‌شود. همه‌ی کلاس برگشته‌اند و منتظر جواب تو هستند.'],
+ ['🧒',T,'«کاش زمین دهان باز کند و من را ببلعد.»']],
+ t:'timed',def:2,q:'به معلم چه جوابی می‌دهی؟',o:[['«دوست ندارم.» (دروغ)',{a:2,s:3}],['«پول نداریم.» (راست)',{}],['سکوت می‌کنم و سرم را پایین می‌اندازم.',{a:3,s:1}]],
+ k:'دروغ یا سکوت برای فرار از شرم، ریشه‌ی «اجتناب از پول» و «منزلت با پول» است. راستگویی آرام درباره‌ی پول نشانه‌ی رابطه‌ی سالم با آن است.'},
+{st:1,e:'🐷',dm:'v',d:[
+ ['📖',R,'چهارده‌ساله‌ای و هر ماه کمی پول‌توجیبی داری. قلک سفالی‌ات روی طاقچه است و ترکی کوچک برداشته، چون هر چه پول داخلش می‌رود دیگر بیرون نمی‌آید.'],
+ ['🧑','دوستت (رضا)','«بیا امروز بعد از مدرسه بستنی بخوریم و ساندویچ هم بزنیم! من مهمان تو، دفعه‌ی بعد تو.»'],
+ ['🧑‍🎓',T,'«اگر خرج کنم، آخر ماه چیزی ندارم. اگر نروم، مثل آدم‌های خسیس می‌شوم.»']],
+ t:'slider',q:'چند درصد پول‌توجیبی‌ات را قلک می‌کنی؟',l:'همه را خرج می‌کنم',r:'همه را نگه می‌دارم',f:function(x){return {v:x/100*3}},
+ k:'پس‌انداز نیمه‌ی سالم «هوشیاری نسبت به پول» است. اما قلکی که هیچ‌وقت شکسته نشود یعنی ترس جای لذت را گرفته. جای درست معمولاً میانه است.'},
+{st:1,e:'🌌',dm:'awsv',d:[
+ ['📖',R,'پانزده‌ساله‌ای. شب‌ها روی تخت دراز می‌کشی و به خودت فکر می‌کنی: من درباره‌ی پول چطور آدمی هستم؟'],
+ ['🧑‍🎓',T,'«نه درست و غلط دارد، نه نمره؛ فقط ببین کدام جمله به تو نزدیک‌تر است.»']],
+ t:'cards',q:'هر جمله شبیه توست؟',c:[['وقتی قبض می‌آید، اول می‌گذارمش کنار.','a'],['اگر پولم دو برابر شود، بالاخره راحت می‌شوم.','w'],['خودم را با چیزهایی که دیگران دارند مقایسه می‌کنم.','s'],['قبل از هر خرج بزرگ باید ذخیره‌ی اضطراری داشته باشم.','v']],
+ k:'«شبیه من» گفتن ایرادی ندارد. هر صدا یک نیمه‌ی سالم دارد؛ مهم این است که صدای کدام بلندتر است.'},
+{st:2,e:'☕',dm:'awsv',d:[
+ ['📖',R,'۲۴ ساله‌ای. اولین حقوق واقعی‌ات به حساب نشسته: ۳۰ میلیون تومان. اولین بار است که پول خودت را داری و چهار صدا همزمان شروع می‌کنند.'],
+ vo('a','«نگاه نکن. اگر بازش کنی دوباره نگران می‌شوی.»'),
+ vo('w','«اگر همه‌اش را الان به کار بیندازی، تا یک سال دیگر دو برابر می‌شود.»'),
+ vo('s','«بالاخره می‌توانی همان کت و کفشی را بخری که همکارها دارند.»'),
+ vo('v','«اول ببین اجاره و قبض‌ها چقدر است؛ بعد بقیه.»')],
+ t:'choice',q:'اولین کاری که با حقوق می‌کنی؟',o:[['گوشی را خاموش می‌کنم؛ بعداً نگاه می‌کنم.',{a:3}],['همه‌اش را یک‌جا در سرمایه‌گذاری می‌ریزم؛ زودتر پولدار شوم.',{w:3}],['یک دست لباس برند می‌خرم؛ باید بدرخشم!',{s:3}],['نصفش را ثابت کنار می‌گذارم، باقی را برای زندگی.',{v:1,w:1,s:1}]],
+ k:'اسکریپت‌ها با تصمیم‌های کوچک شکل می‌گیرند. گزینه‌ی آخر چیزی از هر صدا دارد بی‌آنکه یکی را تنها بگذارد.'},
+{st:2,e:'📬',dm:'av',d:[
+ ['🏦','پیامک بانک','«مشتری گرامی، سررسید قسط وام شما فردا است.»'],
+ ['👩‍💼','همکار (مریم)','«راستی تو هم وام گرفته بودی؟ من پارسال دیرکردش را ندیده بودم؛ جریمه‌اش سه برابر شد!»'],
+ ['📖',R,'روی میز کنار لپ‌تاپ‌ات سه پاکت بسته است. دو هفته است که باز نشده‌اند.']],
+ t:'timed',def:1,q:'با قسط و قبض‌ها چه می‌کنی؟',o:[['همین حالا همه را باز می‌کنم و حساب می‌کنم.',{v:1}],['گوشی را برمی‌گردانم؛ فردا.',{a:3}],['پرداخت خودکار می‌گذارم تا هر ماه خودش برود.',{v:1}]],
+ k:'«بعداً» در کوتاه‌مدت آرام می‌کند و در بلندمدت جریمه می‌آورد. پرداخت خودکار فایده‌ی اجتناب (کم‌دغدغه بودن) را نگه می‌دارد، بی‌هزینه.'},
+{st:2,e:'💒',dm:'s',d:[
+ ['📖',R,'عروسی همکلاسی قدیمی‌ات است. کنار در، میزی هست که همه پاکت هدیه را آنجا می‌گذارند.'],
+ ['🧑‍🎓','دوست قدیمی (امیر)','«ما با بچه‌ها هر کدام پنج میلیون گذاشتیم. تو چقدر می‌خواهی بگذاری؟»'],
+ vo('s','«نکند فکر کنند کم داده‌ای. همه نگاه می‌کنند.»'),
+ ['🧑‍💼',T,'«این ماه قسطم هم هست...»']],
+ t:'slider',q:'چقدر هدیه می‌دهی؟',l:'خیلی کمتر از توانم',r:'بیش از توانم',f:function(x){return {s:x/100*3}},
+ k:'«منزلت با پول» یعنی ارزش دادن به دیده‌شدن و تعلق، و این طبیعی است. مرز سالم آنجاست که برای تصویرت قرض نکنی.'},
+{st:2,e:'📈',dm:'wva',d:[
+ ['🧑‍💼','دوستت (کیان)','«داداش، یک فرصت دارم: یک ارز دیجیتال که قول داده‌اند سه ماهه دو برابر شود. من همه‌ی پس‌اندازم را ریختم!»'],
+ vo('w','«فرصت‌ها همیشه نمی‌مانند. هر چه بیشتر بگذاری، بیشتر برمی‌داری!»'),
+ vo('v','«وقتی کسی فقط از سود می‌گوید و از ریسک حرف نمی‌زند، یعنی چیزی را پنهان می‌کند.»')],
+ t:'choice',q:'چه می‌کنی؟',o:[['همه‌ی پس‌اندازم را می‌گذارم.',{w:3}],['می‌پرسم کجا، کی، چه ریسکی؛ بعد یک مبلغ کوچک.',{w:1,v:1}],['اصلاً گوش نمی‌دهم؛ پول را دست نمی‌زنم.',{a:2,v:3}]],
+ k:'«پرستش پول» انگیزه‌ی رشد می‌دهد ولی «کافی» را تعریف نمی‌کند. سؤال «چقدر ریسک؟» بیشتر از «چقدر سود؟» کمکت می‌کند.'},
+{st:3,e:'💌',dm:'awsv',d:[
+ ['📖',R,'سی‌ساله‌ای. پدربزرگ بعد از یک بیماری طولانی درگذشته؛ روز هفتم، وکیل خانواده تماس می‌گیرد.'],
+ ['⚖️','وکیل','«ایشان وصیت کرده‌اند ۲۰۰ میلیون تومان به نام شما باشد. نوشته‌اند: "هر طور صلاح می‌دانی، ولی عاقلانه."»'],
+ ['🧔',T,'«بغض و ذوق با هم آمده. چقدر عجیب است که با رفتن او، این پول برسد.»']],
+ t:'choice',q:'اولین واکنش درونی‌ات چیست؟',o:[['«الان نمی‌خواهم بهش فکر کنم.»',{a:3}],['«اگر کمی بیشتر شود، همه‌چیز عوض می‌شود.»',{w:3}],['«بالاخره می‌توانم چیزی بخرم که دیده شوم.»',{s:3}],['«اول باید جایی امن نگهش دارم.»',{v:3}]],
+ k:'پول ناگهانی اسکریپت‌ها را بلند می‌کند، چون تصمیم‌ها بزرگ‌تر و احساس‌ها پررنگ‌ترند.'},
+{st:3,e:'💰',dm:'awsv',d:[
+ ['🏦','راوی','۲۰۰ میلیون تومان در حساب است: ده بسته‌ی ۲۰ میلیونی.'],
+ vo('v','«قبل از هر چیز، صندوق اضطراری و بیمه.»'),
+ vo('s','«برای خودت هم باید چیزی بماند؛ سال‌ها صبر کرده‌ای!»'),
+ vo('a','«نیازی نیست الان تصمیم بگیری. بگذارش همان‌جا.»')],
+ t:'alloc',q:'بسته‌ها را بین چهار پاکت تقسیم کن.',it:[['🛡️ صندوق اضطراری و بیمه','v'],['📈 رشد و سرمایه‌گذاری','w'],['👑 لذت و ظاهر و هدیه به خودت','s'],['🙈 فعلاً همان‌جا می‌ماند','a']],
+ k:'تقسیم متعادل یعنی هر صدا سهمی دارد و هیچ‌کدام همه‌چیز را نمی‌برد. اگر یک پاکت بیش از ۵ بسته گرفت، آن صدا فرماندهی می‌کند.'},
+{st:3,e:'⏱️',dm:'sav',d:[
+ ['🏪','فروشنده','«فقط امروز! اگر الان بخرید ۳۰٪ تخفیف دارید؛ فردا قیمت اصلی است. دو نفر دیگر هم دارند فکر می‌کنند.»'],
+ vo('s','«همه این را دارند. وقتش است تو هم داشته باشی.»'),
+ ['📖',R,'قلبت کمی تندتر می‌زند. فروشنده منتظر است.']],
+ t:'timed',def:0,q:'چه می‌کنی؟',o:[['همین حالا می‌خرم!',{s:3}],['می‌گویم ۲۴ ساعت فکر می‌کنم و می‌روم.',{v:1}],['حوصله ندارم؛ می‌روم و فراموش می‌کنم.',{a:3}]],
+ k:'فشار زمان اسکریپت‌ها را بلندتر می‌کند. قانون ۲۴ ساعت، تصمیم را از اسکریپت جدا می‌کند.'},
+{st:3,e:'🌙',dm:'av',d:[
+ ['📖',R,'ساعت یک بامداد است. روی تخت دراز کشیده‌ای و گوشی در دستت است.'],
+ vo('a','«نگاه نکن. فردا نگاه می‌کنی.»'),
+ vo('v','«فقط یک بار دیگر موجودی را ببین؛ مطمئن شو چیزی کم نشده.»')],
+ t:'slider',q:'چند بار در هفته موجودی حساب را چک می‌کنی؟',l:'هیچ‌وقت',r:'هر ساعت',f:function(x){return {a:(100-x)/100*3,v:x/100*3}},
+ k:'نگاه‌نکردن و وسواسی‌نگاه‌کردن هر دو افراط‌اند. یک قرار ثابت هفتگی هم آرامش می‌دهد هم آگاهی.'},
+{st:4,e:'🔧',dm:'awsv',
+ d:function(){var o={a:'یک سال بعد: بخشی از پول بی‌حرکت مانده و تورم آن را خورده. هنوز دقیقاً نمی‌دانی چقدر داری.',w:'یک سال بعد: بیشتر پول در ریسک است. ارزشش بالا و پایین می‌شود و آرامش نداری.',s:'یک سال بعد: ظاهر زندگی‌ات درخشان است، ولی ذخیره‌ی واقعی کم است.',v:'یک سال بعد: ذخیره‌ات امن است، ولی لذت‌ها عقب افتاده‌اند و زندگی همان‌جا مانده.'};return [['🌅',R,o[lead()]],['🔧','تعمیرکار','«موتور ماشین مشکل دارد. حدود ۲۰ میلیون تومان می‌شود؛ تا فردا باید جواب بدهید.»']]},
+ t:'choice',q:'چه می‌کنی؟',o:[['از صندوق اضطراری می‌پردازم؛ دقیقاً برای همین بود.',{v:1}],['پرداختش را عقب می‌اندازم و بهش نگاه نمی‌کنم.',{a:3}],['قرض می‌گیرم تا سرمایه‌گذاری‌ها دست نخورد.',{w:3}],['با کارت اعتباری می‌پردازم تا شکل زندگی‌ام عوض نشود.',{s:3}]],
+ k:'پیامد اسکریپت‌ها معمولاً وقتی دیده می‌شود که زندگی غافلگیرت کند. حاشیه‌ی امن یعنی آن لحظه برایت فاجعه نباشد.'},
+{st:4,e:'⏳',ne:1,t:'jump',d:[
+ ['⏳',R,'حالا فرض کن می‌شود زمان را جلو برد. یک صدا را انتخاب می‌کنی و می‌بینی اگر فرمانده‌ی زندگی‌ات شود، یا اگر در جای درستش بنشیند، ۱ سال، ۵ سال و ۲۰ سال بعد چه می‌شود.'],
+ ['📝',R,'این یک سناریوست، نه پیش‌گویی؛ برای دیدن است، نه برای ترسیدن.']],q:'کدام صدا را می‌خواهی در زمان جلو ببری؟',
+ k:'تفاوت دو مسیر معمولاً در سال اول دیده نمی‌شود؛ هزینه‌ی افراط آهسته و بی‌صدا جمع می‌شود. برای همین عادت‌های کوچک امروز مهم‌اند.'},
+{st:4,e:'🎚️',ne:1,t:'mixer',d:[['🎚️',R,'حالا پشت میز صدا نشسته‌ای و همه‌ی دستگیره‌ها دست توست.']],q:'صدای ایده‌آل هر کدام در ذهنت چقدر باشد؟',
+ k:'در آخر، ایده‌آلی که تعیین کردی را با آنچه از تصمیم‌هایت درآمد مقایسه می‌کنیم.'}
+];
+var S,X,I,AL,CI,JV,JH,JT,COM,WANT,TM,TO,RN=0,CUR=-1,CHATON=false,app=document.getElementById('app');
+function ap(d,dm){for(var k in d)S[k]+=d[k];for(var j=0;j<dm.length;j++)X[dm[j]]+=3}
+function pc(k){return X[k]?Math.round(S[k]/X[k]*100):0}
+function lead(){var b='a',bp=-1;['a','w','s','v'].forEach(function(k){if(pc(k)>bp){bp=pc(k);b=k}});return b}
+function dark(){var t=document.documentElement.getAttribute('data-theme');return t?t=='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function paint(s){if(s<0)document.documentElement.style.removeProperty('--bg');else document.documentElement.style.setProperty('--bg',ST[s].c[dark()?1:0])}
+function vn(k){return V[k][0]+' '+V[k][1]+' <small dir="ltr">'+V[k][2]+'</small>'}
+function hdr(){var n=Math.min(I+1,16);return '<div class="top"><span>🧠 چهار صدای پول</span><span>'+fa(n)+' از ۱۶</span><button onclick="muteT(this)" style="background:none;border:0">'+(muted?'🔇':'🔊')+'</button></div><div class="pg"><i style="width:'+(n*100/16)+'%"></i></div>'}
+function muteT(b){muted=!muted;b.textContent=muted?'🔇':'🔊'}
+function hub(){
+ CUR=-1;CHATON=false;paint(-1);
+ app.innerHTML='<div class="card"><div class="big">🧠</div><h1>چهار صدا، یک ذهن</h1><p>در ذهن هر آدم چهار صدا درباره‌ی پول حرف می‌زند. این بازی داستان یک زندگی است؛ از کودکی تا یک ارث ۲۰۰ میلیون تومانی. با انتخاب، سرعت، اسلایدر و تقسیم‌کردن پیش می‌روی، در زمان جلو می‌روی و در پایان نامه‌ای از خودِ شصت‌ساله‌ات می‌گیری.</p><div class="grid">'+
+ ['a','w','s','v'].map(function(k){return '<div class="hc"><div style="font-size:36px">'+V[k][0]+'</div><b>'+V[k][1]+'</b><small dir="ltr">'+V[k][2]+'</small></div>'}).join('')+'</div><p class="w">هیچ‌کدام بد نیستند؛ فقط جایگاهشان مهم است.</p><button class="btn" onclick="go()">شروع داستان ←</button></div>';
+}
+function go(){I=0;S={a:0,w:0,s:0,v:0};X={a:0,w:0,s:0,v:0};WANT=null;COM=null;CUR=-1;r(0)}
+function age(s,cb){
+ var o=document.createElement('div');o.className='ov';o.style.background=ST[s].c[dark()?1:0];
+ o.innerHTML='<div class="em"><span class="o">'+(CUR<0?'✨':ST[CUR].e)+'</span><span class="n">'+ST[s].e+'</span></div><h2>'+(CUR<0?'':'سال‌ها می‌گذرد... ')+ST[s].n+'</h2><p>'+ST[s].age+'</p>';
+ document.body.appendChild(o);paint(s);play('good');CHATON=false;var d=false;
+ function end(){if(d)return;d=true;o.classList.add('out');setTimeout(function(){o.remove();cb()},400)}
+ o.onclick=end;setTimeout(end,3000);
+}
+function getD(m){var d=typeof m.d=='function'?m.d():m.d.slice();if(I>=4&&!m.ne){var L=lead();d.push(vo(L,ECH[L]))}return d}
+function bub(l){return '<div class="bb"><span>'+l[0]+'</span><div><small>'+l[1]+'</small><p>'+l[2]+'</p></div></div>'}
+function head(m){var s=ST[m.st];return '<div class="top"><span>'+s.e+' '+s.n+' · '+s.age+'</span><span>ماژول '+fa(I+1)+' از ۱۶</span></div>'}
+function r(n){clearInterval(TM);var m=M[I];
+ if(n==0&&m.st!==CUR){var s=m.st;CHATON=false;age(s,function(){CUR=s;r2(0)});return}
+ r2(n)}
+function r2(n){
+ RN=n;clearInterval(TM);var m=M[I],D=getD(m),inter=n>=D.length;CHATON=!inter;play('pop');
+ var h=hdr()+'<div class="card">'+head(m)+(n==0?'<div class="big">'+m.e+'</div>':'')+D.slice(0,Math.min(n+1,D.length)).map(bub).join('');
+ if(inter)h+='<div class="q"><p class="pr">👉 '+PR[m.t]+'</p><p><b>'+m.q+'</b></p><div id="ui">'+ui(m)+'</div></div>';
+ else h+='<p class="hint">👆 برای ادامه‌ی گفتگو روی صفحه بزن</p>';
+ app.innerHTML=h+'</div>';
+ if(inter&&m.t=='timed')timer(m);
+ setTimeout(function(){window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})},60);
+}
+document.addEventListener('click',function(e){if(!CHATON||e.target.closest('button'))return;r2(RN+1)});
+document.addEventListener('keydown',function(e){if(CHATON&&(e.key==' '||e.key=='Enter')){e.preventDefault();r2(RN+1)}});
+function opts(m){return m.o.map(function(o,j){return '<button class="ch" onclick="pk('+j+')">'+o[0]+'</button>'}).join('')}
+function ui(m){
+ if(m.t=='choice')return opts(m);
+ if(m.t=='timed')return '<div class="pg"><i id="tb" style="width:100%"></i></div><p class="w" id="tc">'+fa(15)+' ثانیه</p>'+opts(m);
+ if(m.t=='slider')return '<input id="sl" type="range" min="0" max="100" value="50"><div class="lab"><span>'+m.l+'</span><span>'+m.r+'</span></div><button class="btn" onclick="sv()">ثبت</button>';
+ if(m.t=='cards'){CI=0;return cardUI()}
+ if(m.t=='alloc'){AL=[0,0,0,0];return allocUI()}
+ if(m.t=='jump'){JV=lead();JH=[];JT=-1;return jumpUI()}
+ if(m.t=='mixer')return ['a','w','s','v'].map(function(k,j){return '<div class="row"><b>'+V[k][0]+' '+V[k][1]+'</b></div><input id="mx'+j+'" type="range" min="0" max="100" value="50">'}).join('')+'<button class="btn" onclick="mx()">ثبت</button>';
+}
+function timer(m){TO=0;var t0=Date.now(),L=15000;TM=setInterval(function(){var left=L-(Date.now()-t0),b=document.getElementById('tb'),c=document.getElementById('tc');if(b)b.style.width=Math.max(left/L,0)*100+'%';if(c)c.textContent=fa(Math.max(Math.ceil(left/1000),0))+' ثانیه';if(left<=0){clearInterval(TM);TO=1;pk(m.def)}},100)}
+function pk(j){clearInterval(TM);var m=M[I],o=m.o[j];ap(o[1],m.dm);fin(o[0])}
+function sv(){var m=M[I],v=+document.getElementById('sl').value;ap(m.f(v),m.dm);fin('عدد '+fa(v)+' از ۱۰۰')}
+function cardUI(){var s=M[I].c[CI];return '<p class="w" style="font-size:18px">«'+s[0]+'»</p><div class="grid"><button class="hc" onclick="cd(1)">👍 شبیه من</button><button class="hc" onclick="cd(0)">👎 نه</button></div><p class="w">'+fa(CI+1)+' از ۴</p>'}
+function cd(y){var s=M[I].c[CI];X[s[1]]+=3;if(y)S[s[1]]+=3;CI++;play('tick');if(CI>=M[I].c.length)fin('به هر چهار جمله پاسخ دادی.');else document.getElementById('ui').innerHTML=cardUI()}
+function allocUI(){var m=M[I],t=AL.reduce(function(a,b){return a+b},0);return m.it.map(function(x,j){return '<div class="row"><span>'+x[0]+'</span><span><button onclick="al('+j+',-1)">−</button> <b>'+fa(AL[j])+'</b> <button onclick="al('+j+',1)">+</button></span></div>'}).join('')+'<p class="w">باقی‌مانده: '+fa(10-t)+' بسته</p><button class="btn" '+(t==10?'':'disabled')+' onclick="ad()">ثبت تقسیم</button>'}
+function al(j,d){var t=AL.reduce(function(a,b){return a+b},0);if(AL[j]+d<0||t+d>10)return;AL[j]+=d;play('tick');document.getElementById('ui').innerHTML=allocUI()}
+function ad(){var m=M[I];m.it.forEach(function(x,j){S[x[1]]+=Math.min(3,AL[j]*.4);X[x[1]]+=3});fin('تقسیم ۱۰ بسته ثبت شد.')}
+var JM={
+a:[['قبض‌های باز‌نشده جریمه می‌شوند. آرام به نظر می‌رسی، ولی زیر آن نگرانی بی‌نامی موج می‌زند.','دیرکردها و تورم پس‌انداز را کوچک کرده‌اند. تصمیم‌های مهم را دیگران گرفته‌اند، چون نمی‌دانستی چقدر داری.','در بیماری یا بیکاری ناگهان غافلگیر می‌شوی. بدهی و ناآگاهی روی هم آمده و شرم دلیل سکوتت شده است.'],
+ ['هفته‌ای ۱۵ دقیقه نگاه می‌کنی. اولش سخت است، بعد عادی. هیولا اندازه‌ی واقعی‌اش را پیدا می‌کند.','پرداخت‌ها خودکار است و عدد دارایی‌ات را می‌دانی. پول مرکز زندگی‌ات نیست، ولی دیگر غافلگیرت نمی‌کند.','ذهنت آزاد است چون چیزی پنهان نیست. با فرزندانت راحت از پول حرف می‌زنی؛ همان کاری که برای خودت اتفاق نیفتاد.']],
+w:[['درآمدت بالا رفته، ولی «کافی» جلوتر رفته است. شب‌ها به بازار نگاه می‌کنی و آرام نمی‌گیری.','چند سرمایه‌گذاری پرریسک شکسته‌اند. رابطه‌ها کم‌رنگ شده؛ همسرت می‌گوید حتی وقتی کنارم هستی، کنارم نیستی.','ثروت زیادی داری و کسی کنارت نیست که برایش خرج کنی. پول ابزار بود، شد خودِ زندگی.'],
+ ['عدد «کافی» را نوشته‌ای. بخشی سرمایه‌گذاری می‌شود و بخشی خرج زندگی.','رشدت کندتر ولی پایدار است. شب‌ها به‌جای بازار، سر میز شام هستی.','ثروتی ساخته‌ای که فقط عدد نیست؛ آزادی انتخاب دارد و کسانی را که کنارت می‌خندند.']],
+s:[['زندگی‌ات از بیرون درخشان است: سفر، برند، عکس. پشت صحنه، کارت اعتباری به سقف رسیده.','قسط‌ها به لذت‌ها چنگ می‌زنند. وقتی تنها هستی، خانه‌ای را که برای دیگران خریدی دوست نداری و فقط نگهش می‌داری.','تصویر ثروتمند ماند، ثروت نه. بازنشستگی با دست خالی است و دعوت‌ها کم شده‌اند.'],
+ ['۱۰٪ درآمد را برای لذتی معنادار کنار می‌گذاری؛ بدون قرض و بدون عذاب وجدان.','چیزهایی که خریده‌ای واقعاً مال خودت است. دوستانت به‌خاطر خودت می‌آیند، نه تصویرت.','ثروتت دیده نمی‌شود، ولی خودت دیده می‌شوی؛ با آرامش و عزت‌نفسی که کسی نمی‌تواند بگیرد.']],
+v:[['ذخیره‌ات رشد می‌کند و هیچ خرجی بی‌دلیل نیست. ولی سفر خانوادگی را دوباره عقب انداخته‌ای.','حساب بانکی پر است و خانه خاموش. فرزندت دیگر نمی‌پرسد «برویم سفر؟»؛ یاد گرفته جوابت نه است.','پول زیادی مانده، ولی خاطره‌ای که بشود به آن لبخند زد نه. ترس نگهبان بود و راننده شد.'],
+ ['صندوق اضطراری ۶ ماهه و بیمه داری و بخشی از پول برای سفر کنار گذاشته شده.','وقتی بحران آمد، غافلگیر نشدی چون آماده بودی. و آن سفر را هم رفتی.','امنیت و زندگی هر دو را داری. خانواده‌ات از تو ترس را یاد نگرفته‌اند، آمادگی را.']]};
+function jumpUI(){var m=M[I],H=['۱ سال بعد','۵ سال بعد','۲۰ سال بعد'];
+ var h='<div class="grid">'+['a','w','s','v'].map(function(k){return '<button class="hc'+(k==JV?' on':'')+'" onclick="jv(\''+k+'\')"><div style="font-size:30px">'+V[k][0]+'</div><b>'+V[k][1]+'</b></button>'}).join('')+'</div><div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:12px">'+H.map(function(t,j){return '<button class="hc'+(j==JT?' on':'')+'" onclick="jt('+j+')">'+(JH.indexOf(j)>-1?'✔ ':'')+t+'</button>'}).join('')+'</div>';
+ if(JT>=0)h+='<div class="jc bad"><b>🔥 اگر «'+V[JV][1]+'» فرمانده شود</b><p>'+JM[JV][0][JT]+'</p></div><div class="jc ok"><b>⚖️ اگر در جای درستش بنشیند</b><p>'+JM[JV][1][JT]+'</p></div>';else h+='<p class="w">یک بازه‌ی زمانی را انتخاب کن.</p>';
+ if(JH.length==3)h+='<div class="rx">💡 '+m.k+'</div><p class="w">می‌توانی صدای دیگری را هم ببینی.</p><button class="btn" onclick="nx()">ادامه ←</button>';return h}
+function jv(k){JV=k;play('pop');document.getElementById('ui').innerHTML=jumpUI()}
+function jt(j){JT=j;if(JH.indexOf(j)<0)JH.push(j);play('pop');document.getElementById('ui').innerHTML=jumpUI()}
+function mx(){WANT={};['a','w','s','v'].forEach(function(k,j){WANT[k]=+document.getElementById('mx'+j).value});fin('تنظیم ایده‌آل ثبت شد.')}
+function fin(t){
+ clearInterval(TM);var m=M[I];play('click');CHATON=false;
+ app.innerHTML=hdr()+'<div class="card">'+head(m)+'<p><b>'+m.q+'</b></p>'+(TO?'<p class="w">⏱️ وقت تمام شد؛ ذهن به عادتش برگشت و این هم یک انتخاب بود.</p>':'')+'<p>✔ '+t+'</p><div class="rx">💡 '+m.k+'</div><button class="btn" onclick="nx()">'+(I>=14?'🪞 دیدن آینه':'ادامه ←')+'</button></div>';TO=0;
+}
+function nx(){I++;if(I>=15)age(5,function(){CUR=5;final()});else r(0)}
+var LT={a:['یادم هست چقدر دوست داشتی به پول نگاه نکنی. آن آرامش کوتاه هزینه‌ی سنگینی داشت؛ بعضی تصمیم‌ها را دیگران برایم گرفتند، چون من آنجا نبودم.','ممنونم که یاد گرفتی به پول نگاه کنی. آن قرارهای کوتاه آرامشی ساخت که هیچ عددی نمی‌خرد.'],
+w:['یادم هست «کافی» همیشه یک پله بالاتر بود. ثروت جمع شد، ولی خیلی از شام‌ها را از دست دادم.','ممنونم که پول را ابزار دیدی و برایش «کافی» تعریف کردی. رشدمان آرام بود، کنار آدم‌هایی که دوستشان داشتیم.'],
+s:['یادم هست چقدر مهم بود دیگران چه فکری می‌کنند. خیلی چیزها را برای آن‌ها خریدم و گاهی فراموش کردم خودم چه می‌خواهم.','ممنونم که لذت و دیده‌شدن را بدون قرض و نمایش چشیدی. زندگی‌ام قشنگ بود و لازم نبود کسی تأییدش کند.'],
+v:['یادم هست چقدر محتاط بودی. هیچ بحرانی ما را نبرد، ولی خاطره‌های کمی ساخته شد که بشود به آن‌ها لبخند زد.','ممنونم که حاشیه‌ی امن ساختی و بعد اجازه دادی زندگی کنیم. وقتی روزهای سخت آمد آماده بودیم و روزهای خوب هم از دست نرفت.']};
+var LW={a:'یک خواهش دارم: گاهی نگاهی هم به حساب بینداز. نگاه‌کردن از نادیدن ترسناک‌تر نیست.',w:'یک خواهش دارم: برای رشد هم هدفی بگذار؛ پول می‌تواند آزادی بسازد.',s:'یک خواهش دارم: از لذت و دیده‌شدن نترس؛ زندگی فقط حساب‌وکتاب نیست.',v:'یک خواهش دارم: برای روز مبادا هم جایی بگذار؛ امنیت هدیه‌ای است به آینده‌ی خودت.'};
+var CMT={a:'هفته‌ای یک قرار ۱۵ دقیقه‌ای با حساب بانکی',w:'نوشتن یک عدد «کافی» برای خودم',s:'تعیین سهم ثابت ۱۰٪ برای لذت، بدون قرض',v:'شروع صندوق اضطراری ۶ ماهه (حتی با مبلغ کوچک)'};
+function weak(L){var b='a',bp=1e9;['a','w','s','v'].forEach(function(k){if(k!=L&&pc(k)<bp){bp=pc(k);b=k}});return b}
+function ext(){var b='a',bd=-1;['a','w','s','v'].forEach(function(k){var d=Math.abs(pc(k)-46);if(d>bd){bd=d;b=k}});return b}
+function zi(p){return p<30?0:p<=62?1:2}
+function shareText(){var L=lead(),t='🧠 چهار صدای پول در ذهن من\nنزدیک‌ترین: '+V[L][0]+' '+V[L][1]+' ('+fa(pc(L))+'٪)\n';['a','w','s','v'].forEach(function(k){t+=V[k][0]+' '+V[k][1]+': '+fa(pc(k))+'٪ ('+ZN[zi(pc(k))]+')\n'});if(COM)t+='تعهدم: '+CMT[COM]+'\n';return t+'تو کدام صدا را داری؟'}
+function cmtUI(){var r=ext();return '<p><b>🤝 یک تعهد کوچک برای هفته‌ی آینده</b></p>'+['a','w','s','v'].map(function(k){return '<button class="ch" onclick="cm(\''+k+'\')">'+(COM==k?'✅ ':'')+V[k][0]+' '+CMT[k]+(k==r?' ⭐':'')+'</button>'}).join('')+'<p class="w">⭐ نزدیک‌ترین به صدای پرتنش تو</p>'}
+function cm(k){COM=k;play('good');document.getElementById('cmt').innerHTML=cmtUI()}
+function cardImg(L){try{var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d'),col={a:'#4a8fd0',w:'#d98a2b',s:'#a45cc2',v:'#3a9d5d'};
+ x.fillStyle='#faf6ee';x.fillRect(0,0,1080,1350);x.fillStyle=col[L];x.fillRect(0,0,1080,18);x.textAlign='center';x.direction='rtl';
+ x.font='200px sans-serif';x.fillText(V[L][0],540,290);
+ x.font='46px Tahoma,sans-serif';x.fillStyle='#7a7165';x.fillText('نزدیک‌ترین صدای پولی من',540,380);
+ x.font='bold 84px Tahoma,sans-serif';x.fillStyle=col[L];x.fillText(V[L][1],540,490);
+ x.font='40px Tahoma,sans-serif';x.direction='ltr';x.fillText(V[L][2],540,550);x.direction='rtl';
+ ['a','w','s','v'].forEach(function(k,j){var y=650+j*135,p=pc(k);x.font='38px Tahoma,sans-serif';x.fillStyle='#2b2620';x.textAlign='right';x.fillText(V[k][0]+' '+V[k][1],1000,y);x.textAlign='left';x.fillText(fa(p)+'٪',80,y);x.fillStyle='#e6dccb';x.fillRect(80,y+22,920,26);x.fillStyle=col[k];x.fillRect(1000-920*p/100,y+22,920*p/100,26)});
+ x.textAlign='center';x.fillStyle='#2b2620';x.font='bold 44px Tahoma,sans-serif';x.fillText('تو کدام صدا را داری؟',540,1240);x.fillStyle='#7a7165';x.font='30px Tahoma,sans-serif';x.fillText('بازی «چهار صدای پول در ذهن تو»',540,1295);
+ return c.toDataURL('image/png')}catch(e){return ''}}
+function cp(){var t=shareText(),fb=function(){document.getElementById('cpa').innerHTML='<textarea id="cpt" readonly></textarea>';var a=document.getElementById('cpt');a.value=t;a.select();document.getElementById('cpm').textContent='متن را انتخاب کن و کپی کن.'};
+ try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){document.getElementById('cpm').textContent='کپی شد ✅'},fb);else fb()}catch(e){fb()}}
+function final(){
+ play('win');I=15;CHATON=false;var L=lead(),hi=pc(L)>62,Wk=weak(L);
+ var img=cardImg(L);
+ app.innerHTML=hdr()+
+ '<div class="card letter"><div class="big">🧓</div><h1>نامه از خودِ شصت‌ساله‌ات</h1><p>به تو، که هنوز در سی‌ویک‌سالگی تصمیم می‌گیری،</p><p>'+LT[L][hi?0:1]+'</p><p>'+LW[Wk]+'</p><p>و بیشتر از همه‌چیز: هیچ‌کدام از آن چهار صدا دشمن تو نیست. بگذار هر کدام جای درستش بنشیند.</p><p>— خودِ شصت‌ساله‌ات 🧓</p></div>'+
+ '<div class="card"><div class="big">'+V[L][0]+'</div><h1>نزدیک‌ترین صدا به تو: '+V[L][1]+'</h1><p class="w" dir="ltr">'+V[L][2]+'</p><p class="w">'+fa(pc(L))+'٪ از انتخاب‌هایت با این صدا هم‌جهت بود</p></div>'+
+ ['a','w','s','v'].map(function(k){var p=pc(k),z=zi(p),w=WANT?WANT[k]:null,g='';
+  if(w!==null&&Math.abs(w-p)>=25)g='<p class="rx">🎚️ ایده‌آل تو '+fa(w)+'٪ بود و رفتارت '+fa(p)+'٪؛ '+(p>w?'این صدا در عمل بلندتر از چیزی است که می‌خواهی.':'این صدا در عمل کم‌صداتر از چیزی است که می‌خواهی.')+'</p>';
+  return '<div class="card"><div class="row"><b>'+vn(k)+'</b><span>'+fa(p)+'٪ · '+ZN[z]+'</span></div><div class="pg" style="position:relative;overflow:visible"><i style="width:'+p+'%"></i>'+(w!==null?'<span style="position:absolute;top:-14px;right:'+w+'%;font-size:12px;transform:translateX(50%)">▼</span>':'')+'</div><p>'+Z[k][z]+'</p>'+g+'</div>'}).join('')+
+ '<div class="card" id="cmt">'+cmtUI()+'</div>'+
+ '<div class="card"><p><b>📤 کارت نتیجه‌ی تو</b></p>'+(img?'<img class="shimg" src="'+img+'" alt="کارت نتیجه"><p class="w">عکس را نگه دار (یا راست‌کلیک کن) و ذخیره کن.</p>':'')+'<button class="btn" onclick="cp()">📋 کپی متن نتیجه</button><div id="cpa"></div><p class="w" id="cpm"></p></div>'+
+ '<div class="card"><p><b>⚖️ درس نهایی</b></p><p>هیچ‌کدام از این چهار صدا بد نیست. آگاهی، رشد، لذت و امنیت هر کدام یک نیاز واقعی‌اند. مشکل وقتی است که یکی همه‌ی مسیر را فرماندهی کند. هدف خاموش‌کردن صداها نیست؛ نشاندن هر یک جای درستش است.</p><p class="w">📝 این بازی ابزار تشخیص روان‌شناختی نیست؛ فقط آینه‌ای برای فکر کردن است.</p></div><button class="btn" onclick="hub()">↻ دوباره بازی کن</button>';
+ window.scrollTo({top:0});
+}
+hub();
+</script>
+</body>
+</html>

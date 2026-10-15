@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>پروژهٔ نمونه</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; line-height: 1.8;
+      font-family: "Vazirmatn", "Vazir", "Segoe UI", Tahoma, system-ui, sans-serif; color: #e9ecf4;
+      background: radial-gradient(700px 400px at 85% 0, rgba(91, 79, 214, .4), transparent 60%), #0d1017; }
+    main { width: min(580px, 100%); background: #141926; border: 1px solid #262d40; border-radius: 20px; padding: 28px; }
+    h1 { margin: 0 0 4px; font-size: 1.5rem; }
+    p { margin: .4rem 0; color: #a9b2c6; }
+    .kind { display: inline-block; padding: 1px 12px; border-radius: 99px; background: #1d2434; border: 1px solid #2c3550; color: #3fd8c5; font-size: .85rem; }
+    .row { display: flex; align-items: center; gap: 14px; margin: 18px 0; }
+    .count { font-size: 2rem; font-weight: 800; min-width: 2ch; }
+    button, a.back { font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 12px; padding: 10px 18px; background: #3fd8c5; color: #06211d; text-decoration: none; display: inline-block; }
+    button:focus-visible, a.back:focus-visible { outline: 2px solid #8b7cff; outline-offset: 3px; }
+    pre { direction: ltr; text-align: left; margin: 14px 0 0; padding: 14px; overflow: auto; font-size: .8rem; color: #c9d2e8; background: #0b0e15; border: 1px solid #222a3d; border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="kind" id="kind">پروژهٔ نمونه</span>
+    <h1 id="title">این یک پروژهٔ HTML مستقل است</h1>
+    <p>هر پوشه‌ای با یک <code>index.html</code> داخل <code>projects/</code> می‌تواند در داشبورد ثبت شود. شمارندهٔ زیر نشان می‌دهد که پروژه می‌تواند از localStorage خودش استفاده کند.</p>
+    <div class="row">
+      <button type="button" id="inc">یک واحد اضافه کن</button>
+      <span class="count" id="count" aria-live="polite">۰</span>
+    </div>
+    <p>ثبت این پروژه در <code>data/projects.json</code>:</p>
+<pre>{
+  "id": "demo-project",
+  "title": "پروژهٔ نمونه",
+  "categoryId": "prototypes",
+  "entry": { "localPath": "projects/demo-project/index.html" }
+}</pre>
+    <p id="back-wrap" hidden><a class="back" href="../../index.html">بازگشت به داشبورد</a></p>
+  </main>
+  <script>
+    (function () {
+      var names = { book: 'کتاب تعاملی', game: 'بازی', sim: 'شبیه‌سازی', test: 'آزمون', tool: 'ابزار' };
+      var sample = new URLSearchParams(location.search).get('sample');
+      if (sample && names[sample]) {
+        document.getElementById('kind').textContent = 'ورودی نمونهٔ ' + names[sample];
+        document.getElementById('title').textContent = 'به‌جای این صفحه، ' + names[sample] + ' واقعی خود را ثبت کنید';
+      }
+      var KEY = 'demo-project:clicks', n = 0, out = document.getElementById('count');
+      try { n = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) { /* localStorage در دسترس نیست */ }
+      function paint() { out.textContent = n.toLocaleString('fa-IR'); }
+      document.getElementById('inc').addEventListener('click', function () {
+        n += 1; paint();
+        try { localStorage.setItem(KEY, String(n)); } catch (e) { /* نادیده بگیر */ }
+      });
+      paint();
+      if (window.self === window.top) document.getElementById('back-wrap').hidden = false;
+    })();
+  </script>
+</body>
+</html>

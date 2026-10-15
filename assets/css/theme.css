@@ -1,0 +1,20 @@
+/* Project Deck — theme.css
+   هویت بصری در همین فایل است: رنگ‌ها، شعاع گوشه‌ها، فونت و پس‌زمینه.
+   برای تغییر ظاهر فقط مقدارهای زیر را عوض کنید؛ منطق برنامه و style.css را لازم نیست دست بزنید.
+   --accent       رنگ اصلی (دکمه‌های اصلی، فوکوس، وضعیت فعال)
+   --accent-2     رنگ ثانویه (کم‌مصرف: گرادیان آرم و نقاط تأکید)
+   --font-ui      فونت رابط؛ فونت محلی را در style.css با @font-face تعریف کنید
+   --bg-image     تصویر پس‌زمینه (یا در data/projects.json با settings.backgroundImage) */
+:root {
+  color-scheme: dark;
+  --bg: #0a0c11; --bg-2: #0f121a; --surface: #131722; --surface-2: #1a1f2d;
+  --line: #252b3b; --line-2: #323a50;
+  --text: #e9ecf4; --muted: #a2abbf; --faint: #7f889e;
+  --accent: #3fd8c5; --accent-2: #8b7cff; --accent-ink: #06211d; --danger: #ff6b81;
+  --radius: 16px; --shadow: 0 14px 34px -14px rgba(0, 0, 0, .7);
+  --sidebar-w: 270px; --flip: 1;
+  --font-ui: "Vazirmatn", "Vazir", "IRANSans", "Shabnam", "Segoe UI", Tahoma, system-ui, -apple-system, sans-serif;
+  --bg-image: none;   /* مثال: url("../backgrounds/background.webp") */
+  --bg-overlay: none; /* وقتی تصویر پس‌زمینه هست خودکار تیره می‌شود تا خوانایی حفظ شود */
+}
+:root[dir="ltr"] { --flip: -1; }

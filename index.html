@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Project Deck | پروژه‌دک</title>
+  <meta name="description" content="داشبورد شخصی برای سازمان‌دهی، پیش‌نمایش و اجرای پروژه‌های HTML.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0c11">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <div id="boot-notice" class="boot-notice" role="status" hidden></div>
+  <div id="storage-notice" class="boot-notice" role="status" hidden></div>
+  <script>
+    /* اگر ماژول‌ها لود نشوند (مثلاً با file://) همین پیام دیده می‌شود؛ app.js پس از بوت موفق آن را پنهان می‌کند. */
+    (function () {
+      if (location.protocol === 'file:') {
+        var n = document.getElementById('boot-notice');
+        n.hidden = false;
+        n.textContent = 'این صفحه با file:// باز شده است و مرورگر ماژول‌های جاوااسکریپت و خواندن JSON را مسدود می‌کند. پوشهٔ پروژه را با یک سرور ایستا اجرا کنید (راهنما در README.md).';
+      }
+    })();
+  </script>
+
+  <div class="app" id="app">
+    <aside class="sidebar" id="sidebar" aria-label="ناوبری اصلی">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div><strong id="brand-title">Project Deck</strong><small>پروژه‌دک</small></div>
+      </div>
+      <nav class="nav" id="nav-main" aria-label="بخش‌های اصلی"></nav>
+      <div class="nav-group">
+        <div class="nav-title-row"><h2 class="nav-title">دسته‌بندی‌ها</h2>
+          <button type="button" class="link" id="manage-cats-btn" data-action="manage-categories" hidden>مدیریت</button></div>
+        <nav class="nav" id="nav-categories" aria-label="دسته‌بندی‌ها"></nav>
+      </div>
+      <nav class="nav" id="nav-lib" aria-label="کتابخانهٔ شخصی"></nav>
+      <p class="sidebar-foot">داده‌ها فقط در همین مرورگر ذخیره می‌شوند.</p>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main-col">
+      <header class="topbar">
+        <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="باز کردن منو" aria-controls="sidebar" aria-expanded="false" data-icon="menu"></button>
+        <div class="topbar-title">
+          <h1 id="page-title">داشبورد</h1>
+          <span class="count-pill" id="page-count" hidden></span>
+        </div>
+        <form class="search" id="search-form" role="search">
+          <label class="sr-only" for="search-input">جستجو در پروژه‌ها</label>
+          <span class="search-ico" data-icon="search" aria-hidden="true"></span>
+          <input id="search-input" type="search" placeholder="جستجوی نام، توضیح، برچسب یا دسته" autocomplete="off" spellcheck="false">
+          <button type="button" class="search-clear" id="search-clear" aria-label="پاک کردن جستجو" hidden data-icon="close"></button>
+          <kbd aria-hidden="true">/</kbd>
+        </form>
+        <button type="button" class="btn btn-primary top-btn" id="add-btn" data-action="add-project" aria-label="افزودن پروژه"><span data-icon="plus"></span><span class="hide-sm">افزودن پروژه</span></button>
+        <div class="popover-wrap">
+          <button type="button" class="btn btn-ghost top-btn" id="data-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="data-menu" aria-label="داده‌ها: ورود، خروج و مدیریت"><span data-icon="data"></span><span class="hide-sm">داده‌ها</span></button>
+          <div class="popover" id="data-menu" role="menu" aria-label="داده‌ها" hidden>
+            <button type="button" role="menuitem" data-action="export">دریافت خروجی JSON</button>
+            <button type="button" role="menuitem" data-action="import-pick">وارد کردن فایل JSON</button>
+            <button type="button" role="menuitem" data-action="manage-categories">مدیریت دسته‌ها</button>
+            <button type="button" role="menuitemcheckbox" id="manage-toggle" aria-checked="true" data-action="toggle-manage">حالت مدیریت: روشن</button>
+            <a role="menuitem" href="?view=settings" data-nav>تنظیمات و راهنما</a>
+          </div>
+        </div>
+        <button type="button" class="icon-btn" id="audio-btn" aria-pressed="false" aria-label="پخش موسیقی محیطی" hidden></button>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <noscript><p class="boot-notice">برای استفاده از Project Deck باید جاوااسکریپت فعال باشد.</p></noscript>
+        <p class="loading">در حال بارگذاری…</p>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="preview-dialog" class="modal modal-lg" aria-labelledby="pv-title"></dialog>
+  <dialog id="live-dialog" class="modal modal-xl" aria-labelledby="lv-title"></dialog>
+  <input type="file" id="import-input" accept="application/json,.json" hidden>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

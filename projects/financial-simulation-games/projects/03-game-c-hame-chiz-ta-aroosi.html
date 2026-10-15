@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>همه‌چیز تا عروسی</title>
+<script src="assets/howler.min.js"></script>
+<style>
+:root{--bg:#ffe4ec;--card:#fff;--tx:#3a2530;--mu:#8a6f7c;--ac:#e0457b;--bd:#f3cbd8;--bb:#fde8ef;--bad:#c62828;--good:#2b7a5b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b1520;--card:#3a1f2c;--tx:#f8e6ee;--mu:#c9a4b4;--bd:#5a3445;--bb:#472838}}
+:root[data-theme="dark"]{--bg:#2b1520;--card:#3a1f2c;--tx:#f8e6ee;--mu:#c9a4b4;--bd:#5a3445;--bb:#472838}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;line-height:1.9;transition:background .8s}
+#app{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin:14px 0}
+.big{font-size:64px;text-align:center;line-height:1.2;animation:pop .5s}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes blink{50%{opacity:.35}}
+h1{margin:6px 0;text-align:center}
+p{margin:8px 0}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{display:block;width:100%;padding:12px;border-radius:14px;border:0;background:var(--ac);color:#fff;font-weight:bold;margin-top:14px;transition:background .8s}
+.btn:disabled{opacity:.4}
+.btn.sec{background:transparent;border:1.5px solid var(--ac);color:var(--tx)}
+.ch{display:block;width:100%;text-align:right;padding:12px 14px;margin:8px 0;border-radius:14px;border:1.5px solid var(--bd);background:var(--card)}
+.ch:hover{border-color:var(--ac)}
+.ch.on,.hc.on{border-color:var(--ac);background:var(--bb)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hc{border:2px solid var(--bd);border-radius:14px;background:var(--card);padding:10px 6px;text-align:center;font-size:14px}
+.bb{display:flex;gap:10px;align-items:flex-start;margin:12px 0;animation:pop .4s}
+.bb>span{font-size:28px;line-height:1.4}
+.bb small{display:block;font-weight:bold;color:var(--mu);font-size:13px}
+.bb p{margin:0;background:var(--bb);border-radius:14px;padding:6px 12px 8px}
+.q{border-top:1px dashed var(--bd);margin-top:14px;padding-top:12px}
+.pr{color:var(--ac);font-weight:bold}
+.rx{border-right:4px solid var(--ac);padding:4px 12px;margin-top:12px;animation:pop .4s}
+.w{text-align:center;color:var(--mu)}
+.hint{text-align:center;color:var(--mu);animation:blink 1.6s infinite;margin-top:16px}
+.pg{height:8px;border-radius:4px;background:var(--bd);margin:6px 0 8px;overflow:hidden}.pg i{display:block;height:100%;background:var(--ac);transition:width .6s}
+.row{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.row button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);font-size:20px}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.tb{width:100%;border-collapse:collapse;font-size:14px}.tb td,.tb th{padding:4px 6px;border-bottom:1px solid var(--bd);text-align:center}
+.pos{background:var(--bb);border-radius:12px;padding:6px 12px;font-size:14px;margin:8px 0}
+.bad{color:var(--bad);font-weight:bold}.ok{color:var(--good);font-weight:bold}
+.shimg{width:100%;border-radius:14px;border:1px solid var(--bd)}
+textarea{width:100%;height:140px;font:inherit;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px}
+.ov{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx);animation:fi .4s}
+.ov.out{opacity:0;transition:opacity .4s}
+.ov h2{margin:8px 0 0}.ov p{color:var(--mu);margin:0}
+.em{position:relative;width:140px;height:140px;font-size:110px;text-align:center;line-height:140px}
+.em span{position:absolute;inset:0}
+.em .o{animation:fo 1s .5s forwards}
+.em .n{opacity:0;animation:ageup 1s 1.2s forwards}
+@keyframes fo{to{opacity:0;transform:scale(.3) rotate(-30deg)}}
+@keyframes ageup{0%{opacity:0;transform:scale(.3) rotate(30deg)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes fi{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){.hint{animation:none}}
+</style>
+<script src="assets/ui.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+function fa(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
+function m1(n){return fa((Math.round(n*10)/10).toString().replace('.','٫'))}
+function mt(x){return x>=1000?m1(x/1000)+' میلیارد':fa(Math.round(x))+' میلیون'}
+function wav(n,d){d=d||.15;var r=8000,o=[];n.forEach(function(f){var L=r*d;for(var i=0;i<L;i++)o.push(128+Math.round(60*Math.sin(2*Math.PI*f*i/r)*(1-i/L)))});
+var b=new Uint8Array(44+o.length),v=new DataView(b.buffer),s=function(p,t){for(var i=0;i<t.length;i++)b[p+i]=t.charCodeAt(i)};
+s(0,'RIFF');v.setUint32(4,36+o.length,true);s(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,r,true);v.setUint32(28,r,true);v.setUint16(32,1,true);v.setUint16(34,8,true);s(36,'data');v.setUint32(40,o.length,true);b.set(o,44);
+var t='';b.forEach(function(x){t+=String.fromCharCode(x)});return 'data:audio/wav;base64,'+btoa(t)}
+var DEF={click:[[660],.07],pop:[[500,600],.06],tick:[[300],.05],good:[[523,659,784],.14],bad:[[247,196],.2],bell:[[784,988,1175],.2],win:[[523,659,784,1047],.18]};
+var SND={},muted=false;
+function play(k){if(muted||!window.Howl)return;try{if(!SND[k])SND[k]=new Howl({src:[wav(DEF[k][0],DEF[k][1])],format:['wav'],volume:.5});SND[k].play()}catch(e){}}
+
+/* داده‌های واقعی و فرض‌ها (میلیون تومان) */
+var INC=58,S0=450,PRICE_M2=88.5,LOAN_RATIO=0.00909;
+var RENT=[[700,10,'ارزان‌تر (مثل تهرانپارس، ۸۰ متر): ودیعه ۷۰۰ + اجاره ۱۰ میلیون'],[1300,21,'میانگین مناطق ۴ و ۵: ودیعه ≈۱٫۳ میلیارد + اجاره ۲۱ میلیون']];
+var BK=[['📺 تلویزیون ۵۰ اینچ',[[35,'ایرانی ارزان (کف بازار)'],[48,'میان‌رده (جی‌پلاس/ایکس‌ویژن)'],[65,'۵۵ اینچ (دوو)']]],
+ ['🧊 یخچال فریزر',[[30,'۵ فوت'],[75,'دوقلوی ایرانی'],[225,'دوقلوی ۴۰ فوت']]],
+ ['🧺 ماشین لباسشویی',[[12,'سطلی'],[35,'اتوماتیک ایرانی ارزان'],[75,'اسنوا ۸ کیلویی']]],
+ ['🧶 فرش ماشینی ۱۲ متری',[[20,'۷۰۰ شانه'],[36,'۱۲۰۰ شانه ارزان'],[55,'۱۲۰۰ شانه کاشان']]]];
+var SL=[['۷ ماه',7],['۲ سال',24],['۵ سال',60],['۱۰ سال',120]];
+var AX={cl:['🧾','وضوح هزینه'],sh:['🛡️','سپر و برنامه‌ی هدف']};
+var R='راوی',MD='مهدی‌یار',AR='آرش (تو)',SA='ساناز',TT='آرش (در دلت)';
+var ST=[{n:'خبر خوب',e:'💍',age:'مهر ۱۴۰۵',c:['#ffe4ec','#2b1520']},
+{n:'خانه‌تکانی',e:'🧾',age:'چند هفته بعد',c:['#ffdce7','#2f1623']},
+{n:'سپر زندگی',e:'🛡️',age:'آبان ۱۴۰۵',c:['#fbdcf0','#2c1830']},
+{n:'نردبان اهداف',e:'🪜',age:'آذر ۱۴۰۵',c:['#ffd3df','#301420']},
+{n:'بودجه‌ی نهایی',e:'🎀',age:'دی ۱۴۰۵',c:['#ffe0ea','#2b1520']},
+{n:'آینه',e:'🪞',age:'پایان قصه',c:['#fff0f4','#2a1a22']}];
+var PR={self:'حالا سه حدس درباره‌ی خودت را مشخص کن:',guess2:'حالا دو حدس بزن:',triage:'حالا هر هزینه را دسته‌بندی کن:',views:'حالا هر سه نما را ببین:',choice:'حالا به این پرسش پاسخ بده:',shield:'حالا این اسلایدر را مشخص کن:',basket:'حالا سبد جهیزیه‌ات را بچین:',ladder:'حالا هر هدف را روی زمان بگذار:',loan:'حالا مبلغ وام را انتخاب کن:',timed:'⏱️ حالا سریع جواب بده (۱۵ ثانیه وقت داری):',alloc:'حالا ده سهم منابع را بین هدف‌ها تقسیم کن:'};
+
+var M=[
+{st:0,e:'💍',t:'self',d:[
+ ['📖',R,'مهر ۱۴۰۵. آرش ۲۹ ساله و ساناز ۲۷ ساله بعد از دو سال آشنایی قرار عروسی را بهار ۱۴۰۶ گذاشته‌اند. خانواده‌ها خوشحال‌اند و فهرست خرج‌ها هر روز بلندتر می‌شود. (گفتگوها و عددهای زندگی این زوج داستانی‌اند؛ قیمت‌ها و آمار بازار واقعی‌اند.)'],
+ ['👩‍💼',SA,'«من هم ذوق دارم هم می‌ترسم. هر جا حساب می‌کنم عدد بزرگ‌تر از چیزی می‌شود که فکر می‌کردم.»'],
+ ['🧑‍🏫',MD,'«قبل از هر عددی، سه حدس درباره‌ی خودتان بزنید. آخر قصه می‌سنجیم؛ قضاوتی در کار نیست.»']],
+ q:'سه حدس درباره‌ی خودت',k:'حدس‌ها ثبت می‌شوند و آخر قصه با رفتار تو سنجیده می‌شوند.'},
+{st:0,e:'🏠',t:'guess2',d:[
+ ['🧑‍💻',AR,'«ساناز، فکر می‌کنی قسط ماهانه‌ی وام ازدواج چقدر می‌شود؟ و یک متر مسکن در تهران چند است؟»'],
+ ['👩‍💼',SA,'«هر کدام را حدس بزنیم؛ آخر قصه جوابش را از داده‌های واقعی می‌بینیم.»']],
+ q:'دو حدس',k:'حدس قبل از دیدن واقعیت، یادگیری را عمیق‌تر می‌کند. جواب‌ها را در ماژول‌های بعد و آینه می‌بینی.'},
+{st:1,e:'🧾',t:'triage',d:[
+ ['📖',R,'جمعه‌شب، یک لپ‌تاپ و یک فهرست. ساناز و آرش هزینه‌های ماهانه‌شان را می‌نویسند تا ببینند «پول کجا می‌رود».'],
+ ['👩‍💼',SA,'«هر خرج یا ضروری است، یا قابل‌تغییر، یا برای تصویر ما پیش دیگران.»'],
+ ['🧑‍🏫',MD,'«خرج «هویتی» بد نیست؛ فقط باید بدانی چقدر از درآمدت را می‌خورد.»']],
+ q:'هر هزینه در کدام دسته است؟',c:[['اجاره‌ی فعلی',14,0],['خوراک و میوه و خانه',9,0],['اینترنت و قبض‌ها',3,0],['رفت‌وآمد',4,0],['اشتراک‌ها و سرگرمی',2.5,1],['رستوران و کافه‌ی آخر هفته',5,1],['لباس و ظاهر (هر ماه)',3,2],['هدیه و مهمانی‌های فامیلی',2.5,2],['قسط ماشین بهتر',6,2],['دورهمی‌های شلوغ و برند',2,2]],
+ k:'«ضروری» یعنی بدون آن زندگی نمی‌چرخد؛ «قابل‌تغییر» یعنی می‌توان کم یا زیادش کرد؛ «هویتی» یعنی بخشی از آن برای تصویری است که دیگران می‌بینند. (اعداد این زوج داستانی است.)'},
+{st:1,e:'🔍',t:'views',vf:'v4',views:['۱. نقشه‌ی هزینه','۲. اگر هویتی نصف شود','۳. اگر درآمد ۲۰٪ بالا برود'],d:[
+ ['🧑‍🏫',MD,'«حالا سه نگاه به همین هزینه‌ها: عدد واقعی، اگر هویتی نصف شود، و اگر درآمد بیشتر شود.»']],
+ q:'سه نما را ببین.',k:'درآمد بیشتر فقط وقتی کمک می‌کند که هزینه‌ها همراهش بالا نروند. با تورم ماهانه‌ی بالا، «درآمد ۲۰٪ بیشتر» می‌تواند در چند ماه بخورد.'},
+{st:1,e:'🎯',t:'choice',dm:['cl'],d:[
+ ['👩‍💼',SA,'«پس مشکل ما درآمد کم است یا خرج‌هایمان؟»'],
+ ['🧑‍💻',TT,'«هر دو یک‌کم... ولی کدام را می‌توانم همین هفته تغییر بدهم؟»']],
+ q:'اول چه را تغییر می‌دهید؟',o:[['منتظر ارتقا یا افزایش درآمد می‌مانیم.',{cl:0},0],['اول هزینه‌ی هویتی (قسط ماشین و ظاهر) را کم می‌کنیم.',{cl:3},.5],['هم درآمد و هم هزینه، با عدد و تاریخ.',{cl:2},.3]],
+ on:function(o){G.cut=o[2];G.E=51-13.5*G.cut;G.eSet=1},
+ k:'وقتی ریشه‌ی مشکل را با عدد می‌بینی، می‌دانی اول کدام اهرم را بکشی. هزینه‌ی هویتی سریع‌ترین اهرم است، چون تصمیمش دست خودت است.'},
+{st:1,e:'👵',t:'choice',dm:['cl'],d:[
+ ['👩‍🦳','مادر آرش','«بچه‌ها، تالار را بگیریم؟ من برای شما کمی کنار گذاشته‌ام، ولی نمی‌دانم چقدر لازم دارید.»'],
+ ['🧑‍💻',TT,'«خودمان هم هنوز دقیق نمی‌دانیم...»'],
+ ['🧑‍🏫',MD,'«حرف زدن درباره‌ی پول با خانواده یک مهارت است: عدد، تاریخ، و درخواست مشخص.»']],
+ q:'آرش چه می‌گوید؟',o:[['«همه‌چیز خوب است؛ کمکی نمی‌خواهیم.»',{cl:0},0],['«تا بهمن حدود ۱۰۰ میلیون برای ودیعه کمک می‌کنید؟»',{cl:3},100],['«هر کاری شما بخواهید می‌کنیم.»',{cl:1},0]],
+ on:function(o){G.fam=o[2]},
+ k:'درخواست مشخص (عدد + تاریخ) به خانواده امکان کمک واقعی می‌دهد. «همه‌چیز خوب است» یا «هر چه شما بخواهید» معمولاً بدون کمک و با فشار بیشتر تمام می‌شود.'},
+{st:2,e:'🛡️',t:'choice',dm:[],d:[
+ ['📖',R,'آبان. همکار ساناز ناگهان بیمار شد و خانواده‌اش ماه‌ها درگیر هزینه‌ی درمان بود. ساناز شب‌ها بیدار می‌ماند.'],
+ ['👩‍💼',SA,'«اگر چنین چیزی برای ما پیش بیاید، وسط ماه عسل بدهکار می‌شویم.»'],
+ ['🧑‍🏫',MD,'«به این می‌گویند «سپر»: ذخیره‌ی نقد، بیمه، مهارت درآمد دوم و شبکه‌ی حمایتی. هر کدام هزینه دارد و هزینه‌ی فرصت.»']],
+ q:'کدام خطر بیشتر نگرانت می‌کند؟',o:[['بیماری یا هزینه‌ی ناگهانی درمان',{},0],['کاهش یا قطع درآمد آرش (فریلنس)',{},1],['جهش اجاره',{},2],['فشار تورم و قیمت‌ها',{},3]],
+ on:function(o){G.risk=o[2]},k:'این پرسش جواب درست ندارد؛ فقط جهت نگرانی تو را نشان می‌دهد. سپر خوب چند لایه است.'},
+{st:2,e:'🧱',t:'shield',dm:['sh'],d:[
+ ['🧑‍🏫',MD,'«سپر نقد را با «ماه هزینه» بسنجیم. هر ماه سپر پولی است که دیگر برای عروسی نیست.»'],
+ ['🧑‍💻',TT,'«درآمد من نوسان دارد. ساناز حقوق ثابت دارد.»']],
+ q:'سپر نقدِ آرش و ساناز چند ماه هزینه باشد؟',k:'قاعده‌ی رایج ۳ تا ۶ ماه هزینه است و برای درآمد نوسانی به سمت ۶ می‌رود. این یک راهنمای آموزشی است، نسخه‌ی شخصی نیست.'},
+{st:2,e:'🤝',t:'choice',dm:['sh'],d:[
+ ['👩‍💼',SA,'«پس باید از بودجه‌ی عروسی کم کنیم. آرش، تو چه می‌گویی؟»'],
+ ['🧑‍💻',TT,'«اگر سپر بزرگ بگذاریم عروسی کوچک‌تر می‌شود؛ اگر عروسی بزرگ بگیریم سپر نازک می‌شود.»']],
+ q:'چه توافقی؟',o:[['اول سپر؛ عروسی با هر چه ماند.',{sh:3},0],['نصف‌نصف.',{sh:2},0],['اول عروسی؛ سپر را بعداً می‌سازیم.',{sh:0},0]],
+ k:'سپر را قبل از هزینه‌ی بزرگ بساز؛ بعد از آن، وقتی بحران می‌رسد دیر است.'},
+{st:2,e:'🎞️',t:'views',vf:'v10',views:['۱. بیماری ناگهانی','۲. نصف شدن درآمد آرش','۳. جهش اجاره'],d:[
+ ['🧑‍🏫',MD,'«سه رخداد روی نقشه‌ی شما؛ با سپر خودتان.»']],
+ q:'سه رخداد را ببین.',k:'سپر همه‌چیز را حل نمی‌کند، ولی تفاوت «یک ماجرا» و «یک بحران» است.'},
+{st:3,e:'🧺',t:'basket',d:[
+ ['📖',R,'آذر. جهیزیه اولین ردیف بزرگ فهرست است. مادر ساناز چهار قلم اصلی را مشخص کرده: تلویزیون، یخچال، لباسشویی و فرش ۱۲ متری.'],
+ ['👩‍💼',SA,'«قیمت‌ها را که دیدم دلم ریخت. ماه به ماه هم گران‌تر می‌شود.»'],
+ ['🧑‍🏫',MD,'«قیمت‌ها واقعی‌اند (بهمن ۱۴۰۴ تا خرداد ۱۴۰۵) ولی بازه‌اند. هر ردیف را خودت انتخاب کن.»']],
+ q:'سبد جهیزیه‌ات چیست؟',k:'جهیزیه‌ی کامل فقط ۴ قلم نیست؛ مبلمان، آشپزخانه، خواب و ده‌ها قلم دیگر هم دارد. چهار قلم اصلی حدود یک‌چهارم کل بود (در جمع‌بندی اسفند ۱۴۰۳).'},
+{st:3,e:'🪜',t:'ladder',dm:['sh'],d:[
+ ['👩‍💼',SA,'«حالا همه‌ی خواسته‌ها را روی زمان بچینیم: کدام را کی؟»'],
+ ['🧑‍🏫',MD,'«هر هدف با منابع همان زمان سنجیده می‌شود: پس‌انداز فعلی + وام + کمک خانواده + پس‌اندازِ ماهانه.»']],
+ q:'هر هدف را روی زمان بگذار.',k:'هدف بدون تاریخ آرزوست. تاریخ، مبلغ ماهانه را مشخص می‌کند و تضاد بین هدف‌ها را قبل از پرداخت نشان می‌دهد.'},
+{st:3,e:'🏦',t:'loan',d:[
+ ['👩‍💼',SA,'«وام ازدواج را هم داریم؛ مبلغ و قسطش چقدر است؟»'],
+ ['🧑‍🏫',MD,'«۳۰۰ میلیون برای هر نفر، ۱۰ سال، کارمزد ۴٪؛ قسط حدود ۲٫۷۲۷ میلیون برای هر ۳۰۰ میلیون. ولی صف طولانی است و طبق گزارش‌ها بیش از یک میلیون نفر در صف‌اند.»']],
+ q:'چه مقدار وام در برنامه می‌گذاری؟',k:'وام منبع است، نه رایگان: قسطش هر ماه از ظرفیت پس‌انداز کم می‌کند. و زمان رسیدنش نامطمئن است.'},
+{st:3,e:'⏱️',t:'timed',def:2,dm:['cl'],d:[
+ ['👨‍🦳','آقای کیانی (پدر ساناز)','«۵۰۰ نفر کم است! آبرو هم دارد. تالار بزرگ می‌گیریم، شما نگران نباشید.»'],
+ ['👩‍🦳','مادر آرش','«ما هم فامیل زیاد داریم...»'],
+ ['👩‍💼',SA,'«آرش، چه می‌گویی؟ زود جواب بده.»']],
+ q:'آرش چه می‌گوید؟',o:[['«قبول می‌کنیم؛ آبرو مهم است.»',{cl:0},450],['«ما حدود ۲۵۰ میلیون داریم؛ با همین عدد برنامه می‌چینیم.»',{cl:3},250],['سکوت می‌کنم تا بعداً حل شود.',{cl:0},400]],
+ on:function(o){G.wed=o[2];G.wSet=1},
+ k:'عدد روی میز بگذار. سکوت یا «بعداً» معمولاً به بزرگ‌ترین عدد فشار اجتماعی می‌رسد.'},
+{st:4,e:'🎀',t:'alloc',dm:['sh'],d:[
+ ['🧑‍🏫',MD,'«حالا بودجه‌ی نهایی. منابع شما را ده سهم کرده‌ام. هر هدف چقدر سهم می‌گیرد؟»'],
+ ['👩‍💼',SA,'«رنگ صفحه را نگاه کن؛ هر کسری می‌آید قرمزتر می‌شود.»']],
+ q:'ده سهم را بین پنج ردیف تقسیم کن.',k:'کسری یعنی یکی از هدف‌ها باید کوچک‌تر یا دیرتر شود، منبعی اضافه شود، یا مصالحه‌ای با خانواده انجام شود. فرقی ندارد کدام؛ مهم است کسری را قبل از پرداخت ببینی.'}
+];
+var S,X,I,G,CI,AL,TM,TO,VS,LS,RN=0,CUR=-1,CHATON=false,app=document.getElementById('app');
+function ap(d,dm){for(var k in d)S[k]+=d[k];for(var j=0;j<dm.length;j++)X[dm[j]]+=3}
+function pc(k){return X[k]?Math.round(S[k]/X[k]*100):0}
+function fourSum(){var s=0;BK.forEach(function(b,i){s+=b[1][G.jt[i]][0]});return s}
+function jah(){return G.J!=null?G.J:fourSum()*(1+G.rest)}
+function cap(){var rm=RENT[G.rent][1];return INC-(G.E-14+rm)}
+function res(t){return S0+(G.loan!=null?G.loan:600)+G.fam+cap()*t}
+function needs(){var n=0;if(G.wSet)n+=G.wed;if(G.J!=null)n+=G.J;if(G.rSet)n+=RENT[G.rent][0];if(G.shSet)n+=G.shm*G.E;return n}
+function pressure(){if(G.cov!=null)return Math.max(0,Math.min(1,1-G.cov));var n=needs();if(n<=0)return .05;return Math.max(.05,Math.min(1,(n-res(7))/n))}
+function hex(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function mixc(a,b,t){var x=hex(a),y=hex(b);return '#'+[0,1,2].map(function(i){var v=Math.round(x[i]+(y[i]-x[i])*t).toString(16);return v.length<2?'0'+v:v}).join('')}
+function dark(){var t=document.documentElement.getAttribute('data-theme');return t?t=='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function theme(){var p=pressure(),s=CUR<0?0:CUR,bgc=ST[s].c[dark()?1:0],red=dark()?'#5a1d1d':'#f6b3ab',st=document.documentElement.style;st.setProperty('--bg',mixc(bgc,red,Math.min(p,1)*.85));st.setProperty('--ac',mixc('#e0457b','#c62828',Math.min(p,1)))}
+function hdr(){var n=Math.min(I+1,16),p=pressure();return '<div class="top"><span>🎀 همه‌چیز تا عروسی</span><span>'+fa(n)+' از ۱۶</span><button onclick="muteT(this)" style="background:none;border:0">'+(muted?'🔇':'🔊')+'</button></div><div class="pg"><i style="width:'+(n*100/16)+'%"></i></div><div class="row" style="font-size:12px;margin:0"><span>'+(p>.6?'💔':'💖')+' فشار مالی</span><span>'+fa(Math.round(p*100))+'٪</span></div><div class="pg"><i style="width:'+Math.round(p*100)+'%;background:#c62828"></i></div>'}
+function muteT(b){muted=!muted;b.textContent=muted?'🔇':'🔊'}
+function hub(){CUR=-1;CHATON=false;G={rent:0,E:51,fam:0,wed:250,rest:2.8,jt:[1,1,1,1],shm:3,tri:[]};theme();document.documentElement.style.removeProperty('--bg');
+ app.innerHTML='<div class="card"><div class="big">🎀</div><h1>همه‌چیز تا عروسی</h1><p>قسمت سوم «تا کی دوام می‌آوری؟». آرش و ساناز بهار ۱۴۰۶ ازدواج می‌کنند. عروسی، جهیزیه، ودیعه‌ی یک خانه‌ی ۷۵ متری، سپر زندگی و وام ازدواج همه سر یک پول رقابت می‌کنند. قیمت‌ها و آمار (تورم، مسکن، اجاره، لوازم خانگی، وام) واقعی‌اند؛ گفتگوها و عددهای زندگی این زوج داستانی‌اند.</p><div class="grid"><div class="hc"><div style="font-size:32px">🧑‍💻</div><b>آرش</b><br><small>فریلنسر، ۲۹ ساله</small></div><div class="hc"><div style="font-size:32px">👩‍💼</div><b>ساناز</b><br><small>کارمند، ۲۷ ساله</small></div></div><p class="w">حدود ۱۵ دقیقه · صورتی یعنی آرام، قرمز یعنی فشار مالی · آموزشی است و توصیه‌ی مالی نیست.</p><button class="btn" onclick="go()">شروع قصه ←</button></div>'}
+function go(){I=0;S={cl:0,sh:0};X={cl:0,sh:0};G={s1:5,s2:5,s3:3,g1:3,g2:60,rent:0,E:51,fam:0,wed:250,rest:2.8,jt:[1,1,1,1],shm:3,tri:[],cut:0,loan:null,cov:null};LS={wed:0,jah:0,dep:0,sh:0,house:3};CUR=-1;r(0)}
+function age(s,prev,cb){var o=document.createElement('div');o.className='ov';o.style.background=ST[s].c[dark()?1:0];
+ o.innerHTML='<div class="em"><span class="o">'+(prev<0?'✨':ST[prev].e)+'</span><span class="n">'+ST[s].e+'</span></div><h2>'+(prev<0?'':'ادامه‌ی قصه... ')+ST[s].n+'</h2><p>'+ST[s].age+'</p>';
+ document.body.appendChild(o);CUR=CUR;theme();play('bell');CHATON=false;var d=false;
+ function end(){if(d)return;d=true;o.classList.add('out');setTimeout(function(){o.remove();cb()},400)}
+ o.onclick=end;setTimeout(end,3000)}
+function bub(l){return '<div class="bb"><span>'+l[0]+'</span><div><small>'+l[1]+'</small><p>'+l[2]+'</p></div></div>'}
+function head(m){var s=ST[m.st];return '<div class="top"><span>'+s.e+' '+s.n+' · '+s.age+'</span><span>ماژول '+fa(I+1)+' از ۱۶</span></div>'}
+function getD(m){return typeof m.d=='function'?m.d():(m.d||[]).slice()}
+function r(n){clearInterval(TM);var m=M[I];
+ if(n==0&&m.st!==CUR){var s=m.st,pv=CUR;CHATON=false;CUR=s;age(s,pv,function(){r2(0)});return}
+ r2(n)}
+function r2(n){RN=n;clearInterval(TM);var m=M[I],D0=getD(m),inter=n>=D0.length;CHATON=!inter;play('pop');theme();
+ var h=hdr()+'<div class="card">'+head(m)+(n==0?'<div class="big">'+m.e+'</div>':'')+D0.slice(0,Math.min(n+1,D0.length)).map(bub).join('');
+ if(inter)h+='<div class="q"><p class="pr">👉 '+PR[m.t]+'</p><p><b>'+m.q+'</b></p><div id="ui">'+ui(m)+'</div></div>';
+ else h+='<p class="hint">👆 برای ادامه‌ی گفتگو روی صفحه بزن</p>';
+ app.innerHTML=h+'</div>';if(inter&&m.t=='timed')timer(m);
+ setTimeout(function(){window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})},60)}
+document.addEventListener('click',function(e){if(!CHATON||e.target.closest('button'))return;r2(RN+1)});
+document.addEventListener('keydown',function(e){if(CHATON&&(e.key==' '||e.key=='Enter')){e.preventDefault();r2(RN+1)}});
+function slr(id,mn,mx,v,lab,sfx,st){sfx=sfx||'';return '<div class="row"><b>'+lab+'</b><span id="'+id+'v">'+fa(v)+sfx+'</span></div><input id="'+id+'" type="range" min="'+mn+'" max="'+mx+'" step="'+(st||1)+'" value="'+v+'" oninput="document.getElementById(\''+id+'v\').textContent=fa(this.value)+\''+sfx+'\'">'}
+function opts(m){return m.o.map(function(o,j){return '<button class="ch" onclick="pk('+j+')">'+o[0]+'</button>'}).join('')}
+function ui(m){
+ if(m.t=='choice')return opts(m);
+ if(m.t=='timed')return '<div class="pg"><i id="tb" style="width:100%"></i></div><p class="w" id="tc">'+fa(15)+' ثانیه</p>'+opts(m);
+ if(m.t=='self')return slr('s1',1,10,5,'خودم را در تشخیص «ضروری» از «هویتی» چقدر دقیق می‌دانم؟ (۱ تا ۱۰)')+slr('s2',1,10,5,'برای اتفاقات ناگهانی چقدر آماده‌ایم؟ (۱ تا ۱۰)')+slr('s3',1,5,3,'اگر درآمدمان بیشتر شود، خرج عروسی خودبه‌خود جور می‌شود. (۱ مخالف … ۵ موافق)')+'<button class="btn" onclick="ss()">ثبت حدس‌ها</button>';
+ if(m.t=='guess2')return slr('g1',1,10,3,'قسط ماهانه‌ی وام ۳۰۰ میلیونی ازدواج (میلیون تومان)',' م',.5)+slr('g2',20,150,60,'میانگین قیمت هر متر مسکن تهران (میلیون تومان)',' م',5)+'<button class="btn" onclick="sg()">ثبت حدس‌ها</button>';
+ if(m.t=='triage'){CI=0;G.tri=[];return triUI()}
+ if(m.t=='views'){VS=[];return viewsUI()}
+ if(m.t=='shield'){setTimeout(function(){var e=document.getElementById('sh');var u=function(){var v=+e.value,t=document.getElementById('shc');if(t)t.innerHTML='هزینه‌ی این سپر: <b>'+mt(v*G.E)+'</b> · '+fa(Math.round(v*G.E/700*100))+'٪ ودیعه‌ی ۷۰۰ میلیونی'};if(e){e.addEventListener('input',u);u()}},0);return slr('sh',0,8,3,'ماه‌های هزینه در سپر',' ماه')+'<div class="pos" id="shc"></div><button class="btn" onclick="ssh()">ثبت</button>'}
+ if(m.t=='basket')return basketUI();
+ if(m.t=='ladder')return ladderUI();
+ if(m.t=='loan')return loanUI();
+ if(m.t=='alloc'){AL=[0,0,0,0,0];return allocUI()}}
+function timer(m){TO=0;var t0=Date.now(),L=15000;TM=setInterval(function(){var left=L-(Date.now()-t0),b=document.getElementById('tb'),c=document.getElementById('tc');if(b)b.style.width=Math.max(left/L,0)*100+'%';if(c)c.textContent=fa(Math.max(Math.ceil(left/1000),0))+' ثانیه';if(left<=0){clearInterval(TM);TO=1;pk(m.def)}},100)}
+function pk(j){clearInterval(TM);var m=M[I],o=m.o[j];ap(o[1],m.dm||[]);if(m.on)m.on(o);fin(o[0])}
+function ss(){G.s1=+document.getElementById('s1').value;G.s2=+document.getElementById('s2').value;G.s3=+document.getElementById('s3').value;fin('تشخیص '+fa(G.s1)+' از ۱۰ · آمادگی '+fa(G.s2)+' از ۱۰ · باور '+fa(G.s3)+' از ۵')}
+function sg(){G.g1=+document.getElementById('g1').value;G.g2=+document.getElementById('g2').value;fin('قسط '+m1(G.g1)+' میلیون · هر متر '+m1(G.g2)+' میلیون')}
+function triUI(){var c=M[I].c[CI];return '<p class="w" style="font-size:18px">«'+c[0]+'»</p><p class="w"><b>'+m1(c[1])+' میلیون در ماه</b></p><div class="grid" style="grid-template-columns:repeat(3,1fr)"><button class="hc" onclick="tr(0)">✅ ضروری</button><button class="hc" onclick="tr(1)">🔄 قابل‌تغییر</button><button class="hc" onclick="tr(2)">👑 هویتی</button></div><p class="w">'+fa(CI+1)+' از ۱۰</p>'}
+function tr(j){var c=M[I].c[CI];X.cl+=3;if(j==c[2])S.cl+=3;G.tri.push([c,j]);CI++;play('tick');
+ if(CI>=M[I].c.length){var ok=G.tri.filter(function(x){return x[1]==x[0][2]}).length,bad=G.tri.filter(function(x){return x[1]!=x[0][2]}),nm=['ضروری','قابل‌تغییر','هویتی'];
+  fin('دقت تو: '+fa(ok)+' از ۱۰',bad.length?'<p class="w" style="font-size:13px">متفاوت با دسته‌بندی مرجع: '+bad.map(function(x){return x[0][0]+' ('+nm[x[0][2]]+')'}).join('، ')+'</p>':'<p class="ok">همه‌ی دسته‌ها با مرجع یکی بود.</p>')}
+ else document.getElementById('ui').innerHTML=triUI()}
+function viewsUI(){var m=M[I],h='<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+m.views.map(function(t,j){return '<button class="hc'+(VS.cur==j?' on':'')+'" onclick="vw('+j+')">'+(VS.indexOf(j)>-1?'✔ ':'')+t+'</button>'}).join('')+'</div>';
+ if(VS.cur>=0)h+=VIEWS[m.vf](VS.cur);else h+='<p class="w">یکی را انتخاب کن.</p>';
+ if(VS.length==3)h+='<div class="rx">💡 '+m.k+'</div><button class="btn" onclick="nx()">ادامه ←</button>';return h}
+function vw(j){if(VS.indexOf(j)<0)VS.push(j);VS.cur=j;play('pop');document.getElementById('ui').innerHTML=viewsUI()}
+function barRow(l,v,t,c){return '<div class="row" style="margin:2px 0"><span>'+l+'</span><b>'+m1(v)+' م</b></div><div class="pg"><i style="width:'+Math.round(v/t*100)+'%;background:'+c+'"></i></div>'}
+var VIEWS={
+v4:function(j){var t=51;
+ if(j==0)return barRow('✅ ضروری',30,t,'#2b7a5b')+barRow('🔄 قابل‌تغییر',7.5,t,'#e0a21b')+barRow('👑 هویتی',13.5,t,'#e0457b')+'<p>جمع هزینه‌ی ماهانه‌ی داستان: ۵۱ میلیون؛ درآمد مشترک ۵۸ میلیون؛ پس‌انداز ماهانه ۷ میلیون. هویتی ≈ ۲۶٪ هزینه است.</p><p class="w" style="font-size:13px">مرجع واقعی: میانگین خانوار شهری ۱۴۰۳ (مرکز آمار): هزینه ≈۲۷۰ و درآمد ≈۳۴۰ میلیون در سال (≈۲۲٫۵ و ۲۸٫۳ در ماه)؛ ۱۳۹۶: ۳۲٫۹ و ۳۶٫۶ میلیون در سال.</p>';
+ if(j==1)return '<p>هویتی ۱۳٫۵ ← ۶٫۷۵ میلیون: ماهی <b>۶٫۷۵ میلیون</b> آزاد می‌شود.</p><p>در ۷ ماه حدود <b>۴۷ میلیون</b>؛ برابر ۷٪ ودیعه‌ی ۷۰۰ میلیونی.</p><p class="w" style="font-size:13px">تصمیمش دست خودت است؛ فقط به «تصویر» بستگی دارد، نه به بازار.</p>';
+ var e7=51*Math.pow(1.042,7);return '<p>درآمد ۲۰٪ بالا: ۵۸ ← ۶۹٫۶ میلیون.</p><p>ولی با تورم ماهانه‌ی <b>۴٫۲٪</b> (مرکز آمار، شهریور ۱۴۰۵)، هزینه‌ی ۵۱ میلیونی بعد از ۷ ماه حدود <b>'+m1(e7)+' میلیون</b> می‌شود (+۳۴٪).</p><p>پس‌انداز ماهانه از ۷ به <b class="'+(69.6-e7<7?'bad':'ok')+'">'+m1(69.6-e7)+' میلیون</b> می‌رسد.</p><p class="w" style="font-size:13px">فرض ساده: همه‌ی هزینه‌ها با تورم عمومی بالا می‌روند. در خرداد ۱۴۰۵ «مبلمان و لوازم خانگی» ماهانه ۹٫۷٪ گران شد.</p>'},
+v10:function(j){var E=G.E,sh=G.shm*E,ev=[['بیماری یا هزینه‌ی درمان ناگهانی',40],['درآمد آرش دو ماه نصف می‌شود (۱۵ از ۳۰ میلیون)',30],['جهش اجاره ۳۱٪ روی اجاره‌ی ۱۰ میلیونی در یک سال',37]][j],cov=Math.min(1,sh/ev[1]);
+ return '<p><b>'+ev[0]+'</b></p><p>هزینه: <b>'+fa(ev[1])+' میلیون</b></p><p>سپر تو ('+fa(G.shm)+' ماه): <b>'+m1(sh)+' میلیون</b> ← پوشش <b class="'+(cov>=1?'ok':'bad')+'">'+fa(Math.round(cov*100))+'٪</b></p>'+(cov<1?'<p class="bad">کسری: '+m1(ev[1]-sh)+' میلیون (باید از وام، قرض یا کاهش هزینه جبران شود)</p>':'<p class="ok">سپر همه‌ی رخداد را پوشش می‌دهد.</p>')+(j==2?'<p class="w" style="font-size:13px">رشد رسمی اجاره (اردیبهشت ۱۴۰۵: ۳۳٫۲٪ سالانه) برای همه‌ی قراردادها است؛ قرارداد جدید ممکن است بیشتر بالا برود.</p>':'')}};
+function ssh(){G.shm=+document.getElementById('sh').value;G.shSet=1;var m=G.shm,d=(m>=4&&m<=6)?3:(m==3||m==7)?2:(m==2||m==8)?1:0;ap({sh:d},['sh']);fin(fa(m)+' ماه هزینه ('+mt(m*G.E)+')','<p>هزینه‌ی فرصت: این سپر برابر <b>'+fa(Math.round(m*G.E/700*100))+'٪</b> ودیعه‌ی ۷۰۰ میلیونی یا <b>'+fa(Math.round(m*G.E/jah()*100))+'٪</b> جهیزیه است.</p>')}
+function basketUI(){var h='';BK.forEach(function(b,i){h+='<p style="margin:6px 0 2px"><b>'+b[0]+'</b></p><div class="grid" style="grid-template-columns:repeat(3,1fr)">'+b[1].map(function(t,j){return '<button class="hc'+(G.jt[i]==j?' on':'')+'" onclick="bk('+i+','+j+')">'+fa(t[0])+' م<br><small>'+t[1]+'</small></button>'}).join('')+'</div>'});
+ var f=fourSum();h+='<p class="pos">۴ قلم: <b>'+fa(f)+' میلیون</b></p>'+slr('rs',1,4,G.rest,'«بقیه‌ی اقلام» (مبلمان، آشپزخانه، خواب...) برابر چند برابر ۴ قلم؟','×',.2)+'<p class="pos" id="jt">جهیزیه‌ی کامل (برآورد): <b>'+mt(f*(1+G.rest))+'</b></p><p class="w" style="font-size:13px">قیمت‌ها: ۲۸ بهمن ۱۴۰۴ و ۳ خرداد ۱۴۰۵؛ فرش: لیست‌های ترب (تاریخ دقیق نامشخص). ضریب ۲٫۸: ۴ قلم ≈ ۲۷٪ جهیزیه‌ی ۲۹۰ میلیونی در اسفند ۱۴۰۳. عدد کل برآورد است، نه قیمت. در خرداد ۱۴۰۵ لوازم خانگی ماهانه ۹٫۷٪ گران شد.</p><button class="btn" onclick="sb()">ثبت سبد</button>';
+ setTimeout(function(){var e=document.getElementById('rs');if(e)e.addEventListener('input',function(){G.rest=+this.value;var t=document.getElementById('jt');if(t)t.innerHTML='جهیزیه‌ی کامل (برآورد): <b>'+mt(fourSum()*(1+G.rest))+'</b>'})},0);return h}
+function bk(i,j){G.jt[i]=j;G.J=fourSum()*(1+G.rest);theme();play('tick');document.getElementById('ui').innerHTML=basketUI()}
+function sb(){G.rest=+document.getElementById('rs').value;G.J=fourSum()*(1+G.rest);fin('۴ قلم '+mt(fourSum())+' · کل (برآورد) '+mt(G.J),'<div class="pos">جهیزیه '+fa(Math.round(G.J/(res(7)+0)*100))+'٪ منابع ۷ ماه آینده است.</div>')}
+function goals(){var E=G.E;return [['wed','💒 عروسی',G.wed],['jah','🧺 جهیزیه کامل',jah()],['dep','🏠 ودیعه‌ی ۷۵ متری',RENT[G.rent][0]],['sh','🛡️ سپر',G.shm*E],['house','🏡 خرید خانه ۷۵ متری',75*PRICE_M2]]}
+function ladderUI(){var gs=goals(),h='<p style="margin:4px 0"><b>ودیعه‌ی ۷۵ متری:</b></p>'+RENT.map(function(x,j){return '<button class="ch'+(G.rent==j?' on':'')+'" onclick="rn('+j+')">'+x[2]+'</button>'}).join('');
+ h+='<p class="w" style="font-size:13px">آگهی‌های بهمن ۱۴۰۴ (نبض بورس). هر ۱ میلیون ودیعه ≈ ۳۰ هزار تومان اجاره‌ی ماهانه.</p>';
+ gs.forEach(function(g){h+='<p style="margin:8px 0 2px"><b>'+g[1]+'</b> · '+mt(g[2])+'</p><div class="grid" style="grid-template-columns:repeat(4,1fr)">'+SL.map(function(s,k){return '<button class="hc'+(LS[g[0]]==k?' on':'')+'" onclick="ls(\''+g[0]+'\','+k+')">'+s[0]+'</button>'}).join('')+'</div>'});
+ h+='<table class="tb" style="margin-top:12px"><tr><th>تا</th><th>هدف‌های این زمان</th><th>منابع</th><th></th></tr>';
+ for(var k=0;k<4;k++){var c=0;gs.forEach(function(g){if(g[0]!='house'&&LS[g[0]]<=k)c+=g[2]});var rr=res(SL[k][1]);h+='<tr><td>'+SL[k][0]+'</td><td>'+mt(c)+'</td><td>'+mt(rr)+'</td><td>'+(c<=rr?'<span class="ok">✅</span>':'<span class="bad">❌</span>')+'</td></tr>'}
+ var hc=75*PRICE_M2,hs=res(120);h+='</table><p class="pos">🏡 خانه‌ی ۷۵ متری: ≈ <b>'+mt(hc)+'</b> (بانک مرکزی، مرداد ۱۴۰۳: ۸۸٫۵ میلیون در متر؛ مرکز آمار ≈۸۰٫۸ و اتحادیه ۹۰ تا ۱۰۰). منابع ۱۰ ساله‌ی فعلی: <b>'+mt(hs)+'</b>؛ فاصله ≈ <b class="bad">'+mt(Math.max(0,hc-hs))+'</b> (اسمی، بدون سود و رشد قیمت).</p><p class="w" style="font-size:13px">ظرفیت پس‌انداز ماهانه: '+m1(cap())+' میلیون.</p><button class="btn" onclick="sl()">ثبت نردبان</button>';return h}
+function rn(j){G.rent=j;G.rSet=1;theme();document.getElementById('ui').innerHTML=ladderUI()}
+function ls(k,s){LS[k]=s;G.rSet=1;play('tick');theme();document.getElementById('ui').innerHTML=ladderUI()}
+function sl(){var gs=goals(),okc=0;for(var k=0;k<4;k++){var c=0;gs.forEach(function(g){if(g[0]!='house'&&LS[g[0]]<=k)c+=g[2]});if(c<=res(SL[k][1]))okc++}
+ var d=Math.round(3*okc/4);ap({sh:d},['sh']);G.rSet=1;G.shSet=G.shSet||1;fin(fa(okc)+' از ۴ بازه‌ی زمانی از نظر منابع شدنی است.','<p class="w" style="font-size:13px">سه نمره‌ی مشکل: هدف‌های هم‌زمان، جهیزیه و ودیعه. خانه‌ی ۷۵ متری برای ۱۰ سال بدون جهش درآمد یا کمک بزرگ شدنی نیست.</p>')}
+function loanUI(){var h='<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+[0,300,600].map(function(v){return '<button class="hc'+(G.loan==v?' on':'')+'" onclick="ln('+v+')">'+(v?fa(v)+' میلیون<br><small>'+(v==300?'یک نفر':'هر دو نفر')+'</small>':'بدون وام')+'</button>'}).join('')+'</div>';
+ if(G.loan!=null){var q=G.loan*LOAN_RATIO;h+='<p class="pos">قسط ماهانه: <b>'+m1(q)+' میلیون</b> (۱۰ سال) = '+fa(Math.round(q/INC*100))+'٪ درآمد مشترک</p><p>حدس تو برای قسط ۳۰۰ میلیونی: <b>'+m1(G.g1)+' میلیون</b>؛ واقعیت: <b>۲٫۷۲۷ میلیون</b>.</p><p class="w" style="font-size:13px">مبلغ وام از ۱۴۰۳ تغییر نکرده؛ بیش از یک میلیون نفر در صف‌اند (رادیو فردا، مرداد ۱۴۰۵). افزایش‌های پیشنهادی (۴۰۰ و ۵۰۰) هنوز اجرایی‌شدنش تأیید نشده است.</p><button class="btn" onclick="slo()">ثبت</button>'}else h+='<p class="w">یک گزینه را انتخاب کن.</p>';return h}
+function ln(v){G.loan=v;play('tick');theme();document.getElementById('ui').innerHTML=loanUI()}
+function slo(){var q=G.loan*LOAN_RATIO;fin(G.loan?fa(G.loan)+' میلیون وام؛ قسط '+m1(q)+' میلیون در ماه':'بدون وام',q>cap()?'<p class="bad">قسط از ظرفیت پس‌انداز ماهانه ('+m1(cap())+' میلیون) بیشتر است؛ از فشار ماهانه کم نمی‌کند.</p>':'')}
+function allocUI(){var m=M[I],it=['💒 عروسی','🧺 جهیزیه','🏠 ودیعه/رهن','🛡️ سپر','🌱 پس‌انداز بلندمدت'],t=AL.reduce(function(a,b){return a+b},0),R=res(7),unit=R/10,tg=[G.wed,jah(),RENT[G.rent][0],G.shm*G.E,0];
+ var h='<p class="pos">منابع تا ۷ ماه: <b>'+mt(R)+'</b> (پس‌انداز '+fa(S0)+' + وام '+fa(G.loan!=null?G.loan:600)+' + کمک خانواده '+fa(G.fam)+' + ۷ ماه پس‌انداز) · هر سهم ≈ '+mt(unit)+'</p>';
+ it.forEach(function(x,j){var cov=tg[j]?Math.min(1,AL[j]*unit/tg[j]):null;h+='<div class="row"><span>'+x+(tg[j]?'<br><small>هدف: '+mt(tg[j])+(cov!=null?' · پوشش '+fa(Math.round(cov*100))+'٪':'')+'</small>':'')+'</span><span><button onclick="al('+j+',-1)">−</button> <b>'+fa(AL[j])+'</b> <button onclick="al('+j+',1)">+</button></span></div>'});
+ return h+'<p class="w">باقی‌مانده: '+fa(10-t)+' سهم</p><button class="btn" '+(t==10?'':'disabled')+' onclick="ad()">ثبت بودجه‌ی نهایی</button>'}
+function al(j,d){var t=AL.reduce(function(a,b){return a+b},0);if(AL[j]+d<0||t+d>10)return;AL[j]+=d;play('tick');document.getElementById('ui').innerHTML=allocUI()}
+function ad(){var R0=res(7),unit=R0/10,tg=[G.wed,jah(),RENT[G.rent][0],G.shm*G.E],cv=tg.map(function(t,j){return Math.min(1,AL[j]*unit/t)}),avg=cv.reduce(function(a,b){return a+b},0)/4;G.cov=avg;G.cv=cv;G.AL=AL.slice();theme();
+ var d=avg>=.9?3:avg>=.7?2:avg>=.5?1:0;ap({sh:d},['sh']);play(avg>=.7?'good':'bad');
+ fin('پوشش میانگین هدف‌ها: '+fa(Math.round(avg*100))+'٪','<table class="tb"><tr><th>هدف</th><th>پوشش</th></tr>'+['💒 عروسی','🧺 جهیزیه','🏠 ودیعه','🛡️ سپر'].map(function(x,j){return '<tr><td>'+x+'</td><td class="'+(cv[j]>=.9?'ok':'bad')+'">'+fa(Math.round(cv[j]*100))+'٪</td></tr>'}).join('')+'</table>'+(avg<.9?'<p class="bad">کسری تا پوشش کامل: ≈ '+mt((1-avg)*tg.reduce(function(a,b){return a+b},0))+'. باید یک هدف کوچک‌تر یا دیرتر شود، یا منبع تازه‌ای اضافه شود.</p>':'<p class="ok">همه‌ی هدف‌ها پوشش داده شد.</p>'))}
+function fin(t,ex){clearInterval(TM);var m=M[I];play('click');CHATON=false;theme();
+ app.innerHTML=hdr()+'<div class="card">'+head(m)+'<p><b>'+m.q+'</b></p>'+(TO?'<p class="w">⏱️ وقت تمام شد؛ ذهن به عادتش برگشت و این هم یک انتخاب بود.</p>':'')+'<p>✔ '+t+'</p>'+(ex||'')+'<div class="rx">💡 '+m.k+'</div><button class="btn" onclick="nx()">'+(I>=14?'🪞 دیدن آینه':'ادامه ←')+'</button></div>';TO=0}
+function nx(){I++;if(I>=15){var pv=CUR;CUR=5;age(5,pv,function(){pre()})}else r(0)}
+function pre(){I=15;CHATON=false;theme();
+ app.innerHTML=hdr()+'<div class="card"><div class="big">🪞</div><h1>یک سؤال آخر</h1><p class="w">قبل از دیدن آینه:</p>'+slr('b2',1,5,3,'اگر درآمدمان بیشتر شود، خرج عروسی خودبه‌خود جور می‌شود. (۱ مخالف … ۵ موافق)')+'<button class="btn" onclick="mirror()">نمایش آینه ←</button></div>'}
+function cmp(lab,sp,bp,su,bu,txt){return '<div class="card"><b>'+lab+'</b><div class="row"><span>تصور تو</span><b>'+su+'</b></div><div class="pg"><i style="width:'+sp+'%;background:#b9a3ae"></i></div><div class="row"><span>رفتار تو</span><b>'+bu+'</b></div><div class="pg"><i style="width:'+bp+'%"></i></div><p>'+txt+'</p></div>'}
+function gapTxt(d,t){return d>=t?'🔦 <b>نقطه‌ی کور:</b> خودت را بهتر از رفتارت می‌بینی. این شرم‌آور نیست؛ بیشتر آدم‌ها هزینه‌های هویتی و ریسک‌ها را کمتر می‌بینند.':d<=-t?'💪 <b>قدرت پنهان:</b> رفتارت بهتر از تصورت است. به خودت اعتماد بیشتری بده.':'🎯 تصورت و رفتارت نزدیک‌اند؛ خودت را خوب می‌شناسی.'}
+function share(){return '🎀 همه‌چیز تا عروسی\nوضوح هزینه: تصور '+fa(G.s1*10)+'٪ ← رفتار '+fa(pc('cl'))+'٪\nآمادگی و برنامه: تصور '+fa(G.s2*10)+'٪ ← رفتار '+fa(pc('sh'))+'٪\nپوشش هدف‌ها: '+fa(Math.round((G.cov||0)*100))+'٪'+(G.cm?'\nتعهدم: '+G.cm:'')+'\nتو چقدر برای عروسی و زندگی آماده‌ای؟'}
+function cardImg(){try{var c=document.createElement('canvas');c.width=1080;c.height=1350;var x=c.getContext('2d'),F='Tahoma,sans-serif',p=pressure();x.fillStyle=mixc('#ffe4ec','#f6b3ab',p*.85);x.fillRect(0,0,1080,1350);x.direction='rtl';x.textAlign='center';
+ x.fillStyle='#c2185b';x.font='bold 60px '+F;x.fillText('همه‌چیز تا عروسی',540,140);x.font='160px sans-serif';x.fillText('🎀',540,330);
+ var rows=[['وضوح هزینه',G.s1*10,pc('cl')],['آمادگی و برنامه',G.s2*10,pc('sh')]];
+ rows.forEach(function(r,i){var y=480+i*260;x.fillStyle='#6b3a4a';x.font='46px '+F;x.fillText(r[0],540,y);x.fillStyle='#9a7a88';x.font='bold 76px '+F;x.fillText('تصور '+fa(r[1])+'٪',540,y+90);x.fillStyle='#c2185b';x.fillText('رفتار '+fa(r[2])+'٪',540,y+180)});
+ x.fillStyle='#6b3a4a';x.font='bold 54px '+F;x.fillText('پوشش هدف‌ها '+fa(Math.round((G.cov||0)*100))+'٪',540,1060);
+ x.fillStyle='#3a2530';x.font='bold 46px '+F;x.fillText('تو چقدر آماده‌ای؟',540,1180);x.fillStyle='#8a6f7c';x.font='30px '+F;x.fillText('آمار واقعی · شبیه‌سازی آموزشی؛ توصیه‌ی مالی نیست',540,1290);
+ return c.toDataURL('image/png')}catch(e){return ''}}
+function cp(){var t=share(),fb=function(){document.getElementById('cpa').innerHTML='<textarea id="cpt" readonly></textarea>';var a=document.getElementById('cpt');a.value=t;a.select();document.getElementById('cpm').textContent='متن را انتخاب کن و کپی کن.'};
+ try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){document.getElementById('cpm').textContent='کپی شد ✅'},fb);else fb()}catch(e){fb()}}
+var CM=['هر ماه هزینه‌ها را در سه دسته (ضروری، قابل‌تغییر، هویتی) مرور کنیم','برای هر خرید بزرگ قانون ۲۴ ساعت و سه قیمت','سقف عروسی را روی کاغذ بنویسیم و به خانواده بگوییم'];
+function cmx(j){G.cm=CM[j];play('good');document.getElementById('cmt').innerHTML=cmUI()}
+function cmUI(){return '<p><b>🤝 یک تعهد کوچک برای هفته‌ی آینده</b></p>'+CM.map(function(t,j){return '<button class="ch'+(G.cm==t?' on':'')+'" onclick="cmx('+j+')">'+(G.cm==t?'✅ ':'')+t+'</button>'}).join('')}
+function mirror(){play('win');G.b2=+document.getElementById('b2').value;var cl=pc('cl'),sh=pc('sh'),b1=G.s3,b2=G.b2,cov=G.cov!=null?G.cov:0,p=pressure();theme();
+ var bt=b2<b1?'ذهنت عوض شد: درآمد بیشتر خودبه‌خود خرج عروسی را جور نمی‌کند.':(b1<=2?'از اول هم می‌دانستی که درآمد بیشتر به‌تنهایی کافی نیست.':'هنوز فکر می‌کنی درآمد بیشتر مشکل را حل می‌کند. دوباره ماژول «اگر درآمد ۲۰٪ بالا برود» را ببین.');
+ var img=cardImg(),ie=G.g1/2.727-1,ip=G.g2/PRICE_M2-1,
+ note=(G.s1*10-cl>=20||G.s2*10-sh>=20)?'بیشتر آدم‌ها آمادگی و دقت خودشان را بیشتر از رفتار واقعی می‌بینند، چون هزینه‌های هویتی و رخدادهای ناگهانی در ذهن ثبت نمی‌شوند. دیدن این فاصله اولین قدم برای پر کردنش است.':(G.s1*10-cl<=-20||G.s2*10-sh<=-20)?'رفتارت از تصورت بهتر بود. حالا که می‌دانی، با اطمینان بیشتری برنامه بچین.':'تصور و رفتارت نزدیک بودند. حالا بهتر کردن هر دو را با عدد و تاریخ شروع کن.';
+ app.innerHTML=hdr()+'<div class="card"><div class="big">'+(p>.6?'💔':'💖')+'</div><h1>آینه‌ی آرش و ساناز، و تو</h1><p class="w">پوشش هدف‌های نهایی: '+fa(Math.round(cov*100))+'٪ · فشار مالی: '+fa(Math.round(p*100))+'٪</p></div>'+
+ cmp('🧾 وضوح هزینه',G.s1*10,cl,fa(G.s1*10)+'٪',fa(cl)+'٪',gapTxt(G.s1*10-cl,20))+
+ cmp('🛡️ آمادگی و برنامه‌ی هدف',G.s2*10,sh,fa(G.s2*10)+'٪',fa(sh)+'٪',gapTxt(G.s2*10-sh,20))+
+ '<div class="card"><b>🎯 حدس‌های تو در برابر داده‌ی واقعی</b><p>قسط وام ۳۰۰ میلیونی: حدس '+m1(G.g1)+' م؛ واقعیت ۲٫۷۲۷ م ('+(ie>=0?'+':'')+fa(Math.round(ie*100))+'٪).</p><p>هر متر مسکن تهران: حدس '+m1(G.g2)+' م؛ آخرین عدد رسمی (بانک مرکزی، مرداد ۱۴۰۳) ۸۸٫۵ م ('+(ip>=0?'+':'')+fa(Math.round(ip*100))+'٪). منابع دیگر ۸۰٫۸ تا ۱۰۰ می‌گویند.</p></div>'+
+ '<div class="card"><b>🧠 باور تو</b><p>قبل: '+fa(b1)+' از ۵ ← بعد: '+fa(b2)+' از ۵</p><p>'+bt+'</p></div>'+
+ '<div class="card"><div class="row"><b>🧑‍🏫 یادداشت مهدی‌یار</b></div><p>'+note+'</p></div>'+
+ '<div class="card" id="cmt">'+cmUI()+'</div>'+
+ '<div class="card"><p><b>📤 کارت نتیجه‌ی تو</b></p>'+(img?'<img class="shimg" src="'+img+'" alt="کارت نتیجه"><p class="w">عکس را نگه دار (یا راست‌کلیک کن) و ذخیره کن.</p>':'')+'<button class="btn" onclick="cp()">📋 کپی متن نتیجه</button><div id="cpa"></div><p class="w" id="cpm"></p></div>'+
+ '<div class="card"><p><b>📚 منبع داده‌ها و محدودیت‌ها</b></p><p style="font-size:14px">تورم: مرکز آمار، شهریور ۱۴۰۵ (سالانه ۷۳٫۶٪، نقطه‌ای ۸۹٫۸٪، ماهانه ۴٫۲٪؛ خرداد ۱۴۰۵ لوازم خانگی و مبلمان ماهانه ۹٫۷٪). اجاره‌ی رسمی: اردیبهشت ۱۴۰۵، ۳۳٫۲٪ سالانه. مسکن تهران: بانک مرکزی مرداد ۱۴۰۳ (آخرین گزارش رسمی) ≈۸۸٫۵ م/متر؛ مرکز آمار ≈۸۰٫۸؛ اتحادیه‌ی املاک ۹۰ تا ۱۰۰. اجاره: آگهی‌های بهمن ۱۴۰۴ (نبض بورس). لوازم: ۲۸ بهمن ۱۴۰۴ و ۳ خرداد ۱۴۰۵؛ فرش: لیست‌های ترب (تاریخ دقیق نامشخص). وام ازدواج: ۳۰۰ م برای هر نفر، قسط ≈۲٫۷۲۷ م (رادیو فردا، مرداد ۱۴۰۵). هزینه‌ی عروسی داده‌ی معتبر نداشت و عدد دست خودت بود. اعداد درآمد و هزینه‌ی این زوج داستانی‌اند.</p><p class="w" style="font-size:13px">آموزشی است، نه توصیه‌ی مالی. جهیزیه‌ی کامل برآورد ضریبی است و قیمت‌ها هر ماه عوض می‌شوند.</p></div>'+
+ '<div class="card"><p><b>⏭️ قسمت بعد</b></p><p>«کارگاه سیستم من»: ساختن قانون‌های شخصی برای تصمیم مالی و آزمایش آن‌ها با شوک‌ها. به‌زودی.</p></div><button class="btn sec" onclick="hub()">↻ دوباره بازی کن</button>';
+ try{localStorage.setItem('fc_game_c',JSON.stringify({cl:cl,sh:sh,selfCl:G.s1*10,selfSh:G.s2*10,cov:Math.round(cov*100),belief:[b1,b2]}))}catch(e){}
+ window.scrollTo({top:0})}
+hub();
+</script>
+</body>
+</html>
