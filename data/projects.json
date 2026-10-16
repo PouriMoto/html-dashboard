@@ -454,6 +454,111 @@
         "notes": "",
         "custom": {}
       }
+    },
+    {
+      "id": "project-mv9ek39c",
+      "title": "ارادۀ جنگیدن",
+      "subtitle": "",
+      "description": "پیروزی در نبرد نهایتاً به ارادۀ جنگیدن ربط دارد، نه فناوری‌های پیشرفته\nتعهد به ارزش‌های بنیادین و عزم جمعی عواملی‌اند که می‌توانند نتیجۀ محتوم جنگ‌ها را عوض کنند",
+      "categoryId": "prototypes",
+      "tags": [],
+      "entry": {
+        "localPath": "projects/The-will-to-fight/The-will-to-fight.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "iframe",
+      "cover": {
+        "thumbnail": null,
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": true,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-15",
+        "updatedAt": "2026-10-15",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mv9exouw",
+      "title": "شبیه سازی های مالی",
+      "subtitle": "",
+      "description": "5 بازی چت محور برا درک شرایط و مباحث اقتصادی مرتبط با پول",
+      "categoryId": "simulations",
+      "tags": [],
+      "entry": {
+        "localPath": "projects/financial-simulation-games/index.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "iframe",
+      "cover": {
+        "thumbnail": null,
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": true,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-15",
+        "updatedAt": "2026-10-15",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mvauywda",
+      "title": "عمارت کلاه فرنگی بندرعباس",
+      "subtitle": "",
+      "description": "نمونه فایل ساختن ریلز با GSAP و کدنویسی",
+      "categoryId": "prototypes",
+      "tags": [],
+      "entry": {
+        "localPath": "projects/animate-html/kolah-farangi-reel-v3-fixed.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "iframe",
+      "cover": {
+        "thumbnail": null,
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": true,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-16",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
     }
   ]
 }
