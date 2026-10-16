@@ -120,11 +120,11 @@
       "label": "مالی"
     },
     {
-      "id": "animation",
+      "id": "انیمیشن",
       "label": "انیمیشن"
     },
     {
-      "id": "zero-level",
+      "id": "نمونه-اولیه",
       "label": "نمونه اولیه"
     }
   ],
@@ -143,7 +143,7 @@
       "launchTarget": "local",
       "previewMode": "iframe",
       "cover": {
-        "thumbnail": null,
+        "thumbnail": "assets/thumbnails/the-will-to-fight.webp",
         "gradient": null,
         "accent": null,
         "icon": null
@@ -155,7 +155,7 @@
         "version": null,
         "author": null,
         "createdAt": "2026-10-15",
-        "updatedAt": "2026-10-15",
+        "updatedAt": "2026-10-16",
         "language": null,
         "direction": null,
         "status": null,
