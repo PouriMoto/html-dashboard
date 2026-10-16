@@ -4,13 +4,13 @@
   "settings": {
     "siteTitle": "Project Deck",
     "iconSpritePath": "assets/icons/tabler-sprite.svg",
+    "projectsDir": "projects/",
+    "backgroundImage": "assets/backgrounds/background.webp",
     "iconSymbolPrefix": "tabler-",
     "ambientAudio": {
       "src": "assets/audio/ambient.mp3",
       "label": "موسیقی محیطی"
-    },
-    "projectsDir": "projects/",
-    "backgroundImage": "assets/backgrounds/background.webp"
+    }
   },
   "categories": [
     {
@@ -22,6 +22,7 @@
         "tabler": "device-gamepad-2"
       },
       "accent": "#8b7cff",
+      "hidden": false,
       "order": 1
     },
     {
@@ -33,6 +34,7 @@
         "tabler": "book-2"
       },
       "accent": "#ffb86b",
+      "hidden": false,
       "order": 2
     },
     {
@@ -44,6 +46,7 @@
         "tabler": "flask"
       },
       "accent": "#5ab0ff",
+      "hidden": false,
       "order": 3
     },
     {
@@ -55,6 +58,7 @@
         "tabler": "clipboard-check"
       },
       "accent": "#ff7a9c",
+      "hidden": false,
       "order": 4
     },
     {
@@ -66,6 +70,7 @@
         "tabler": "tool"
       },
       "accent": "#3fd8c5",
+      "hidden": false,
       "order": 5
     },
     {
@@ -77,6 +82,7 @@
         "tabler": "rocket"
       },
       "accent": "#c4e86b",
+      "hidden": false,
       "order": 6
     }
   ],
@@ -172,28 +178,37 @@
         "persian"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=book"
+        "localPath": "projects/demo-project/index.html?sample=book",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
       "previewMode": "iframe",
       "cover": {
+        "thumbnail": null,
         "gradient": [
           "#ffb86b",
           "#7a3fd6"
         ],
+        "accent": null,
         "icon": {
           "emoji": "📖",
           "tabler": "book-2"
         }
       },
       "featured": true,
+      "visibility": "visible",
       "sortOrder": 2,
       "meta": {
         "version": "0.1.0",
+        "author": null,
         "createdAt": "2026-09-20",
         "updatedAt": "2026-10-10",
         "language": "fa",
+        "direction": null,
         "status": "نمونه",
-        "estimatedMinutes": 15
+        "estimatedMinutes": 15,
+        "notes": "",
+        "custom": {}
       }
     },
     {
@@ -207,9 +222,14 @@
         "mobile-friendly"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=game"
+        "localPath": "projects/demo-project/index.html?sample=game",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
+      "previewMode": "new-tab",
       "cover": {
+        "thumbnail": null,
+        "gradient": null,
         "accent": "#8b7cff",
         "icon": {
           "emoji": "🎮",
@@ -217,16 +237,20 @@
         }
       },
       "featured": true,
+      "visibility": "visible",
       "sortOrder": 3,
       "meta": {
         "version": "0.3.0",
+        "author": null,
         "createdAt": "2026-09-05",
         "updatedAt": "2026-10-02",
         "language": "fa",
+        "direction": null,
         "status": "نمونه",
-        "estimatedMinutes": 5
-      },
-      "previewMode": "new-tab"
+        "estimatedMinutes": 5,
+        "notes": "",
+        "custom": {}
+      }
     },
     {
       "id": "sample-physics-lab",
@@ -239,22 +263,34 @@
         "experiment"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=sim"
+        "localPath": "projects/demo-project/index.html?sample=sim",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
+      "previewMode": "thumbnail",
       "cover": {
+        "thumbnail": null,
+        "gradient": null,
         "accent": "#5ab0ff",
         "icon": {
           "emoji": "🧪",
           "tabler": "flask"
         }
       },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
       "meta": {
         "version": "0.2.0",
+        "author": null,
         "createdAt": "2026-08-12",
         "updatedAt": "2026-09-28",
         "language": "fa",
+        "direction": null,
         "status": "نمونه",
-        "estimatedMinutes": 10
+        "estimatedMinutes": 10,
+        "notes": "",
+        "custom": {}
       }
     },
     {
@@ -268,24 +304,35 @@
         "persian"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=test"
+        "localPath": "projects/demo-project/index.html?sample=test",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
+      "previewMode": "thumbnail",
       "cover": {
+        "thumbnail": null,
+        "gradient": null,
         "accent": "#ff7a9c",
         "icon": {
           "emoji": "📝",
           "tabler": "clipboard-check"
         }
       },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
       "meta": {
         "version": "0.1.0",
+        "author": null,
         "createdAt": "2026-07-30",
         "updatedAt": "2026-09-15",
         "language": "fa",
+        "direction": null,
         "status": "نمونه",
-        "estimatedMinutes": 8
-      },
-      "previewMode": "thumbnail"
+        "estimatedMinutes": 8,
+        "notes": "",
+        "custom": {}
+      }
     },
     {
       "id": "sample-budget-tool",
@@ -298,22 +345,34 @@
         "offline"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=tool"
+        "localPath": "projects/demo-project/index.html?sample=tool",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
+      "previewMode": "thumbnail",
       "cover": {
+        "thumbnail": null,
+        "gradient": null,
         "accent": "#3fd8c5",
         "icon": {
           "emoji": "🧮",
           "tabler": "calculator"
         }
       },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
       "meta": {
         "version": "0.4.0",
+        "author": null,
         "createdAt": "2026-06-18",
         "updatedAt": "2026-10-08",
         "language": "fa",
+        "direction": null,
         "status": "نمونه",
-        "estimatedMinutes": 3
+        "estimatedMinutes": 3,
+        "notes": "",
+        "custom": {}
       }
     },
     {
@@ -332,20 +391,31 @@
       "launchTarget": "deployed",
       "previewMode": "thumbnail",
       "cover": {
+        "thumbnail": null,
         "gradient": [
           "#c4e86b",
           "#1f6f5c"
         ],
+        "accent": null,
         "icon": {
           "emoji": "🌐",
           "tabler": "world"
         }
       },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
       "meta": {
         "version": "0.0.1",
+        "author": null,
         "createdAt": "2026-10-12",
         "updatedAt": "2026-10-12",
-        "status": "نمونه"
+        "language": null,
+        "direction": null,
+        "status": "نمونه",
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
       }
     },
     {
@@ -358,12 +428,31 @@
         "experiment"
       ],
       "entry": {
-        "localPath": "projects/demo-project/index.html?sample=tool"
+        "localPath": "projects/demo-project/index.html?sample=tool",
+        "deployedUrl": null
       },
+      "launchTarget": "auto",
+      "previewMode": "thumbnail",
+      "cover": {
+        "thumbnail": null,
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": false,
       "visibility": "hidden",
+      "sortOrder": 0,
       "meta": {
+        "version": null,
+        "author": null,
         "createdAt": "2026-10-13",
-        "status": "پیش‌نویس"
+        "updatedAt": null,
+        "language": null,
+        "direction": null,
+        "status": "پیش‌نویس",
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
       }
     }
   ]

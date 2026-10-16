@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>عمارت کلاه‌فرنگی | ریلز داستانی نسخه ۳ اصلاح‌شده</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+:root{--gold:#ffd27a;--cream:#fff8e9;--ink:#16120d}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#080808;color:white;font-family:Vazirmatn,sans-serif}body{display:grid;place-items:center;overflow:hidden}
+.reel{position:relative;width:min(100vw,56.25vh);height:min(100dvh,177.7778vw);aspect-ratio:9/16;overflow:hidden;background:#111;isolation:isolate;box-shadow:0 20px 70px #000b}
+.image-stack,.visual,.visual img{position:absolute;inset:0;width:100%;height:100%}.visual{overflow:hidden;opacity:0;will-change:opacity,transform}.visual img{object-fit:cover;will-change:transform;filter:sepia(.14) contrast(1.06) brightness(.86);transform:scale(1.08)}
+/* soft blurred fill prevents empty bars on archival landscape photographs */
+.visual:before{content:"";position:absolute;inset:-10%;background-image:var(--bg);background-size:cover;background-position:center;filter:blur(18px) brightness(.25);transform:scale(1.1);z-index:1;opacity:.7}
+.visual img{z-index:2;object-fit:contain}.visual.crop img{object-fit:cover}.visual .photo-wash{position:absolute;z-index:3;inset:0;background:linear-gradient(180deg,#0505058c 0%,transparent 27%,transparent 53%,#000d 100%);pointer-events:none}
+.frame{position:absolute;z-index:5;inset:0;pointer-events:none}.topline{position:absolute;top:5.8%;right:6%;left:6%;display:flex;align-items:center;justify-content:space-between;font-size:clamp(10px,2.7vw,13px);font-weight:700;color:#ffe6b3;text-shadow:0 2px 10px #000;opacity:0}.topline .pill{border:1px solid #ffe6b388;background:#17120dcc;padding:5px 9px;border-radius:30px}
+.hook{position:absolute;z-index:6;top:20%;left:6%;right:6%;font-size:clamp(30px,8.5vw,44px);font-weight:900;line-height:1.35;text-align:center;text-shadow:0 4px 30px #000;opacity:0}.hook .gold{color:var(--gold)}
+.caption{position:absolute;z-index:7;bottom:10.7%;left:5.5%;right:5.5%;padding:12px 14px 13px;background:linear-gradient(135deg,#fffdf5f7,#f4e9d8f5);color:#1b1712;border-right:4px solid var(--gold);border-radius:10px;box-shadow:0 12px 32px #0008;opacity:0;transform:translateY(16px)}.caption p{margin:0;font-size:clamp(16px,4.15vw,21px);line-height:1.85;font-weight:800;text-align:center;direction:rtl}.caption .word{display:inline-block;opacity:.22;transform:translateY(4px);margin-inline:0 0.20em;white-space:pre}.caption .word.active{opacity:1;color:#8b5700;text-shadow:0 0 18px #e9c16b66;transform:translateY(0) scale(1.04)}.caption .word.done{opacity:.82;transform:none}
+.progress{position:absolute;z-index:8;bottom:5.5%;left:6%;right:6%;height:3px;border-radius:10px;background:#ffffff55;overflow:hidden}.fill{height:100%;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:right}.counter{position:absolute;z-index:8;bottom:2.1%;left:6%;font-size:10px;color:#ffffffb8;text-shadow:0 2px 6px #000}
+.grain{position:absolute;z-index:4;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+.cracks{position:absolute;z-index:5;inset:0;opacity:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 710'%3E%3Cg fill='none' stroke='%23fff1d6' stroke-opacity='.8' stroke-width='1.2'%3E%3Cpath d='M315 0L298 62 320 89 289 122 300 159 269 188 282 220 245 254 254 290 218 322 227 357 193 389 204 430 174 465 183 498 151 534 165 567 132 605 143 644 112 710M298 62L264 47 250 18M320 89L355 73 374 41M289 122L251 112 233 82M269 188L303 196 326 177M245 254L210 237 185 246M254 290L289 307 313 294M218 322L186 308 163 325M227 357L263 367 285 349M193 389L159 377 139 396M204 430L238 442 257 425M174 465L143 452 119 472M183 498L217 508 239 490M151 534L119 520 94 540M165 567L197 580 217 563M132 605L100 592 78 613M143 644L175 654 197 638'/%3E%3C/g%3E%3C/svg%3E");background-size:cover;mix-blend-mode:screen}
+.decay-vignette{position:absolute;z-index:4;inset:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 24%,#07050388 72%,#000 100%),linear-gradient(0deg,#160d08aa,transparent 55%)}
+.flash{position:absolute;z-index:9;inset:0;background:#fff;opacity:0;pointer-events:none}.controls{position:absolute;z-index:20;top:10px;left:10px;display:flex;gap:6px}.controls button{border:1px solid #ffffff70;border-radius:30px;background:#000b;color:#fff;font:600 11px Vazirmatn;padding:7px 10px;cursor:pointer}
+.source-note{position:absolute;z-index:15;bottom:0;right:0;transform:translateY(100%);font-size:10px}
+@media(prefers-reduced-motion:reduce){.visual img{transform:none!important}}
+</style></head>
+<body>
+<div class="reel" id="reel">
+ <div class="image-stack" id="image-stack"></div>
+ <div class="grain"></div><div class="cracks" id="cracks"></div><div class="decay-vignette" id="decay-vignette"></div><div class="flash" id="flash"></div>
+ <div class="frame">
+  <div class="topline" id="topline"><span class="pill" id="chapter">بندرعباس · ۱۹۱۷</span><span id="micro-label">روایت یک عمارت</span></div>
+  <div class="hook" id="hook">این عمارت را<br><span class="gold">چه کسی به حال خودش رها کرد؟</span></div>
+  <div class="caption" id="caption"><div id="caption-text"></div></div>
+  <div class="progress"><div class="fill" id="fill"></div></div><div class="counter" id="counter">۰۱ / ۰۸</div>
+ </div>
+ <div class="controls"><button id="restart">از ابتدا</button><button id="pause">مکث</button></div>
+</div>
+<script>
+// نسخه ۳ اصلاح‌شده: روایت آهسته‌تر + زیرنویس واژه‌به‌واژه با زمان‌بندی تقریبی شبیه خروجی WhisperX.
+// این زمان‌ها هنوز هم‌ترازی واقعی صوت نیستند؛ پس از ضبط راوی، می‌توان start/end هر کلمه را از WhisperX وارد کرد.
+const scenes = [
+ {id:'hook', image:'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/%D8%A7%D9%85%D8%A7%D8%B1%D8%AA_%DA%A9%D9%84%D8%A7%D9%87_%D9%81%D8%B1%D9%86%DA%AF%DB%8C_%D8%A8%D9%86%D8%AF%D8%B1%D8%B9%D8%A8%D8%A7%D8%B3_%D8%AF%D8%B1_%D8%B3%D8%A7%D9%84_1917.jpg/1280px-%D8%A7%D9%85%D8%A7%D8%B1%D8%AA_%DA%A9%D9%84%D8%A7%D9%87-%D9%81%D8%B1%D9%86%DA%AF%DB%8C-%D8%A8%D9%86%D8%AF%D8%B1%D8%B9%D8%A8%D8%A7%D8%B3-%D8%AF%D8%B1-%D8%B3%D8%A7%D9%84_1917.jpg',d:4.8,hook:true,top:'بندرعباس · ۱۹۱۷',micro:'یک عکس، یک سؤال',cap:'',zoom:1.08,pos:'center',crop:false},
+ {id:'people', image:'https://suru.ir/images/blog/history/04/intro.jpg',d:8.2,top:'اسکله قدیمی',micro:'آدم‌ها و بارها',cap:'سال هزار و نهصد و هفده است. کار بندر با دست‌های مردم پیش می‌رود؛ بارها جابه‌جا می‌شوند و قایق‌ها می‌رسند.',zoom:1.28,pos:'58% 65%',crop:true},
+ {id:'building', image:'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/%D8%A7%D9%85%D8%A7%D8%B1%D8%AA_%DA%A9%D9%84%D8%A7%D9%87_%D9%81%D8%B1%D9%86%DA%AF%DB%8C_%D8%A8%D9%86%D8%AF%D8%B1%D8%B9%D8%A8%D8%A7%D8%B3_%D8%AF%D8%B1_%D8%B3%D8%A7%D9%84_1917.jpg/1280px-%D8%A7%D9%85%D8%A7%D8%B1%D8%AA_%DA%A9%D9%84%D8%A7%D9%87-%D9%81%D8%B1%D9%86%DA%AF%DB%8C-%D8%A8%D9%86%D8%AF%D8%B1%D8%B9%D8%A8%D8%A7%D8%B3-%D8%AF%D8%B1-%D8%B3%D8%A7%D9%84_1917.jpg',d:8.8,top:'ساختمانِ پشت اسکله',micro:'مرکز تجارت',cap:'حالا به ساختمان پشت این رفت‌وآمدها نگاه کن: عمارت کلاه‌فرنگی. اینجا بخشی از سازوکار تجارت بندر بود.',zoom:1.34,pos:'58% 34%',crop:true},
+ {id:'interior', image:'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/KITLV_A682_-_Interieur_van_de_woning_van_de_gezaghebber_van_Bandar_Abbas_in_Iran%2C_een_voormalig_factorij_van_de_VOC%2C_KITLV_81776.tiff/lossy-page1-1280px-KITLV_A682_-_Interieur_van_de_woning_van_de_gezaghebber_van_Bandar_Abbas_in_Iran%2C_een_voormalig_factorij_van_de_VOC%2C_KITLV_81776.tiff.jpg',d:8.1,top:'درون عمارت',micro:'اتاق‌ها و اداره‌ها',cap:'درون این مجموعه کارهای اداری و بازرگانی انجام می‌شد؛ تصمیم‌هایی که مسیر بارها و معامله‌ها را تغییر می‌دادند.',zoom:1.18,pos:'50% 47%',crop:true},
+ {id:'boat', image:'https://www.prints-online.com/sq/164/dhow-iran-4369956.jpg.webp',d:8.5,top:'لبه آب',micro:'راه دریا',cap:'بیرون از دیوارها، دریا بود. کشتی‌های بادبانی تجارت را به بندر وصل می‌کردند؛ این تصویر، حال‌وهوای آن دوران را نشان می‌دهد.',zoom:1.17,pos:'50% 55%',crop:true},
+ {id:'modern', image:'https://blog.flysepehran.com/wp-content/uploads/2024/09/kolah-farangi-place.jpg',d:8.5,top:'بنا در روزگار ما',micro:'از شکوه تا فرسودگی',cap:'زمان می‌گذرد و کاربری بناها عوض می‌شود. اما وقتی ارزش تاریخی‌شان را می‌شناسیم، چه کسی مسئول نگهداری آن‌هاست؟',zoom:1.18,pos:'50% 48%',crop:true},
+ {id:'ruin', image:'https://newsmedia.tasnimnews.ir/Tasnim/Uploaded/Image/1400/09/20/1400092017154518724253134.jpg',d:9.0,top:'وقتی دوربین نزدیک می‌شود',micro:'آسیب‌پذیری میراث',cap:'گزارش‌هایی از فرسودگی بنا منتشر شده است. اول خود تصویر را ببین؛ بعد ترک‌ها آرام‌آرام ظاهر می‌شوند. این افکت فقط یک هشدار بصری است.',zoom:1.22,pos:'50% 48%',crop:true,decay:true,crackAt:2.8},
+ {id:'end', image:'https://img9.irna.ir/d/r2/2019/12/25/4/156846479.jpg',d:8.0,top:'پرسش آخر',micro:'میراثِ چه کسی؟',cap:'اگر این بنا از حافظه‌ی شهر پاک شود، فقط یک ساختمان را از دست می‌دهیم؟ یا بخشی از داستان مردم را هم؟',zoom:1.1,pos:'50% 48%',crop:true}
+];
+const total=scenes.reduce((sum,s)=>sum+s.d,0);let tl=null,paused=false;
+const stack=document.getElementById('image-stack'),hook=document.getElementById('hook'),topline=document.getElementById('topline'),chapter=document.getElementById('chapter'),micro=document.getElementById('micro-label'),caption=document.getElementById('caption'),captionText=document.getElementById('caption-text'),fill=document.getElementById('fill'),cracks=document.getElementById('cracks'),vignette=document.getElementById('decay-vignette'),flash=document.getElementById('flash'),counter=document.getElementById('counter');
+scenes.forEach((s)=>{const layer=document.createElement('div');layer.className='visual'+(s.crop?' crop':'');layer.id='visual-'+s.id;layer.style.setProperty('--bg',`url("${s.image}")`);layer.innerHTML=`<img src="${s.image}" alt="${s.top||'تصویر تاریخی عمارت کلاه‌فرنگی'}" style="object-position:${s.pos||'center'}"><div class="photo-wash"></div>`;stack.appendChild(layer);s.el=layer;s.img=layer.querySelector('img');});
+function clearState(){gsap.set(scenes.map(s=>s.el),{autoAlpha:0,x:0});gsap.set(scenes.map(s=>s.img),{scale:1.04,x:0,y:0,filter:'sepia(.14) contrast(1.06) brightness(.86)'});gsap.set([hook,topline,caption,cracks,vignette,flash],{autoAlpha:0});gsap.set(fill,{scaleX:0});gsap.set(caption,{y:12});}
+function prepareWordCaption(scene){
+ const node=document.createElement('p');node.style.display='none';captionText.appendChild(node);scene.captionNode=node;
+ const words=scene.cap.trim().split(/\s+/).filter(Boolean);
+ scene.wordElements=words.map((word,i)=>{const sp=document.createElement('span');sp.className='word';sp.textContent=word+(i<words.length-1?' ':'');node.appendChild(sp);return sp;});
+}
+scenes.filter(s=>!s.hook).forEach(prepareWordCaption);
+function renderWordCaption(scene, timeline, start, duration){
+ const spans=scene.wordElements; if(!spans||!spans.length)return;
+ // وزن ساده بر اساس طول واژه‌ها، برای ریتمی نزدیک به گفتار طبیعی؛ قابل جایگزینی با تایم‌کدهای واقعی WhisperX.
+ const weights=spans.map(sp=>Math.max(1,sp.textContent.replace(/[،؛.!؟:]/g,'').trim().length));const sum=weights.reduce((a,b)=>a+b,0);const budget=Math.max(2,duration-1.35);let cursor=start+.55;
+ spans.forEach((sp,i)=>{const span=budget*weights[i]/sum;timeline.call(()=>{sp.classList.add('active');if(i>0)spans[i-1].classList.remove('active'),spans[i-1].classList.add('done');},null,cursor);timeline.fromTo(sp,{autoAlpha:.25,y:4,scale:.98},{autoAlpha:1,y:0,scale:1,duration:Math.min(.18,span*.45),ease:'power1.out'},cursor);cursor+=span;});
+ timeline.call(()=>{spans.forEach(sp=>{sp.classList.remove('active');sp.classList.add('done')})},null,start+duration-.55);
+}
+function build(){if(tl)tl.kill();clearState();tl=gsap.timeline({repeat:-1,repeatDelay:1.2,onRepeat:()=>{clearState();}});let t=0;
+ scenes.forEach((s,i)=>{
+   tl.call(()=>{chapter.textContent=s.top;micro.textContent=s.micro;counter.textContent=String(i+1).padStart(2,'0')+' / '+String(scenes.length).padStart(2,'0');scenes.forEach(item=>{if(item.captionNode)item.captionNode.style.display='none';});if(s.captionNode)s.captionNode.style.display='block';},null,t);
+   // هرگز بین دو تصویر قاب خالی نمی‌سازیم: تصویر نخست همان لحظه حاضر است؛ بعدی روی قبلی dissolve می‌شود.
+   if(i===0){tl.set(s.el,{autoAlpha:1},t);tl.set(s.img,{scale:1.04},t);}else{tl.to(s.el,{autoAlpha:1,duration:.42,ease:'power1.out'},t-.42);tl.to(flash,{autoAlpha:0,duration:.01},t);}
+   tl.to(s.img,{scale:s.zoom,duration:s.d,ease:'sine.inOut'},t);
+   tl.to(topline,{autoAlpha:1,duration:.25},t+.12);
+   if(s.hook){tl.fromTo(hook,{autoAlpha:0,scale:.96,y:10},{autoAlpha:1,scale:1,y:0,duration:.55,ease:'power3.out'},t+.12);tl.to(hook,{autoAlpha:0,y:-6,duration:.3},t+3.55);}
+   else {tl.fromTo(caption,{autoAlpha:0,y:12},{autoAlpha:1,y:0,duration:.32,ease:'power2.out'},t+.2);renderWordCaption(s,tl,t+.2,s.d);}
+   if(s.decay){ // ابتدا عکس سالم و قابل مشاهده می‌ماند؛ افکت خرابی با تأخیر روی همان تصویر می‌نشیند.
+     tl.to([cracks,vignette],{autoAlpha:0,duration:.05},t);tl.to([cracks,vignette],{autoAlpha:1,duration:.75},t+(s.crackAt||2.8));tl.to(s.img,{filter:'sepia(.24) contrast(1.16) brightness(.67)',duration:1.1},t+(s.crackAt||2.8));tl.to(s.el,{x:1.2,duration:.08,repeat:3,yoyo:true,ease:'none'},t+(s.crackAt||2.8)+.8);
+   }else{tl.to([cracks,vignette],{autoAlpha:0,duration:.12},t);}
+   tl.to([caption,topline],{autoAlpha:0,duration:.3},t+s.d-.35);
+   if(i<scenes.length-1)tl.to(s.el,{autoAlpha:0,duration:.42},t+s.d-.42);
+   t+=s.d;
+ });
+ tl.to(fill,{scaleX:1,duration:total,ease:'none'},0);tl.play(0);
+}
+build();document.getElementById('restart').onclick=()=>{paused=false;document.getElementById('pause').textContent='مکث';build()};document.getElementById('pause').onclick=()=>{paused=!paused;paused?tl.pause():tl.play();document.getElementById('pause').textContent=paused?'ادامه':'مکث'};
+document.querySelectorAll('.visual img').forEach(img=>img.addEventListener('error',()=>{img.style.display='none';img.parentElement.style.background='#201b16';}));
+</script>
+<!-- نسخه ۳: ریتم آهسته‌تر، واژه‌به‌واژه با هایلایت و ورود تدریجی؛ برای هم‌ترازی واقعی، پس از ضبط صدا تایم‌کدهای WhisperX جایگزین شوند. Image credits: Wikimedia Commons (CC BY-SA 4.0 and CC BY 4.0); Suru.ir historical dock photo; FlySepehran current exterior photo; Prints Online dhow image; Tasnim and IRNA news photos. The dhow and news-site images may have separate reuse terms: verify rights before public/commercial publication. -->
+</body></html>
