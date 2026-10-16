@@ -118,343 +118,17 @@
     {
       "id": "finance",
       "label": "مالی"
+    },
+    {
+      "id": "انیمیشن",
+      "label": "انیمیشن"
+    },
+    {
+      "id": "نمونه-اولیه",
+      "label": "نمونه اولیه"
     }
   ],
   "projects": [
-    {
-      "id": "demo-project",
-      "title": "پروژهٔ نمونه",
-      "subtitle": "نمونهٔ ثبت و اجرای یک پروژهٔ محلی",
-      "description": "یک صفحهٔ HTML کوچک و مستقل که نشان می‌دهد پروژه‌ها چگونه در data/projects.json ثبت و از داشبورد اجرا می‌شوند.",
-      "categoryId": "prototypes",
-      "tags": [
-        "interactive",
-        "offline",
-        "persian"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "iframe",
-      "cover": {
-        "thumbnail": null,
-        "gradient": [
-          "#3fd8c5",
-          "#5b4fd6"
-        ],
-        "accent": null,
-        "icon": {
-          "emoji": "🧭",
-          "tabler": "compass"
-        }
-      },
-      "featured": true,
-      "visibility": "visible",
-      "sortOrder": 1,
-      "meta": {
-        "version": "1.0.0",
-        "author": "Project Deck",
-        "createdAt": "2026-10-01",
-        "updatedAt": "2026-10-14",
-        "language": "fa",
-        "direction": "rtl",
-        "status": "نمونه",
-        "estimatedMinutes": 1,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-story-book",
-      "title": "کتاب تعاملی نمونه",
-      "subtitle": "ورودی نمونه برای دستهٔ کتاب‌ها",
-      "description": "این ورودی فقط برای نشان‌دادن ساختار داده ثبت شده و صفحهٔ پروژهٔ نمونه را باز می‌کند. آن را با کتاب واقعی خودتان جایگزین کنید.",
-      "categoryId": "books",
-      "tags": [
-        "interactive",
-        "story",
-        "persian"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=book",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "iframe",
-      "cover": {
-        "thumbnail": null,
-        "gradient": [
-          "#ffb86b",
-          "#7a3fd6"
-        ],
-        "accent": null,
-        "icon": {
-          "emoji": "📖",
-          "tabler": "book-2"
-        }
-      },
-      "featured": true,
-      "visibility": "visible",
-      "sortOrder": 2,
-      "meta": {
-        "version": "0.1.0",
-        "author": null,
-        "createdAt": "2026-09-20",
-        "updatedAt": "2026-10-10",
-        "language": "fa",
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": 15,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-memory-game",
-      "title": "بازی حافظهٔ نمونه",
-      "subtitle": "ورودی نمونه برای دستهٔ بازی‌ها",
-      "description": "ورودی نمایشی برای بازی‌ها. مسیر آن به صفحهٔ پروژهٔ نمونه اشاره می‌کند.",
-      "categoryId": "games",
-      "tags": [
-        "interactive",
-        "mobile-friendly"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=game",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "new-tab",
-      "cover": {
-        "thumbnail": null,
-        "gradient": null,
-        "accent": "#8b7cff",
-        "icon": {
-          "emoji": "🎮",
-          "tabler": "device-gamepad-2"
-        }
-      },
-      "featured": true,
-      "visibility": "visible",
-      "sortOrder": 3,
-      "meta": {
-        "version": "0.3.0",
-        "author": null,
-        "createdAt": "2026-09-05",
-        "updatedAt": "2026-10-02",
-        "language": "fa",
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": 5,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-physics-lab",
-      "title": "آزمایشگاه حرکت نمونه",
-      "subtitle": "ورودی نمونه برای شبیه‌سازی‌ها",
-      "description": "ورودی نمایشی برای شبیه‌سازی‌ها با برچسب‌های آموزشی و آزمایشی.",
-      "categoryId": "simulations",
-      "tags": [
-        "education",
-        "experiment"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=sim",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "thumbnail",
-      "cover": {
-        "thumbnail": null,
-        "gradient": null,
-        "accent": "#5ab0ff",
-        "icon": {
-          "emoji": "🧪",
-          "tabler": "flask"
-        }
-      },
-      "featured": false,
-      "visibility": "visible",
-      "sortOrder": 0,
-      "meta": {
-        "version": "0.2.0",
-        "author": null,
-        "createdAt": "2026-08-12",
-        "updatedAt": "2026-09-28",
-        "language": "fa",
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": 10,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-learning-style-test",
-      "title": "آزمون سبک یادگیری نمونه",
-      "subtitle": "ورودی نمونه برای آزمون‌ها",
-      "description": "ورودی نمایشی برای آزمون‌ها و پرسشنامه‌ها.",
-      "categoryId": "tests",
-      "tags": [
-        "education",
-        "persian"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=test",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "thumbnail",
-      "cover": {
-        "thumbnail": null,
-        "gradient": null,
-        "accent": "#ff7a9c",
-        "icon": {
-          "emoji": "📝",
-          "tabler": "clipboard-check"
-        }
-      },
-      "featured": false,
-      "visibility": "visible",
-      "sortOrder": 0,
-      "meta": {
-        "version": "0.1.0",
-        "author": null,
-        "createdAt": "2026-07-30",
-        "updatedAt": "2026-09-15",
-        "language": "fa",
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": 8,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-budget-tool",
-      "title": "ماشین‌حساب بودجهٔ نمونه",
-      "subtitle": "ورودی نمونه برای ابزارها",
-      "description": "ورودی نمایشی برای ابزارهای کوچک که بدون اینترنت هم کار می‌کنند.",
-      "categoryId": "tools",
-      "tags": [
-        "finance",
-        "offline"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=tool",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "thumbnail",
-      "cover": {
-        "thumbnail": null,
-        "gradient": null,
-        "accent": "#3fd8c5",
-        "icon": {
-          "emoji": "🧮",
-          "tabler": "calculator"
-        }
-      },
-      "featured": false,
-      "visibility": "visible",
-      "sortOrder": 0,
-      "meta": {
-        "version": "0.4.0",
-        "author": null,
-        "createdAt": "2026-06-18",
-        "updatedAt": "2026-10-08",
-        "language": "fa",
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": 3,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-deployed-site",
-      "title": "نمونهٔ پروژهٔ مستقرشده",
-      "subtitle": "ورودی با نشانی اینترنتی مستقل",
-      "description": "این ورودی به‌جای مسیر محلی، یک نشانی مستقل (deployedUrl) دارد و پیش‌نمایش آن فقط به‌صورت تصویر است.",
-      "categoryId": "prototypes",
-      "tags": [
-        "experiment"
-      ],
-      "entry": {
-        "localPath": null,
-        "deployedUrl": "https://example.com/"
-      },
-      "launchTarget": "deployed",
-      "previewMode": "thumbnail",
-      "cover": {
-        "thumbnail": null,
-        "gradient": [
-          "#c4e86b",
-          "#1f6f5c"
-        ],
-        "accent": null,
-        "icon": {
-          "emoji": "🌐",
-          "tabler": "world"
-        }
-      },
-      "featured": false,
-      "visibility": "visible",
-      "sortOrder": 0,
-      "meta": {
-        "version": "0.0.1",
-        "author": null,
-        "createdAt": "2026-10-12",
-        "updatedAt": "2026-10-12",
-        "language": null,
-        "direction": null,
-        "status": "نمونه",
-        "estimatedMinutes": null,
-        "notes": "",
-        "custom": {}
-      }
-    },
-    {
-      "id": "sample-hidden-draft",
-      "title": "پیش‌نویس پنهان",
-      "subtitle": "نمونه‌ای از visibility: hidden",
-      "description": "این پروژه به‌صورت پیش‌فرض نمایش داده نمی‌شود. از «تنظیمات و داده» می‌توانید پروژه‌های پنهان را ببینید.",
-      "categoryId": "tools",
-      "tags": [
-        "experiment"
-      ],
-      "entry": {
-        "localPath": "projects/demo-project/index.html?sample=tool",
-        "deployedUrl": null
-      },
-      "launchTarget": "auto",
-      "previewMode": "thumbnail",
-      "cover": {
-        "thumbnail": null,
-        "gradient": null,
-        "accent": null,
-        "icon": null
-      },
-      "featured": false,
-      "visibility": "hidden",
-      "sortOrder": 0,
-      "meta": {
-        "version": null,
-        "author": null,
-        "createdAt": "2026-10-13",
-        "updatedAt": null,
-        "language": null,
-        "direction": null,
-        "status": "پیش‌نویس",
-        "estimatedMinutes": null,
-        "notes": "",
-        "custom": {}
-      }
-    },
     {
       "id": "project-mv9ek39c",
       "title": "ارادۀ جنگیدن",
@@ -531,18 +205,24 @@
       "subtitle": "",
       "description": "نمونه فایل ساختن ریلز با GSAP و کدنویسی",
       "categoryId": "prototypes",
-      "tags": [],
+      "tags": [
+        "انیمیشن",
+        "نمونه-اولیه"
+      ],
       "entry": {
-        "localPath": "projects/animate-html/kolah-farangi-reel-v3-fixed.html",
+        "localPath": "projects/kolah-farangi-reel-v3-fixed.html",
         "deployedUrl": null
       },
       "launchTarget": "local",
-      "previewMode": "iframe",
+      "previewMode": "thumbnail",
       "cover": {
-        "thumbnail": null,
+        "thumbnail": "assets/thumbnails/kolah-farangi.webp",
         "gradient": null,
         "accent": null,
-        "icon": null
+        "icon": {
+          "emoji": "🎬",
+          "tabler": null
+        }
       },
       "featured": true,
       "visibility": "visible",
