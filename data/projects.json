@@ -176,7 +176,7 @@
         "deployedUrl": null
       },
       "launchTarget": "local",
-      "previewMode": "iframe",
+      "previewMode": "thumbnail",
       "cover": {
         "thumbnail": null,
         "gradient": null,
@@ -190,7 +190,7 @@
         "version": null,
         "author": null,
         "createdAt": "2026-10-15",
-        "updatedAt": "2026-10-15",
+        "updatedAt": "2026-10-16",
         "language": null,
         "direction": null,
         "status": null,
@@ -214,7 +214,7 @@
         "deployedUrl": null
       },
       "launchTarget": "local",
-      "previewMode": "thumbnail",
+      "previewMode": "new-tab",
       "cover": {
         "thumbnail": "assets/thumbnails/kolah-farangi.webp",
         "gradient": null,
@@ -224,7 +224,7 @@
           "tabler": null
         }
       },
-      "featured": true,
+      "featured": false,
       "visibility": "visible",
       "sortOrder": 0,
       "meta": {
@@ -239,6 +239,41 @@
         "notes": "",
         "custom": {}
       }
+    },
+    {
+      "id": "project-mvaxv0ma",
+      "subtitle": "",
+      "sortOrder": 0,
+      "cover": {
+        "thumbnail": "assets/thumbnails/idea-validation-lab.webp",
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-16",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      },
+      "title": "آزمایشگاه اعتبارسنجی ایده ها",
+      "description": "راهنما و یک تست برای شناسایی اینکه ایده مان را چطور اعتبارسنجی کنیم",
+      "categoryId": "simulations",
+      "tags": [],
+      "entry": {
+        "localPath": null,
+        "deployedUrl": "https://pourimoto.github.io/idea-validation-lab/"
+      },
+      "launchTarget": "deployed",
+      "previewMode": "thumbnail",
+      "featured": false,
+      "visibility": "visible"
     }
   ]
 }
