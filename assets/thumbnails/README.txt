@@ -9,3 +9,5 @@ In the dashboard: Edit project -> "مسیر تصویر پوشش", then type, for
 Rules: the path must be inside assets/, relative (no leading "/" and no ".."), and end with
 png, jpg, jpeg, webp, gif, svg or avif. Remote images are not allowed on purpose.
 If the file is missing or broken, the card shows the gradient + emoji fallback instead.
+
+Naming: lowercase-with-hyphens, ideally the project id, e.g. inflation.webp. No spaces or non-ASCII characters (the dashboard rejects spaces). Recommended: 1280x720, under 200 KB.

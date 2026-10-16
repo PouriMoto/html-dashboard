@@ -314,3 +314,17 @@ form.modal-shell, .modal-shell > form { min-height: 0; }
 .form [aria-invalid="true"], .form [aria-invalid="true"]:focus { border-color: var(--danger); }
 .form [aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgba(255, 107, 129, .2); }
 .choice code, .hint code { white-space: nowrap; }
+
+/* ===== نسخهٔ ۰٫۲: نمای مدیر، انتخاب فایل، ویزارد ورود داده ===== */
+.admin-badge { flex: none; padding: 2px 12px; font-size: .78rem; font-weight: 700; color: var(--accent); border: 1px solid rgba(63, 216, 197, .5); border-radius: 99px; background: rgba(63, 216, 197, .08); white-space: nowrap; }
+.picker { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px dashed var(--line-2); border-radius: 12px; }
+.picker .hint { margin: 0; }
+.picker label { font-weight: 600; font-size: .9rem; }
+.picker select { width: 100%; padding: 8px 10px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg-2); direction: ltr; }
+.modal details { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: var(--bg-2); }
+.modal summary { cursor: pointer; font-weight: 600; }
+.modal details .warn-list { margin-top: 8px; }
+.modal-body .warn-list { max-height: 180px; overflow: auto; }
+@media (max-width: 1100px) { .admin-badge { display: none; } }
+.panel .btn, .modal .btn-row .btn { white-space: normal; height: auto; min-height: 44px; padding-block: 8px; text-align: center; }
+.panel code, .modal-body code { overflow-wrap: anywhere; }

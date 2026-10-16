@@ -7,6 +7,8 @@
   <meta name="description" content="داشبورد شخصی برای سازمان‌دهی، پیش‌نمایش و اجرای پروژه‌های HTML.">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0a0c11">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src 'self' https: http:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/css/theme.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -15,16 +17,7 @@
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
   <div id="boot-notice" class="boot-notice" role="status" hidden></div>
   <div id="storage-notice" class="boot-notice" role="status" hidden></div>
-  <script>
-    /* اگر ماژول‌ها لود نشوند (مثلاً با file://) همین پیام دیده می‌شود؛ app.js پس از بوت موفق آن را پنهان می‌کند. */
-    (function () {
-      if (location.protocol === 'file:') {
-        var n = document.getElementById('boot-notice');
-        n.hidden = false;
-        n.textContent = 'این صفحه با file:// باز شده است و مرورگر ماژول‌های جاوااسکریپت و خواندن JSON را مسدود می‌کند. پوشهٔ پروژه را با یک سرور ایستا اجرا کنید (راهنما در README.md).';
-      }
-    })();
-  </script>
+  <script src="assets/js/boot-check.js"></script>
 
   <div class="app" id="app">
     <aside class="sidebar" id="sidebar" aria-label="ناوبری اصلی">
@@ -39,7 +32,7 @@
         <nav class="nav" id="nav-categories" aria-label="دسته‌بندی‌ها"></nav>
       </div>
       <nav class="nav" id="nav-lib" aria-label="کتابخانهٔ شخصی"></nav>
-      <p class="sidebar-foot">داده‌ها فقط در همین مرورگر ذخیره می‌شوند.</p>
+      <p class="sidebar-foot">نسخهٔ ۰٫۲ · علاقه‌مندی‌ها و سابقه فقط در همین مرورگر ذخیره می‌شوند.</p>
     </aside>
     <div class="scrim" id="scrim" hidden></div>
 
@@ -57,17 +50,23 @@
           <button type="button" class="search-clear" id="search-clear" aria-label="پاک کردن جستجو" hidden data-icon="close"></button>
           <kbd aria-hidden="true">/</kbd>
         </form>
-        <button type="button" class="btn btn-primary top-btn" id="add-btn" data-action="add-project" aria-label="افزودن پروژه"><span data-icon="plus"></span><span class="hide-sm">افزودن پروژه</span></button>
-        <div class="popover-wrap">
-          <button type="button" class="btn btn-ghost top-btn" id="data-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="data-menu" aria-label="داده‌ها: ورود، خروج و مدیریت"><span data-icon="data"></span><span class="hide-sm">داده‌ها</span></button>
+        <button type="button" class="btn btn-primary top-btn" id="add-btn" data-action="add-project" aria-label="افزودن پروژه" hidden><span data-icon="plus"></span><span class="hide-sm">افزودن پروژه</span></button>
+        <div class="popover-wrap" id="data-wrap" hidden>
+          <button type="button" class="btn btn-ghost top-btn" id="data-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="data-menu" aria-label="داده‌ها: پشتیبان و مدیریت"><span data-icon="data"></span><span class="hide-sm">داده‌ها</span></button>
           <div class="popover" id="data-menu" role="menu" aria-label="داده‌ها" hidden>
-            <button type="button" role="menuitem" data-action="export">دریافت خروجی JSON</button>
-            <button type="button" role="menuitem" data-action="import-pick">وارد کردن فایل JSON</button>
+            <button type="button" role="menuitem" data-action="export-publish">دریافت projects.json برای انتشار</button>
+            <button type="button" role="menuitem" data-action="export">دریافت پشتیبان (JSON)</button>
+            <button type="button" role="menuitem" data-action="import-pick">وارد کردن پشتیبان…</button>
             <button type="button" role="menuitem" data-action="manage-categories">مدیریت دسته‌ها</button>
+            <button type="button" role="menuitem" data-action="reset-demo">بازنشانی به داده‌های نمونه…</button>
+            <button type="button" role="menuitem" data-action="clear-local">پاک‌کردن دادهٔ محلی داشبورد…</button>
             <button type="button" role="menuitemcheckbox" id="manage-toggle" aria-checked="true" data-action="toggle-manage">حالت مدیریت: روشن</button>
             <a role="menuitem" href="?view=settings" data-nav>تنظیمات و راهنما</a>
           </div>
         </div>
+        <span class="admin-badge" id="admin-badge" hidden>مدیر</span>
+        <button type="button" class="btn btn-ghost top-btn" id="login-btn" data-action="login" aria-label="ورود مدیر"><span data-icon="lock"></span><span class="hide-sm">ورود مدیر</span></button>
+        <button type="button" class="btn btn-ghost top-btn" id="logout-btn" data-action="logout" aria-label="خروج از حالت مدیر" hidden><span data-icon="logout"></span><span class="hide-sm">خروج</span></button>
         <button type="button" class="icon-btn" id="audio-btn" aria-pressed="false" aria-label="پخش موسیقی محیطی" hidden></button>
       </header>
 
@@ -80,7 +79,6 @@
 
   <dialog id="preview-dialog" class="modal modal-lg" aria-labelledby="pv-title"></dialog>
   <dialog id="live-dialog" class="modal modal-xl" aria-labelledby="lv-title"></dialog>
-  <input type="file" id="import-input" accept="application/json,.json" hidden>
   <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <script type="module" src="assets/js/app.js"></script>

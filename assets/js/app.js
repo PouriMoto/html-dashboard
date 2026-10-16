@@ -6,7 +6,10 @@ import { filterProjects, sortProjects, collectTags, SORTS } from './filters.js';
 import { initIcons, icon, iconFromSpec, hydrateIcons, coverHtml } from './icons.js';
 import { initPreview, initLive, checkLocalFile } from './preview.js';
 import { openProjectForm, openCategoryManager, confirmDialog } from './manage.js';
-import { buildExport, downloadJson, readImportFile, mergeLibraries } from './import-export.js';
+import { buildExport, buildPublish, downloadJson, backupFilename } from './import-export.js';
+import * as Auth from './auth.js';
+import { openLoginDialog, openCredentialsDialog } from './admin.js';
+import { openImportWizard } from './data-manager.js';
 import { VIEWS, parseLocation, toQuery, urlFor } from './router.js';
 import * as L from './library.js';
 import { escapeHtml as esc, debounce, faNumber } from './utils.js';
@@ -28,13 +31,14 @@ const mq = window.matchMedia('(max-width: 900px)');
 const S = {
   library: null, catMap: new Map(), tagMap: new Map(), user: null,
   query: '', tag: '', route: { name: 'home', id: null },
-  source: 'default', importMode: 'merge', lastWarnings: [], loadError: null, stale: false, notices: [], storageIssue: false,
+  source: 'default', lastWarnings: [], loadError: null, stale: false, notices: [], storageIssue: false,
+  admin: false, published: null, draft: null, authRecord: undefined, draftNotices: [],
 };
 let details = null; let live = null; let audio = null; let audioSrc = null;
 
 const saveUser = () => storage.saveUserState(S.user);
 const isFav = (id) => S.user.favorites.includes(id);
-const isManage = () => S.user.prefs.manage;
+const isManage = () => S.admin && S.user.prefs.manage;
 const recentMap = () => new Map(S.user.recent.map((r) => [r.id, r.at]));
 const allProjects = () => S.library.projects.filter((p) => isManage() || p.visibility === 'visible');
 const findProject = (id) => S.library.projects.find((p) => p.id === id);
@@ -49,29 +53,34 @@ function toast(message, type = 'info') {
 }
 
 /* ---------- بوت ---------- */
-async function loadLibrary() {
-  const { doc, status } = storage.loadLibraryStore();
-  if (status === 'corrupt') S.notices.push('داده‌های ذخیره‌شده در مرورگر خراب بود و نادیده گرفته شد (نسخهٔ پشتیبان نگه‌داری شد). داده‌های پیش‌فرض بارگذاری شد.');
-  if (doc) {
-    try {
-      const { library, warnings } = normalizeLibrary(doc);
-      S.library = library; S.lastWarnings = warnings; S.source = 'local';
-      return;
-    } catch {
-      storage.quarantineLibrary();
-      S.notices.push('داده‌های ذخیره‌شده با اسکیمای برنامه سازگار نبود و کنار گذاشته شد. داده‌های پیش‌فرض بارگذاری شد.');
-    }
-  }
+const emptyLib = () => normalizeLibrary({ schemaVersion: 1 }).library;
+
+/** دادهٔ منتشرشده (data/projects.json): همان چیزی که بازدیدکنندگان عادی می‌بینند */
+async function fetchPublished() {
   try {
     const res = await fetch(DATA_URL, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const { library, warnings } = normalizeLibrary(await res.json());
-    S.library = library; S.lastWarnings = warnings; S.source = 'default';
+    S.published = library; S.lastWarnings = warnings;
     warnings.forEach((w) => console.warn('[Project Deck]', w));
-  } catch (err) {
-    S.loadError = err;
-    S.library = normalizeLibrary({ schemaVersion: 1 }).library;
+  } catch (err) { S.loadError = err; }
+}
+
+/** پیش‌نویس محلی مدیر در localStorage */
+function loadDraft() {
+  const { doc, status } = storage.loadLibraryStore();
+  if (status === 'corrupt') S.draftNotices.push('داده‌های ذخیره‌شده در مرورگر خراب بود و نادیده گرفته شد (نسخهٔ پشتیبان نگه‌داری شد).');
+  if (!doc) return;
+  try { S.draft = normalizeLibrary(doc).library; } catch {
+    storage.quarantineLibrary();
+    S.draftNotices.push('داده‌های ذخیره‌شده با اسکیمای برنامه سازگار نبود و کنار گذاشته شد.');
   }
+}
+
+/** بازدیدکننده همیشه دادهٔ منتشرشده را می‌بیند؛ مدیر پیش‌نویس محلی (اگر باشد) را */
+function pickLibrary() {
+  S.library = (S.admin && S.draft) || S.published || emptyLib();
+  S.source = S.admin && S.draft ? 'local' : 'default';
 }
 
 function applyBackground() {
@@ -90,7 +99,8 @@ function indexLibrary() {
   S.tagMap = indexById(S.library.tags);
 }
 
-async function applyLibrary() {
+async function setupLibrary() {
+  pickLibrary();
   indexLibrary();
   const { iconSpritePath, iconSymbolPrefix, siteTitle } = S.library.settings;
   await initIcons({ spritePath: iconSpritePath, symbolPrefix: iconSymbolPrefix });
@@ -99,12 +109,17 @@ async function applyLibrary() {
   applyBackground();
   setupAudio();
   paintManage();
-  onLocationChange({ syncInput: false });
+  paintAdmin();
+  renderStorageNotice();
 }
+async function applyLibrary() { await setupLibrary(); onLocationChange({ syncInput: false }); }
 
 async function boot() {
   S.user = storage.loadUserState();
-  await loadLibrary();
+  S.admin = Auth.hasSession();
+  await fetchPublished();
+  loadDraft();
+  pickLibrary();
   indexLibrary();
   details = initPreview($('#preview-dialog'), {
     getCategory: (id) => S.catMap.get(id), tagLabel: (id) => S.tagMap.get(id)?.label || id,
@@ -114,16 +129,36 @@ async function boot() {
   });
   live = initLive($('#live-dialog'));
   bindEvents();
-  const { iconSpritePath, iconSymbolPrefix, siteTitle } = S.library.settings;
-  await initIcons({ spritePath: iconSpritePath, symbolPrefix: iconSymbolPrefix });
-  $('#brand-title').textContent = siteTitle;
-  hydrateIcons(document);
-  applyBackground();
-  setupAudio();
-  paintManage();
-  renderStorageNotice();
+  await setupLibrary();
   $('#boot-notice').hidden = true;
   onLocationChange({ first: true });
+}
+
+/* ---------- مدیر / بازدیدکننده ---------- */
+function paintAdmin() {
+  $('#add-btn').hidden = !S.admin;
+  $('#data-wrap').hidden = !S.admin;
+  $('#admin-badge').hidden = !S.admin;
+  $('#login-btn').hidden = S.admin;
+  $('#logout-btn').hidden = !S.admin;
+  document.documentElement.classList.toggle('is-admin', S.admin);
+}
+const getAuthRecord = async () => { if (S.authRecord === undefined) S.authRecord = await Auth.loadAuthRecord(); return S.authRecord; };
+function openLogin() {
+  openLoginDialog({ getRecord: getAuthRecord, onSuccess: () => { Auth.startSession(); S.admin = true; applyLibrary(); toast('وارد حالت مدیر شدید.'); } });
+}
+function logout() {
+  Auth.endSession(); S.admin = false;
+  document.querySelectorAll('dialog[open]').forEach((d) => d.close());
+  applyLibrary();
+  toast('از حالت مدیر خارج شدید.');
+}
+/** همهٔ اقدام‌های تغییر دادهٔ داشبورد از اینجا رد می‌شوند؛ بدون ورود انجام نمی‌شوند. */
+function needAdmin() {
+  if (S.admin) return true;
+  toast('این کار فقط برای مدیر ممکن است.', 'error');
+  openLogin();
+  return false;
 }
 
 /* ---------- نشانی و مسیریابی ---------- */
@@ -164,12 +199,14 @@ function go(partial, { replace = false, focus = true } = {}) {
 function noticeHtml(title, text, actions = '') {
   return `<section class="empty"><div class="empty-art" aria-hidden="true"><span></span><span></span><span></span></div><h2>${esc(title)}</h2><p>${text}</p>${actions ? `<div class="empty-actions">${actions}</div>` : ''}</section>`;
 }
-const importBtn = '<button type="button" class="btn btn-ghost" data-action="import-pick">وارد کردن فایل JSON</button>';
+const importBtn = '<button type="button" class="btn btn-ghost" data-action="import-pick">وارد کردن پشتیبان</button>';
 const addBtn = `<button type="button" class="btn btn-primary" data-action="add-project">${icon('plus')} افزودن پروژه</button>`;
 
 function emptyOrErrorHtml() {
-  if (S.loadError) return noticeHtml('داده‌ها بارگذاری نشد', `خواندن <code>${DATA_URL}</code> ناموفق بود (${esc(S.loadError.message)}). اگر صفحه را با file:// باز کرده‌اید، آن را با یک سرور ایستا اجرا کنید؛ یا یک فایل JSON وارد کنید.`, addBtn + importBtn);
-  return noticeHtml('کتابخانه هنوز خالی است', 'اولین پروژه را بدون ویرایش کد اضافه کنید، یا یک فایل JSON آماده وارد کنید.', addBtn + importBtn);
+  const loginBtn = '<button type="button" class="btn btn-ghost" data-action="login">ورود مدیر</button>';
+  if (S.loadError && !S.library.projects.length) return noticeHtml('داده‌ها بارگذاری نشد', `خواندن <code>${DATA_URL}</code> ناموفق بود (${esc(S.loadError.message)}). اگر صفحه را با file:// باز کرده‌اید، آن را با یک سرور ایستا اجرا کنید.`, S.admin ? addBtn + importBtn : loginBtn);
+  if (!S.admin) return noticeHtml('هنوز پروژه‌ای منتشر نشده است', 'مدیر داشبورد هنوز پروژه‌ای اضافه نکرده است.', loginBtn);
+  return noticeHtml('کتابخانه هنوز خالی است', 'اولین پروژه را بدون ویرایش کد اضافه کنید، یا یک فایل پشتیبان وارد کنید.', addBtn + importBtn);
 }
 
 function cardHtml(p) {
@@ -278,28 +315,37 @@ function renderList() {
 function renderSettings() {
   const lib = S.library;
   const fact = (label, value) => `<div><dt>${label}</dt><dd>${value}</dd></div>`;
-  const warnings = S.lastWarnings.length ? `<ul class="warn-list">${S.lastWarnings.slice(0, 8).map((w) => `<li>${esc(w)}</li>`).join('')}</ul>` : '';
+  const warnings = S.lastWarnings.length && S.admin ? `<ul class="warn-list">${S.lastWarnings.slice(0, 8).map((w) => `<li>${esc(w)}</li>`).join('')}</ul>` : '';
+  const storageInfo = `<section class="panel"><h2>ذخیره‌سازی در مرورگر</h2>
+      <p>علاقه‌مندی‌ها و سابقهٔ «اخیراً باز شده» در localStorage همین مرورگر و برای همین آدرس سایت ذخیره می‌شود. در مرورگر یا دستگاه دیگر دیده نمی‌شود و همگام‌سازی خودکار وجود ندارد. پاک‌کردن داده‌های مرورگر آن‌ها را (و برای مدیر، پیش‌نویس تغییرات را) حذف می‌کند.</p>
+      <div class="btn-row"><button type="button" class="btn btn-ghost btn-danger" data-action="clear-local">${S.admin ? 'پاک‌کردن دادهٔ محلی داشبورد…' : 'پاک‌کردن علاقه‌مندی‌ها و سابقه…'}</button></div></section>`;
+  if (!S.admin) {
+    return `<div class="panels">
+    <section class="panel"><h2>دربارهٔ این داشبورد</h2><dl class="facts">${fact('پروژه‌ها', faNumber(lib.projects.length))}${fact('دسته‌ها', faNumber(lib.categories.length))}${fact('نسخه', faNumber(2))}</dl>
+      <p>پروژه‌ها را می‌توانید ببینید، جستجو کنید، به علاقه‌مندی‌ها اضافه کنید و اجرا کنید. افزودن و مدیریت پروژه‌ها فقط برای مدیر ممکن است.</p>
+      <div class="btn-row"><button type="button" class="btn btn-ghost" data-action="login">${icon('lock')} ورود مدیر</button></div></section>${storageInfo}</div>`;
+  }
   return `<div class="panels">
     <section class="panel"><h2>خلاصهٔ کتابخانه</h2><dl class="facts">
       ${fact('پروژه‌ها', faNumber(lib.projects.length))}${fact('دسته‌ها', faNumber(lib.categories.length))}${fact('برچسب‌ها', faNumber(lib.tags.length))}${fact('نسخهٔ اسکیما', faNumber(lib.schemaVersion))}
-      ${fact('منبع داده', S.source === 'local' ? 'نسخهٔ ذخیره‌شده در این مرورگر' : '<code>data/projects.json</code>')}
+      ${fact('منبع داده', S.source === 'local' ? 'پیش‌نویس ذخیره‌شده در این مرورگر' : '<code>data/projects.json</code>')}
       ${fact('ذخیره‌سازی', storage.isPersistent() ? 'localStorage' : 'فقط حافظهٔ موقت')}
-    </dl>${warnings}</section>
-    <section class="panel"><h2>ذخیره‌سازی در مرورگر</h2>
-      <p>تغییراتی که در داشبورد می‌دهید در localStorage همین مرورگر و برای همین آدرس سایت ذخیره می‌شود. در مرورگر یا دستگاه دیگر، یا پس از پاک‌کردن داده‌های مرورگر، دیده نمی‌شود و هیچ همگام‌سازی خودکاری وجود ندارد. برای انتقال یا پشتیبان‌گیری از «دریافت خروجی JSON» و «وارد کردن فایل JSON» استفاده کنید.</p>
-      <p>برای انتشار دائمی تغییرات برای همه، فایل خروجی را به‌جای <code>data/projects.json</code> در مخزن بگذارید.</p></section>
+    </dl>${warnings}
+    <p>تغییرات مدیر یک پیش‌نویس محلی است (فقط در همین مرورگر و همین آدرس) و برای بازدیدکنندگان یا سایت منتشرشده دیده نمی‌شود. برای انتشار، فایل زیر را به‌جای <code>data/projects.json</code> در مخزن بگذارید و commit کنید.</p>
+    <div class="btn-row"><button type="button" class="btn btn-primary" data-action="export-publish">${icon('download')} دریافت projects.json برای انتشار</button></div></section>
+    <section class="panel"><h2>پشتیبان‌گیری و بازیابی</h2>
+      <p>پشتیبان فقط پیکربندی داشبورد است (پروژه‌ها، دسته‌ها، برچسب‌ها، تنظیمات، علاقه‌مندی‌ها) نه فایل‌های HTML پروژه‌ها.</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" data-action="export">${icon('download')} دریافت پشتیبان</button><button type="button" class="btn btn-ghost" data-action="import-pick">${icon('upload')} وارد کردن پشتیبان</button></div>
+      <div class="btn-row"><button type="button" class="btn btn-ghost btn-danger" data-action="reset-demo">بازنشانی به داده‌های نمونه</button></div>
+      <p class="hint">این دو عمل فقط دادهٔ داشبورد را در این مرورگر عوض می‌کنند و هیچ فایل پروژه‌ای را حذف نمی‌کنند.</p></section>
     <section class="panel"><h2>مدیریت</h2>
-      <label><input type="checkbox" id="manage-check"${isManage() ? ' checked' : ''}> حالت مدیریت (دکمه‌های ویرایش و حذف، و نمایش پروژه‌های پنهان)</label>
-      <div class="btn-row"><button type="button" class="btn btn-primary" data-action="add-project">${icon('plus')} افزودن پروژه</button><button type="button" class="btn btn-ghost" data-action="manage-categories">مدیریت دسته‌ها</button></div></section>
-    <section class="panel"><h2>ورود و خروج داده</h2>
-      <p>خروجی شامل پروژه‌ها، دسته‌ها، برچسب‌ها، تنظیمات و علاقه‌مندی‌هاست. ورود، فایل را با اسکیما می‌سنجد.</p>
-      <fieldset><legend>حالت ورود</legend>
-        <label><input type="radio" name="import-mode" value="merge"${S.importMode === 'merge' ? ' checked' : ''}> ادغام با کتابخانهٔ فعلی</label>
-        <label><input type="radio" name="import-mode" value="replace"${S.importMode === 'replace' ? ' checked' : ''}> جایگزینی کامل</label>
-      </fieldset>
-      <div class="btn-row"><button type="button" class="btn btn-primary" data-action="export">دریافت خروجی JSON</button><button type="button" class="btn btn-ghost" data-action="import-pick">وارد کردن فایل JSON</button><button type="button" class="btn btn-ghost btn-danger" data-action="reset">بازنشانی به داده‌های پیش‌فرض</button></div></section>
+      <label><input type="checkbox" id="manage-check"${isManage() ? ' checked' : ''}> حالت مدیریت (ویرایش، حذف و نمایش پروژه‌های پنهان)</label>
+      <div class="btn-row"><button type="button" class="btn btn-primary" data-action="add-project">${icon('plus')} افزودن پروژه</button><button type="button" class="btn btn-ghost" data-action="manage-categories">مدیریت دسته‌ها</button></div>
+      <div class="btn-row"><button type="button" class="btn btn-ghost" data-action="change-credentials">${icon('lock')} تغییر اطلاعات ورود</button></div></section>
+    ${storageInfo}
     <section class="panel"><h2>فایل‌ها و محدودیت‌ها</h2>
-      <p>این یک سایت ایستاست و نمی‌تواند فایلی را در مخزن GitHub بنویسد. فایل‌های HTML پروژه‌ها را خودتان در پوشهٔ <code>${esc(lib.settings.projectsDir)}</code> بگذارید یا جای دیگری منتشر کنید؛ سپس مسیر یا نشانی‌شان را در فرم وارد کنید. حذف پروژه از داشبورد هرگز فایل یا سایت اصلی را پاک نمی‌کند.</p></section>
+      <p>این یک سایت ایستاست و نمی‌تواند فایلی را در مخزن بنویسد. فایل‌های HTML پروژه‌ها را خودتان در پوشهٔ <code>${esc(lib.settings.projectsDir)}</code> بگذارید یا جای دیگری منتشر کنید؛ سپس با «انتخاب فایل» یا تایپ، مسیر یا نشانی‌شان را در فرم وارد کنید. حذف پروژه از داشبورد هرگز فایل یا سایت اصلی را پاک نمی‌کند.</p>
+      <p>ورود مدیر فقط یک قفل مرورگر است، نه امنیت واقعی: دادهٔ منتشرشده در مخزن برای همه قابل خواندن است.</p></section>
   </div>`;
 }
 
@@ -339,6 +385,10 @@ function renderSidebar() {
 
 function renderStorageNotice() {
   const msgs = [...S.notices];
+  if (S.admin) {
+    msgs.push(...S.draftNotices);
+    if (S.source === 'local' && JSON.stringify(S.draft) !== JSON.stringify(S.published)) msgs.push('تغییرات منتشرنشده دارید: بازدیدکنندگان فقط data/projects.json را می‌بینند. «داده‌ها» ← «دریافت projects.json برای انتشار» را بزنید و فایل را در مخزن جایگزین کنید.');
+  }
   if (!storage.isPersistent()) msgs.push('ذخیره‌سازی مرورگر (localStorage) در دسترس نیست؛ تغییرات فقط تا بستن این صفحه می‌مانند. با «دریافت خروجی JSON» نسخهٔ پشتیبان بگیرید.');
   if (S.storageIssue) msgs.push('ذخیرهٔ آخرین تغییر در مرورگر ناموفق بود (ممکن است فضا پر باشد).');
   const n = $('#storage-notice');
@@ -348,19 +398,23 @@ function renderStorageNotice() {
 
 /* ---------- ذخیره و تغییر کتابخانه ---------- */
 function commit(lib) {
-  S.library = lib; S.source = 'local';
+  if (!S.admin) return false;
+  S.library = lib; S.draft = lib; S.source = 'local';
   const ok = storage.saveLibraryStore(lib);
   S.storageIssue = !ok;
   if (!ok) toast('ذخیره در مرورگر ممکن نبود؛ تغییرات تا بستن صفحه می‌ماند.', 'error');
   renderStorageNotice();
   indexLibrary();
   onLocationChange({ syncInput: false }); // اگر دستهٔ انتخاب‌شده حذف شده باشد به حالت امن برمی‌گردد
+  return ok;
 }
 
 function addProject() {
+  if (!needAdmin()) return;
   openProjectForm({ library: S.library, defaultCategory: S.route.name === 'category' ? S.route.id : '', onSave: afterSave });
 }
 function editProject(id) {
+  if (!needAdmin()) return;
   const p = findProject(id);
   if (p) openProjectForm({ library: S.library, project: p, onSave: afterSave });
 }
@@ -372,6 +426,7 @@ function afterSave(lib, saved, info) {
   if (l) checkLocalFile(l.url).then((ok) => { if (ok === false) toast(`پروژه ذخیره شد، اما فایل «${saved.entry.localPath}» هنوز پیدا نمی‌شود. فایل را در پوشهٔ پروژه‌ها بگذارید.`, 'error'); });
 }
 async function deleteProject(id) {
+  if (!needAdmin()) return;
   const p = findProject(id);
   if (!p) return;
   const ok = await confirmDialog({
@@ -386,6 +441,7 @@ async function deleteProject(id) {
   toast(`«${p.title}» از داشبورد حذف شد.`);
 }
 function manageCategories() {
+  if (!needAdmin()) return;
   openCategoryManager({ getLibrary: () => S.library, onChange: (lib) => commit(lib) });
 }
 
@@ -425,30 +481,54 @@ function launchProject(id) {
 function showDetails(id) { const p = findProject(id); if (p) details.open(p); }
 
 function doExport() {
-  downloadJson(buildExport(S.library, S.user), `project-deck-${new Date().toISOString().slice(0, 10)}.json`);
-  toast('فایل خروجی ساخته شد.');
+  if (!needAdmin()) return;
+  downloadJson(buildExport(S.library, S.user), backupFilename());
+  toast('فایل پشتیبان ساخته شد.');
 }
 
-function doReset() {
-  confirmDialog({ title: 'بازنشانی داده‌ها', confirmLabel: 'بازنشانی', danger: true, body: '<p>تغییرات ذخیره‌شده در این مرورگر حذف و <code>data/projects.json</code> دوباره بارگذاری می‌شود. علاقه‌مندی‌ها حفظ می‌شوند.</p>' })
-    .then((ok) => { if (ok) { storage.clearLibraryStore(); location.reload(); } });
+function doExportPublish() {
+  if (!needAdmin()) return;
+  downloadJson(buildPublish(S.library), 'projects.json');
+  toast('فایل projects.json ساخته شد. آن را در مخزن به‌جای data/projects.json بگذارید و commit کنید.');
 }
 
-async function onImportFile(e) {
-  const file = e.target.files[0];
-  e.target.value = '';
-  if (!file) return;
-  try {
-    const { library, warnings, favorites } = await readImportFile(file);
-    const replace = S.importMode === 'replace';
-    S.lastWarnings = warnings; S.loadError = null;
-    if (favorites) { S.user.favorites = replace ? favorites : [...new Set([...S.user.favorites, ...favorites])]; saveUser(); }
-    commit(replace ? library : mergeLibraries(S.library, library));
-    await applyLibrary();
-    toast(`ورود انجام شد: ${faNumber(library.projects.length)} پروژه خوانده شد.`);
-  } catch (err) {
-    toast(err.message || 'ورود فایل ناموفق بود.', 'error');
-  }
+function doImport() {
+  if (!needAdmin()) return;
+  openImportWizard({
+    getLibrary: () => S.library,
+    onExport: doExport,
+    onApply: ({ mode, library, stats, favorites, sort }) => {
+      if (!needAdmin()) return;
+      if (favorites) S.user.favorites = mode === 'replace' ? favorites : [...new Set([...S.user.favorites, ...favorites])];
+      if (mode === 'replace' && sort && SORTS.some((x) => x.id === sort)) S.user.prefs.sort = sort;
+      saveUser();
+      S.loadError = null; S.lastWarnings = [];
+      commit(library);
+      applyLibrary();
+      toast(mode === 'replace' ? 'پیکربندی با فایل پشتیبان جایگزین شد.' : `ادغام انجام شد: ${faNumber(stats.added)} پروژهٔ تازه، ${faNumber(stats.replaced)} جایگزین، ${faNumber(stats.copied)} کپی، ${faNumber(stats.kept)} نگه‌داشته‌شده.`);
+    },
+  });
+}
+
+async function doResetDemo() {
+  if (!needAdmin()) return;
+  const ok = await confirmDialog({ title: 'بازنشانی به داده‌های نمونه', confirmLabel: 'بازنشانی', danger: true,
+    body: '<p>پیش‌نویس تغییرات شما در این مرورگر حذف و داده‌های <code>data/projects.json</code> دوباره بارگذاری می‌شود. علاقه‌مندی‌ها می‌مانند.</p><p class="muted">هیچ فایل پروژه‌ای حذف نمی‌شود. اگر از پیش‌نویس پشتیبان نگرفته‌اید، آن را از دست می‌دهید.</p>' });
+  if (!ok) return;
+  storage.clearLibraryStore(); S.draft = null;
+  await applyLibrary();
+  toast('داده‌های نمونه بازگردانده شد.');
+}
+
+async function doClearLocal() {
+  const admin = S.admin;
+  const ok = await confirmDialog({ title: admin ? 'پاک‌کردن دادهٔ محلی داشبورد' : 'پاک‌کردن علاقه‌مندی‌ها و سابقه', confirmLabel: 'پاک شود', danger: true,
+    body: admin
+      ? '<p>همهٔ دادهٔ ذخیره‌شده در این مرورگر (پیش‌نویس پروژه‌ها و دسته‌ها، علاقه‌مندی‌ها، سابقه و ترجیحات) پاک می‌شود و از حالت مدیر خارج می‌شوید.</p><p class="muted">پاک‌کردن داده‌های مرورگر می‌تواند پیکربندی داشبورد را از بین ببرد؛ اگر پشتیبان ندارید ابتدا آن را دریافت کنید. فایل‌های پروژه‌ها و دادهٔ منتشرشده حذف نمی‌شوند.</p>'
+      : '<p>علاقه‌مندی‌ها و سابقهٔ «اخیراً باز شده» در این مرورگر پاک می‌شود. پروژه‌ها و فایل‌ها دست‌نخورده می‌مانند.</p>' });
+  if (!ok) return;
+  if (admin) { storage.clearAllData(); Auth.endSession(); } else storage.clearUserData();
+  location.reload();
 }
 
 /* ---------- صدای محیطی (پیش‌فرض خاموش) ---------- */
@@ -539,8 +619,13 @@ function onClick(e) {
     case 'manage-categories': manageCategories(); break;
     case 'toggle-manage': toggleManage(); break;
     case 'export': doExport(); break;
-    case 'import-pick': $('#import-input').click(); break;
-    case 'reset': doReset(); break;
+    case 'export-publish': doExportPublish(); break;
+    case 'import-pick': doImport(); break;
+    case 'reset-demo': doResetDemo(); break;
+    case 'clear-local': doClearLocal(); break;
+    case 'login': openLogin(); break;
+    case 'logout': logout(); break;
+    case 'change-credentials': if (needAdmin()) openCredentialsDialog(); break;
     default: break;
   }
 }
@@ -549,7 +634,6 @@ function onChange(e) {
   const t = e.target;
   if (t.id === 'sort-select') { S.user.prefs.sort = t.value; saveUser(); renderMain(); $('#sort-select')?.focus(); }
   else if (t.id === 'manage-check') toggleManage(t.checked);
-  else if (t.name === 'import-mode') S.importMode = t.value;
 }
 
 function onKey(e) {
@@ -587,7 +671,6 @@ function bindEvents() {
   $('#menu-btn').addEventListener('click', () => setSidebar(!$('#app').classList.contains('sidebar-open')));
   $('#scrim').addEventListener('click', () => setSidebar(false));
   $('#audio-btn').addEventListener('click', toggleAudio);
-  $('#import-input').addEventListener('change', onImportFile);
   mq.addEventListener('change', () => setSidebar(false));
 }
 

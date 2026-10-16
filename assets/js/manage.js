@@ -5,10 +5,11 @@ import { icon, iconFromSpec } from './icons.js';
 import { PREVIEW_MODES, PREVIEW_MODE_INFO } from './projects.js';
 import * as V from './validators.js';
 import * as L from './library.js';
+import { checkLocalFile } from './preview.js';
 
 const STORAGE_NOTE = 'تغییرات در localStorage همین مرورگر و همین آدرس ذخیره می‌شوند و بین دستگاه‌ها همگام نمی‌شوند. برای انتقال از «دریافت خروجی JSON» استفاده کنید.';
 
-function makeDialog(cls, { backdropClose = false } = {}) {
+export function makeDialog(cls, { backdropClose = false } = {}) {
   const d = document.createElement('dialog');
   d.className = `modal ${cls}`;
   if (backdropClose) d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
@@ -36,11 +37,11 @@ export function confirmDialog({ title, body, confirmLabel = 'تأیید', danger
   });
 }
 
-const field = ({ id, label, required = false, hint = '', control }) => `<div class="field" data-field="${id}">
+export const field = ({ id, label, required = false, hint = '', control }) => `<div class="field" data-field="${id}">
   <label for="f-${id}">${label}${required ? ' <span class="req" aria-hidden="true">*</span>' : ''}</label>${control}
   ${hint ? `<p class="hint" id="f-${id}-hint">${hint}</p>` : ''}<p class="field-error" id="f-${id}-err" hidden></p></div>`;
 
-function showErrors(root, errors) {
+export function showErrors(root, errors) {
   const summary = root.querySelector('.error-summary');
   root.querySelectorAll('.field-error').forEach((n) => { n.hidden = true; n.textContent = ''; });
   root.querySelectorAll('[aria-invalid]').forEach((n) => n.removeAttribute('aria-invalid'));
@@ -88,8 +89,18 @@ export function openProjectForm({ library, project = null, defaultCategory = '',
         ${choice('locType', 'external', 'سایت مستقل (مستقر شده)', 'نشانی کامل http یا https', type0 === 'external')}
       </fieldset>
       ${field({ id: 'path', label: '<span id="path-label"></span>', required: true, hint: '<span id="path-hint"></span>', control: `<input id="f-path" name="path" type="text" dir="ltr" value="${esc(val.path)}" autocomplete="off" spellcheck="false">` })}
+      <div class="picker" id="path-picker">
+        <div class="btn-row">
+          <button type="button" class="btn btn-ghost btn-sm" data-pick="folder">${icon('folder')} انتخاب پوشهٔ پروژه…</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-pick="file">${icon('file')} انتخاب فایل HTML…</button>
+        </div>
+        <div id="pick-choose" hidden><label for="pick-list">چند فایل HTML پیدا شد؛ یکی را انتخاب کنید</label><select id="pick-list"></select></div>
+        <p class="hint" id="path-status" role="status"></p>
+        <p class="hint">فقط نام و مسیر فایل خوانده می‌شود؛ محتوا هرگز خوانده یا ارسال نمی‌شود. فایل باید خودتان در پوشهٔ <code>${esc(dir)}</code> سایت قرار گرفته باشد.</p>
+      </div>
       <p class="note">این برنامه فایل آپلود نمی‌کند. فایل‌های HTML جدید را خودتان در پوشهٔ <code>${esc(dir)}</code> بگذارید (یا جای دیگری منتشر کنید) و بعد مسیر یا نشانی‌شان را اینجا وارد کنید.</p>
       ${field({ id: 'thumb', label: 'مسیر تصویر پوشش (اختیاری)', hint: 'فایل باید از قبل داخل assets/ باشد. مثال: assets/thumbnails/inflation.webp', control: `<input id="f-thumb" name="thumb" type="text" dir="ltr" value="${esc(val.thumb)}" autocomplete="off" spellcheck="false">` })}
+      <div class="picker"><button type="button" class="btn btn-ghost btn-sm" data-pick="thumb">${icon('image')} انتخاب تصویر…</button><p class="hint" id="thumb-status" role="status"></p></div>
       ${field({ id: 'emoji', label: 'ایموجی جایگزین (اختیاری)', hint: 'وقتی تصویری نباشد یا بارگذاری نشود نمایش داده می‌شود.', control: `<input id="f-emoji" name="emoji" type="text" maxlength="12" value="${esc(val.emoji)}" autocomplete="off">` })}
       ${field({ id: 'tags', label: 'برچسب‌ها (اختیاری)', hint: 'با «،» یا «,» جدا کنید. حداکثر ۱۲ برچسب.', control: `<input id="f-tags" name="tags" type="text" value="${esc(val.tags)}" autocomplete="off">` })}
       <fieldset class="choices"><legend>حالت پیش‌نمایش</legend>
@@ -102,6 +113,7 @@ export function openProjectForm({ library, project = null, defaultCategory = '',
       <p class="note">${STORAGE_NOTE}</p>
     </div>
     <footer class="modal-foot"><button type="button" class="btn btn-ghost" data-act="cancel">انصراف</button><button type="submit" class="btn btn-primary">${editing ? 'ذخیرهٔ تغییرات' : 'افزودن پروژه'}</button></footer>
+    <input type="file" id="pick-folder" webkitdirectory hidden><input type="file" id="pick-file" accept=".html,.htm,text/html" hidden><input type="file" id="pick-thumb" accept="image/*" hidden>
   </form>`;
 
   const form = d.querySelector('form');
@@ -109,10 +121,55 @@ export function openProjectForm({ library, project = null, defaultCategory = '',
     const ext = form.elements.locType.value === 'external';
     d.querySelector('#path-label').textContent = ext ? 'نشانی سایت' : 'مسیر نسبی فایل HTML';
     d.querySelector('#path-hint').innerHTML = ext ? 'مثال: <code>https://example.com</code>' : `مثال: <code>${esc(dir)}inflation/index.html</code> (بدون «..» و بدون «/» ابتدایی)`;
+    d.querySelector('#path-picker').hidden = ext;
     form.elements.path.placeholder = ext ? 'https://example.com' : `${dir}inflation/index.html`;
   };
   form.addEventListener('change', (ev) => { if (ev.target.name === 'locType') syncLoc(); });
   syncLoc();
+
+  /* انتخاب مسیر با «Choose file»: مرورگر مسیر کامل را نمی‌دهد، پس نام/مسیر نسبی داخل پوشه با پوشهٔ مجاز ترکیب و وجودش در سایت بررسی می‌شود */
+  const setStatus = (id, text) => { d.querySelector(id).textContent = text; };
+  async function verifyPath(value, statusId, fileLabel) {
+    setStatus(statusId, 'در حال بررسی…');
+    const ok = await checkLocalFile(new URL(value, document.baseURI).href);
+    setStatus(statusId, ok === true ? `✓ ${fileLabel} در سایت پیدا شد.` : ok === false ? `⚠ ${fileLabel} هنوز در سایت پیدا نمی‌شود؛ آن را در همین مسیر قرار دهید و commit کنید.` : 'بررسی وجود فایل ممکن نشد.');
+  }
+  function useLocal(rel) {
+    form.elements.path.value = dir + rel;
+    const r = V.validateProjectPath(form.elements.path.value, dir);
+    if (!r.ok) { setStatus('#path-status', `⚠ ${r.error}`); return; }
+    verifyPath(r.value, '#path-status', 'فایل');
+  }
+  d.querySelectorAll('[data-pick]').forEach((b) => b.addEventListener('click', () => d.querySelector(`#pick-${b.dataset.pick}`).click()));
+  d.querySelector('#pick-folder').addEventListener('change', (ev) => {
+    const top = dir.replace(/\/$/, '');
+    const paths = [...ev.target.files].map((f) => f.webkitRelativePath || f.name)
+      .filter((pth) => /\.html?$/i.test(pth) && !pth.split('/').some((x) => x.startsWith('.') || x === 'node_modules'))
+      .map((pth) => (pth.startsWith(`${top}/`) ? pth.slice(top.length + 1) : pth));
+    ev.target.value = '';
+    const box = d.querySelector('#pick-choose'); const list = d.querySelector('#pick-list');
+    box.hidden = true;
+    if (!paths.length) { setStatus('#path-status', 'در این پوشه فایل HTML پیدا نشد.'); return; }
+    paths.sort((a, b) => a.split('/').length - b.split('/').length || (/index\.html?$/i.test(b) - /index\.html?$/i.test(a)) || a.localeCompare(b));
+    useLocal(paths[0]);
+    if (paths.length > 1) {
+      list.innerHTML = paths.slice(0, 200).map((pth) => `<option value="${esc(pth)}">${esc(pth)}</option>`).join('');
+      list.onchange = () => useLocal(list.value);
+      box.hidden = false;
+    }
+  });
+  d.querySelector('#pick-file').addEventListener('change', (ev) => {
+    const f = ev.target.files[0]; ev.target.value = '';
+    if (f) useLocal(f.name);
+  });
+  d.querySelector('#pick-thumb').addEventListener('change', (ev) => {
+    const f = ev.target.files[0]; ev.target.value = '';
+    if (!f) return;
+    form.elements.thumb.value = `assets/thumbnails/${f.name}`;
+    const r = V.validateThumbnail(form.elements.thumb.value);
+    if (!r.ok) { setStatus('#thumb-status', `⚠ ${r.error}`); return; }
+    verifyPath(r.value, '#thumb-status', 'تصویر');
+  });
   d.addEventListener('click', (ev) => { if (ev.target.closest('[data-act="cancel"]')) d.close(); });
 
   form.addEventListener('submit', (ev) => {

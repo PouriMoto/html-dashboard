@@ -11,7 +11,7 @@ const UI = {
   star: ['⭐', 'star'], music: ['🎵', 'music'], mute: ['🔇', 'volume-off'],
   edit: ['✏️', 'pencil'], trash: ['🗑️', 'trash'], plus: ['➕', 'plus'], data: ['🗄️', 'database'], external: ['↗', 'external-link'],
   info: ['ℹ️', 'info-circle'], up: ['↑', 'arrow-up'], down: ['↓', 'arrow-down'], hide: ['🙈', 'eye-off'], image: ['🖼️', 'photo'],
-  tune: ['🛠️', 'adjustments'], search_x: ['✕', 'x'],
+  tune: ['🛠️', 'adjustments'], upload: ['⬆️', 'upload'], download: ['⬇️', 'download'], lock: ['🔒', 'lock'], logout: ['🚪', 'logout'], file: ['📄', 'file'], folder: ['📁', 'folder-open'],
 };
 
 const sprite = { path: null, prefix: 'tabler-' };

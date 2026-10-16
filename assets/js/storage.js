@@ -84,3 +84,14 @@ export function loadLibraryStore() {
 }
 export const saveLibraryStore = (doc) => write('library', { storeVersion: STORE_VERSION, savedAt: new Date().toISOString(), library: doc });
 export const clearLibraryStore = () => remove('library');
+
+/** فقط علاقه‌مندی‌ها، سابقه و ترجیحات کاربر (کتابخانه دست‌نخورده می‌ماند) */
+export const clearUserData = () => remove('user');
+
+/** همهٔ کلیدهای این برنامه (کتابخانه، کاربر، پشتیبان داده‌ٔ خراب). فایل‌های پروژه‌ها را هیچ‌وقت لمس نمی‌کند. */
+export function clearAllData() {
+  try {
+    if (backend) [...Array(backend.length).keys()].map((i) => backend.key(i)).filter((k) => k && k.startsWith(NS)).forEach((k) => backend.removeItem(k));
+  } catch { /* نادیده بگیر */ }
+  mem.clear();
+}

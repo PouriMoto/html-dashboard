@@ -10,3 +10,5 @@ The path and the id prefix are configurable in data/projects.json:
 Categories and projects can name a Tabler icon ("icon": {"emoji": "💰", "tabler": "coin"}).
 The emoji is always the fallback when the sprite or the symbol is missing.
 Favicon / logo files can also live here; reference them from index.html.
+
+Naming: tabler-sprite.svg for the sprite; custom single icons as lowercase-with-hyphens.svg.

@@ -5,6 +5,8 @@ import { validateProjectPath, validateExternalUrl, validateThumbnail, DEFAULT_PR
 
 export const SCHEMA_ID = 'project-deck/library';
 export const SCHEMA_VERSION = 1;
+export const APP_VERSION = '0.2.0';
+const LIMITS = { projects: 500, categories: 100, tags: 300 };
 export const PREVIEW_MODES = ['thumbnail', 'iframe', 'new-tab'];
 /* برچسب‌های نمایشی حالت‌ها (برای کارت، فرم و پنجره‌ها) */
 export const PREVIEW_MODE_INFO = {
@@ -96,9 +98,22 @@ export function normalizeProject(raw, ctx, warnings) {
       status: str(m.status, 60) || null,
       estimatedMinutes: Number.isFinite(m.estimatedMinutes) && m.estimatedMinutes > 0 ? m.estimatedMinutes : null,
       notes: str(m.notes, 2000),
-      custom: isPlainObject(m.custom) ? m.custom : {},
+      custom: safeCustom(m.custom),
     },
   };
+}
+
+/** فقط مقدارهای ساده و کلیدهای بی‌خطر؛ هرگز شیء تودرتو یا کلید prototype. */
+function safeCustom(v) {
+  const out = {};
+  if (!isPlainObject(v)) return out;
+  let n = 0;
+  for (const [k, val] of Object.entries(v)) {
+    if (n >= 20) break;
+    if (['__proto__', 'constructor', 'prototype'].includes(k) || k.length > 60) continue;
+    if (typeof val === 'string') { out[k] = val.slice(0, 500); n += 1; } else if (typeof val === 'number' || typeof val === 'boolean') { out[k] = val; n += 1; }
+  }
+  return out;
 }
 
 function validDir(v) {
@@ -137,6 +152,9 @@ export function normalizeLibrary(raw) {
   if (!Number.isInteger(version) || version < 1) throw new Error('schemaVersion باید یک عدد صحیح مثبت باشد.');
   if (version > SCHEMA_VERSION) throw new Error(`نسخهٔ اسکیمای فایل (${version}) جدیدتر از نسخهٔ پشتیبانی‌شده (${SCHEMA_VERSION}) است. برنامه را به‌روز کنید.`);
   const data = migrate(raw, version);
+  for (const k of Object.keys(LIMITS)) {
+    if (Array.isArray(data[k]) && data[k].length > LIMITS[k]) throw new Error(`تعداد ${k} بیشتر از حد مجاز (${LIMITS[k]}) است.`);
+  }
 
   const settings = normalizeSettings(data.settings);
   const categories = normalizeCategories(data.categories, warnings);

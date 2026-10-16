@@ -76,3 +76,11 @@
 - مدیریت از داخل رابط (پیاده‌شده در مرحلهٔ ۲): فرم‌ها با `validators.js` اعتبارسنجی می‌کنند، `library.js` تغییر می‌دهد و `app.js` با `storage.saveLibraryStore()` ذخیره می‌کند.
 - حالت‌های اجرای تازه (قاب تمام‌صفحه، همان تب): فیلد `launchMode` را می‌شود بدون تغییر اسکیمای فعلی اضافه کرد؛ فیلدهای ناشناخته نادیده گرفته می‌شوند و نسخهٔ اسکیما بالا می‌رود.
 - مجموعه‌ها، پوشه‌ها و تم‌ها: کلیدهای سطح بالای تازه در سند کتابخانه، همراه با یک گام در `migrate()`.
+
+## نسخهٔ ۰٫۲: افزوده‌ها
+- **فایل پشتیبان:** سند کتابخانه + `app`, `appVersion`, `exportedAt`, `preferences{sort}`, `userState{favorites}`. هنگام ورود فقط `schema = project-deck/library` و `schemaVersion = 1` پذیرفته می‌شود؛ نسخهٔ دیگر رد می‌شود (مهاجرت خودکار هنوز پیاده نیست).
+- **حدها:** حداکثر ۵۰۰ پروژه، ۱۰۰ دسته، ۳۰۰ برچسب، ۵ مگابایت. `meta.custom` فقط مقدارهای ساده و کلیدهای بی‌خطر نگه می‌دارد.
+- **ادغام:** پیش‌فرض `keep`؛ `replace` و `copy` (پسوند `-imported`) فقط با انتخاب صریح.
+- **نمای مدیر/بازدیدکننده:** بازدیدکننده همیشه `data/projects.json` را می‌بیند؛ مدیر پیش‌نویس `localStorage` را. جلسهٔ مدیر در `sessionStorage` (`projectdeck.v1.admin`) است.
+- **`data/auth.json`:** `{ version, algo: "PBKDF2-SHA256", iterations, salt, hash }` (base64). ورودی هش: `phone + "\n" + password` (UTF-8)، شماره به شکل `09xxxxxxxxx`.
+- **ماژول‌های تازه:** `auth.js`, `admin.js`, `data-manager.js`, `boot-check.js`.
