@@ -1,0 +1,320 @@
+{
+  "schema": "project-deck/library",
+  "schemaVersion": 1,
+  "settings": {
+    "siteTitle": "Project Deck",
+    "iconSpritePath": "assets/icons/tabler-sprite.svg",
+    "projectsDir": "projects/",
+    "backgroundImage": "assets/backgrounds/background.webp",
+    "iconSymbolPrefix": "tabler-",
+    "ambientAudio": {
+      "src": "assets/audio/ambient.mp3",
+      "label": "موسیقی محیطی"
+    }
+  },
+  "categories": [
+    {
+      "id": "games",
+      "label": "بازی‌ها",
+      "description": "بازی‌های کوچک و تجربه‌های تعاملی سرگرم‌کننده.",
+      "icon": {
+        "emoji": "🎮",
+        "tabler": "device-gamepad-2"
+      },
+      "accent": "#8b7cff",
+      "hidden": false,
+      "order": 1
+    },
+    {
+      "id": "books",
+      "label": "کتاب‌های تعاملی",
+      "description": "کتاب‌ها و داستان‌هایی که خواننده در آن‌ها انتخاب می‌کند.",
+      "icon": {
+        "emoji": "📖",
+        "tabler": "book-2"
+      },
+      "accent": "#ffb86b",
+      "hidden": false,
+      "order": 2
+    },
+    {
+      "id": "simulations",
+      "label": "شبیه‌سازی‌ها",
+      "description": "مدل‌های قابل‌بازی برای فهمیدن یک پدیده.",
+      "icon": {
+        "emoji": "🧪",
+        "tabler": "flask"
+      },
+      "accent": "#5ab0ff",
+      "hidden": false,
+      "order": 3
+    },
+    {
+      "id": "tests",
+      "label": "آزمون‌ها",
+      "description": "پرسشنامه‌ها و آزمون‌های سنجشی.",
+      "icon": {
+        "emoji": "📝",
+        "tabler": "clipboard-check"
+      },
+      "accent": "#ff7a9c",
+      "hidden": false,
+      "order": 4
+    },
+    {
+      "id": "tools",
+      "label": "ابزارها",
+      "description": "ابزارهای کوچک برای انجام یک کار مشخص.",
+      "icon": {
+        "emoji": "🧰",
+        "tabler": "tool"
+      },
+      "accent": "#3fd8c5",
+      "hidden": false,
+      "order": 5
+    },
+    {
+      "id": "prototypes",
+      "label": "نمونه‌های اولیه",
+      "description": "ایده‌هایی که هنوز در حال آزمودن‌اند.",
+      "icon": {
+        "emoji": "🚀",
+        "tabler": "rocket"
+      },
+      "accent": "#c4e86b",
+      "hidden": false,
+      "order": 6
+    }
+  ],
+  "tags": [
+    {
+      "id": "interactive",
+      "label": "تعاملی"
+    },
+    {
+      "id": "persian",
+      "label": "فارسی"
+    },
+    {
+      "id": "education",
+      "label": "آموزشی"
+    },
+    {
+      "id": "offline",
+      "label": "آفلاین"
+    },
+    {
+      "id": "mobile-friendly",
+      "label": "سازگار با موبایل"
+    },
+    {
+      "id": "experiment",
+      "label": "آزمایشی"
+    },
+    {
+      "id": "story",
+      "label": "داستانی"
+    },
+    {
+      "id": "finance",
+      "label": "مالی"
+    },
+    {
+      "id": "انیمیشن",
+      "label": "انیمیشن"
+    },
+    {
+      "id": "نمونه-اولیه",
+      "label": "نمونه اولیه"
+    },
+    {
+      "id": "Website",
+      "label": "Website"
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-mv9ek39c",
+      "title": "ارادۀ جنگیدن",
+      "subtitle": "",
+      "description": "پیروزی در نبرد نهایتاً به ارادۀ جنگیدن ربط دارد، نه فناوری‌های پیشرفته\nتعهد به ارزش‌های بنیادین و عزم جمعی عواملی‌اند که می‌توانند نتیجۀ محتوم جنگ‌ها را عوض کنند",
+      "categoryId": "prototypes",
+      "tags": [],
+      "entry": {
+        "localPath": "projects/The-will-to-fight/The-will-to-fight.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "iframe",
+      "cover": {
+        "thumbnail": "assets/thumbnails/the-will-to-fight.webp",
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": true,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-15",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mv9exouw",
+      "title": "شبیه سازی های مالی",
+      "subtitle": "",
+      "description": "5 بازی چت محور برا درک شرایط و مباحث اقتصادی مرتبط با پول",
+      "categoryId": "simulations",
+      "tags": [],
+      "entry": {
+        "localPath": "projects/financial-simulation-games/index.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "thumbnail",
+      "cover": {
+        "thumbnail": null,
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": true,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-15",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mvauywda",
+      "title": "عمارت کلاه فرنگی بندرعباس",
+      "subtitle": "",
+      "description": "نمونه فایل ساختن ریلز با GSAP و کدنویسی",
+      "categoryId": "prototypes",
+      "tags": [
+        "انیمیشن",
+        "نمونه-اولیه"
+      ],
+      "entry": {
+        "localPath": "projects/animate-html/kolah-farangi/kolah-farangi-reel-v3-fixed.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "new-tab",
+      "cover": {
+        "thumbnail": "assets/thumbnails/kolah-farangi.webp",
+        "gradient": null,
+        "accent": null,
+        "icon": {
+          "emoji": "🎬",
+          "tabler": null
+        }
+      },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-16",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mvaxv0ma",
+      "title": "آزمایشگاه اعتبارسنجی ایده ها",
+      "subtitle": "",
+      "description": "راهنما و یک تست برای شناسایی اینکه ایده مان را چطور اعتبارسنجی کنیم",
+      "categoryId": "simulations",
+      "tags": [],
+      "entry": {
+        "localPath": null,
+        "deployedUrl": "https://pourimoto.github.io/idea-validation-lab/"
+      },
+      "launchTarget": "deployed",
+      "previewMode": "thumbnail",
+      "cover": {
+        "thumbnail": "assets/thumbnails/idea-validation-lab.webp",
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-16",
+        "updatedAt": "2026-10-16",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "project-mvcqv5c0",
+      "subtitle": "",
+      "sortOrder": 0,
+      "cover": {
+        "thumbnail": "assets/thumbnails/سید_علی_خامنه_ای_۱۸.jpg",
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-17",
+        "updatedAt": "2026-10-17",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      },
+      "title": "یادبودی از رهبر فقید ایران",
+      "description": "۲۰ سخن از سخنان سیدعلی خامنه ای به صورت scrolly telling",
+      "categoryId": "prototypes",
+      "tags": [
+        "Website"
+      ],
+      "entry": {
+        "localPath": "projects/animate-html/kolah-farangi/in_memoriam_khamenei_bilingual.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "iframe",
+      "featured": false,
+      "visibility": "visible"
+    }
+  ]
+}
