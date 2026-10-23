@@ -1,0 +1,3271 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F5F0E8">
+<title>GameCraft — سازنده پرامپت بازی</title>
+
+<style>
+/* =========================================
+   1. DESIGN TOKENS
+   Claude-inspired warm visual theme
+========================================= */
+:root {
+  --bg: #F5F0E8;
+  --surface: #FFFCF7;
+  --surface-2: #EFE8DD;
+  --text: #292722;
+  --muted: #797267;
+  --border: #DED5C8;
+  --primary: #C96442;
+  --primary-hover: #AE5032;
+  --primary-soft: #F4DFD4;
+  --success: #47745A;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --shadow: 0 8px 28px rgba(60, 45, 30, .06);
+  --font: Tahoma, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(201, 100, 66, .35);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================
+   2. APP HEADER
+========================================= */
+.app-header {
+  max-width: 1100px;
+  margin: auto;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: white;
+  border-radius: 14px;
+  font-size: 23px;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+}
+
+.brand-caption {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.header-badge {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 30px;
+  padding: 6px 12px;
+  font-size: 11px;
+}
+
+/* =========================================
+   3. PAGE LAYOUT
+========================================= */
+.app-container {
+  max-width: 1100px;
+  margin: 10px auto 50px;
+  padding: 0 24px;
+}
+
+.hero {
+  text-align: center;
+  max-width: 650px;
+  margin: 22px auto 34px;
+}
+
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 5px 13px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: clamp(27px, 4vw, 42px);
+  line-height: 1.5;
+  letter-spacing: -1.2px;
+  margin: 15px 0 8px;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 14px;
+  max-width: 530px;
+  margin: auto;
+}
+
+/* =========================================
+   4. WIZARD SHELL
+========================================= */
+.wizard-layout {
+  display: grid;
+  grid-template-columns: 255px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.sidebar,
+.wizard-card,
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* =========================================
+   5. SIDEBAR / STEPPER
+========================================= */
+.sidebar {
+  padding: 20px 14px;
+  position: sticky;
+  top: 16px;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 8px 14px;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  text-align: right;
+  border-radius: 13px;
+  transition: background .2s, color .2s;
+}
+
+.step-item:hover {
+  background: var(--surface-2);
+}
+
+.step-item.active {
+  background: var(--primary-soft);
+  border-color: #E8C7B8;
+  color: var(--text);
+}
+
+.step-item.completed .step-number {
+  background: var(--success);
+  color: white;
+}
+
+.step-number {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.step-item.active .step-number {
+  background: var(--primary);
+  color: white;
+}
+
+.step-label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.step-description {
+  font-size: 10px;
+  opacity: .8;
+  margin-top: 1px;
+}
+
+.sidebar-progress {
+  margin: 22px 8px 5px;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.progress-track {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: inherit;
+  transition: width .3s ease;
+}
+
+/* =========================================
+   6. MAIN WIZARD CARD
+========================================= */
+.wizard-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.wizard-card-header {
+  padding: 25px 28px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.step-kicker {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.step-heading {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.6;
+  letter-spacing: -.5px;
+}
+
+.step-subtitle {
+  color: var(--muted);
+  margin: 5px 0 0;
+  font-size: 12px;
+}
+
+.wizard-content {
+  padding: 26px 28px 30px;
+  min-height: 360px;
+}
+
+.wizard-footer {
+  padding: 17px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #FCF8F2;
+}
+
+.footer-hint {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* =========================================
+   7. BUTTONS
+========================================= */
+.btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 12px;
+  transition: background .2s, transform .2s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--surface-2);
+}
+
+.btn-primary {
+  color: white;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-quiet {
+  border-color: transparent;
+  background: transparent;
+}
+
+.btn-small {
+  padding: 7px 11px;
+  font-size: 11px;
+}
+
+/* =========================================
+   8. FORM ELEMENTS
+========================================= */
+.field {
+  margin-bottom: 23px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  display: block;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.field-hint {
+  color: var(--muted);
+  font-size: 11px;
+  margin: -3px 0 10px;
+}
+
+.text-input,
+.text-area,
+.select-input {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #FFFEFB;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.text-input:focus,
+.text-area:focus,
+.select-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(201, 100, 66, .09);
+}
+
+.text-area {
+  min-height: 115px;
+  resize: vertical;
+}
+
+.text-area::placeholder,
+.text-input::placeholder {
+  color: #A69C8E;
+}
+
+/* =========================================
+   9. OPTION CARDS
+========================================= */
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.option-card {
+  position: relative;
+  min-width: 0;
+}
+
+.option-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.option-card label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 108px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: #FFFEFB;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+
+.option-card label:hover {
+  border-color: #D8A18C;
+  transform: translateY(-2px);
+}
+
+.option-card input:checked + label {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.option-card input:focus-visible + label {
+  outline: 3px solid rgba(201, 100, 66, .35);
+  outline-offset: 2px;
+}
+
+.option-icon {
+  font-size: 25px;
+  line-height: 1.4;
+}
+
+.option-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.option-description {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   10. COLLAPSIBLE HELP
+========================================= */
+.help-box {
+  margin-top: 18px;
+  border: 1px solid #E6D7B8;
+  background: #FBF4E5;
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.help-box summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.help-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.help-box summary::after {
+  content: "+";
+  margin-right: auto;
+  font-size: 19px;
+  color: var(--primary);
+}
+
+.help-box[open] summary::after {
+  content: "−";
+}
+
+.help-content {
+  padding: 0 14px 14px;
+  color: #665B4A;
+  font-size: 12px;
+}
+
+.help-content p {
+  margin: 0 0 8px;
+}
+
+.help-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   11. SUMMARY PANEL
+========================================= */
+.summary-card {
+  margin-top: 22px;
+  padding: 18px 20px;
+}
+
+.summary-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.summary-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary-chip {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 30px;
+  padding: 5px 10px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.summary-empty {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================================
+   12. TOAST NOTIFICATION
+========================================= */
+.toast {
+  position: fixed;
+  z-index: 1000;
+  bottom: 22px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: #292722;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .15);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* =========================================
+   13. RESPONSIVE
+========================================= */
+@media (max-width: 800px) {
+  .wizard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    padding: 12px;
+  }
+
+  .sidebar-title,
+  .sidebar-progress {
+    display: none;
+  }
+
+  .steps-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 7px;
+    padding-bottom: 3px;
+  }
+
+  .step-item {
+    flex: 0 0 47px;
+    width: 47px;
+    justify-content: center;
+    padding: 5px;
+  }
+
+  .step-item > div:last-child {
+    display: none;
+  }
+
+  .step-number {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero {
+    margin-top: 10px;
+  }
+
+  .option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 16px;
+  }
+
+  .app-container {
+    padding: 0 12px;
+    margin-top: 5px;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+
+  .header-badge {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .wizard-card-header {
+    padding: 20px 17px 16px;
+  }
+
+  .wizard-content {
+    padding: 20px 17px 24px;
+    min-height: 300px;
+  }
+
+  .wizard-footer {
+    padding: 14px 17px;
+  }
+
+  .step-heading {
+    font-size: 20px;
+  }
+
+  .option-grid {
+    gap: 8px;
+  }
+
+  .option-card label {
+    min-height: 100px;
+    padding: 11px;
+  }
+
+  .footer-hint {
+    display: none;
+  }
+
+  .btn {
+    padding: 10px 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-icon" aria-hidden="true">✳</div>
+    <div>
+      <div class="brand-name">GameCraft</div>
+      <div class="brand-caption">ایده‌ات را به بازی تبدیل کن</div>
+    </div>
+  </div>
+
+  <div class="header-badge">ابزار رایگان طراحی بازی با AI</div>
+</header>
+
+<main class="app-container">
+
+  <section class="hero">
+    <div class="hero-label">
+      <span>✦</span>
+      <span>از ایده تا پرامپت</span>
+    </div>
+
+    <h1>بازی خودت را <span>طراحی کن!</span></h1>
+
+    <p>
+      به چند سؤال ساده جواب بده، ویژگی‌های بازی‌ات را انتخاب کن
+      و در پایان یک پرامپت آماده برای هوش مصنوعی تحویل بگیر.
+      لازم نیست برنامه‌نویسی بلد باشی.
+    </p>
+  </section>
+
+  <section class="wizard-layout">
+
+    <!-- SIDEBAR: STEPS -->
+    <aside class="sidebar">
+      <p class="sidebar-title">مراحل طراحی بازی</p>
+
+      <nav class="steps-list" id="stepsList" aria-label="مراحل ویزارد">
+
+        <button class="step-item active" type="button" data-step="0">
+          <span class="step-number">۱</span>
+          <div>
+            <div class="step-label">ایده بازی</div>
+            <div class="step-description">چه چیزی می‌سازیم؟</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="1">
+          <span class="step-number">۲</span>
+          <div>
+            <div class="step-label">هدف و قوانین</div>
+            <div class="step-description">چطور بازی کنیم؟</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="2">
+          <span class="step-number">۳</span>
+          <div>
+            <div class="step-label">مکانیک‌ها</div>
+            <div class="step-description">چه قابلیت‌هایی؟</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="3">
+          <span class="step-number">۴</span>
+          <div>
+            <div class="step-label">ظاهر بازی</div>
+            <div class="step-description">چه شکلی باشد؟</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="4">
+          <span class="step-number">۵</span>
+          <div>
+            <div class="step-label">فناوری</div>
+            <div class="step-description">چطور ساخته شود؟</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="5">
+          <span class="step-number">۶</span>
+          <div>
+            <div class="step-label">داده‌ها</div>
+            <div class="step-description">امتیاز و ذخیره‌سازی</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="6">
+          <span class="step-number">۷</span>
+          <div>
+            <div class="step-label">کیفیت</div>
+            <div class="step-description">تست و محدودیت‌ها</div>
+          </div>
+        </button>
+
+        <button class="step-item" type="button" data-step="7">
+          <span class="step-number">۸</span>
+          <div>
+            <div class="step-label">پرامپت نهایی</div>
+            <div class="step-description">آماده برای AI</div>
+          </div>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-progress">
+        <div class="progress-meta">
+          <span>پیشرفت</span>
+          <span id="progressText">مرحله ۱ از ۸</span>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="پیشرفت مراحل"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="12"
+          id="progressTrack"
+        >
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WIZARD -->
+    <section class="wizard-card" aria-live="polite">
+
+      <header class="wizard-card-header">
+        <div class="step-kicker" id="stepKicker">مرحله ۱ · شروع خلاقیت</div>
+        <h2 class="step-heading" id="stepHeading">چه بازی‌ای در ذهن داری؟</h2>
+        <p class="step-subtitle" id="stepSubtitle">
+          یک نوع بازی انتخاب کن یا ایده خودت را توضیح بده.
+        </p>
+      </header>
+
+      <!--
+        پارت ۲:
+        محتوای مرحله‌های ۱ تا ۴
+        از اینجا اضافه می‌شود.
+      -->
+      <div class="wizard-content" id="wizardContent">
+        <div id="partOnePlaceholder">
+          <p>محتوای مراحل در پارت‌های بعدی اضافه خواهد شد.</p>
+        </div>
+      </div>
+
+      <footer class="wizard-footer">
+        <button
+          type="button"
+          class="btn"
+          id="prevBtn"
+          disabled
+        >
+          ← مرحله قبل
+        </button>
+
+        <span class="footer-hint" id="footerHint">
+          می‌توانی بعداً انتخاب‌هایت را تغییر بدهی.
+        </span>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="nextBtn"
+        >
+          مرحله بعد →
+        </button>
+      </footer>
+
+    </section>
+
+  </section>
+
+  <!-- LIVE SUMMARY -->
+  <section class="summary-card">
+    <div class="summary-heading">
+      <span>✦ خلاصه انتخاب‌های تو</span>
+      <span class="header-badge" id="summaryCount">۰ انتخاب</span>
+    </div>
+
+    <div class="summary-content" id="summaryContent">
+      <span class="summary-empty">
+        با انتخاب گزینه‌ها، خلاصه بازی تو اینجا نمایش داده می‌شود.
+      </span>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!--
+  محل ادامه کد جاوااسکریپت در پارت‌های بعدی.
+
+  پارت ۲: فرم‌ها و محتوای مراحل ۱ تا ۴
+  پارت ۳: مراحل ۵ تا ۸ و تولید پرامپت
+  پارت ۴: منطق ویزارد، انتخاب‌ها، ذخیره‌سازی،
+          خلاصه زنده و Copy for AI
+
+  در پایان پارت ۴، تگ‌های script و body و html
+  بسته خواهند شد.
+-->
+<!-- =====================================================
+     PART 2 OF 4
+     GameCraft: Wizard Steps 1–4
+     Paste directly after Part 1
+===================================================== -->
+
+<style>
+/* Additional wizard styles */
+
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 25px 0;
+}
+
+.field-required {
+  color: var(--primary);
+  margin-right: 3px;
+}
+
+.selected-note {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--success);
+}
+
+.inline-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.option-card label {
+  height: 100%;
+}
+
+.option-card input[type="checkbox"] + label::after,
+.option-card input[type="radio"] + label::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.option-card input[type="checkbox"] + label::after {
+  border-radius: 5px;
+}
+
+.option-card input:checked + label::after {
+  content: "✓";
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice-pill {
+  position: relative;
+}
+
+.choice-pill input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice-pill label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all .2s;
+}
+
+.choice-pill input:checked + label {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--text);
+}
+
+.choice-pill input:focus-visible + label {
+  outline: 3px solid rgba(201, 100, 66, .35);
+  outline-offset: 2px;
+}
+
+.conditional-field {
+  margin-top: 13px;
+  padding: 15px;
+  background: var(--surface-2);
+  border-radius: 13px;
+}
+
+.counter-note {
+  text-align: left;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+@media (max-width: 480px) {
+  .inline-fields {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+/* =====================================================
+   GAMECRAFT DATA
+   Shared state and helper functions
+===================================================== */
+
+window.GameCraft = window.GameCraft || {};
+
+GameCraft.state = GameCraft.state || {
+  currentStep: 0,
+  answers: {},
+  completedSteps: []
+};
+
+GameCraft.steps = GameCraft.steps || [
+  {
+    kicker: "مرحله ۱ · شروع خلاقیت",
+    title: "چه بازی‌ای در ذهن داری؟",
+    subtitle: "یک نوع بازی انتخاب کن یا ایده خودت را توضیح بده."
+  },
+  {
+    kicker: "مرحله ۲ · هدف و قوانین",
+    title: "بازیکن قرار است چه کاری انجام دهد؟",
+    subtitle: "هدف بازی و قوانین اصلی آن را مشخص کن."
+  },
+  {
+    kicker: "مرحله ۳ · مکانیک‌های بازی",
+    title: "چه قابلیت‌هایی در بازی باشد؟",
+    subtitle: "هر تعداد قابلیت که لازم داری انتخاب کن."
+  },
+  {
+    kicker: "مرحله ۴ · ظاهر و تجربه",
+    title: "بازی تو چه شکلی باشد؟",
+    subtitle: "ظاهر، حس‌وحال، انیمیشن و کنترل‌ها را انتخاب کن."
+  },
+  {
+    kicker: "مرحله ۵ · فناوری",
+    title: "بازی چطور ساخته شود؟",
+    subtitle: "روش ساخت را مشخص کن یا انتخاب را به AI بسپار."
+  },
+  {
+    kicker: "مرحله ۶ · داده‌ها",
+    title: "چه چیزهایی باید ذخیره شوند؟",
+    subtitle: "امتیاز، پیشرفت و اطلاعات بازیکن را تنظیم کن."
+  },
+  {
+    kicker: "مرحله ۷ · کیفیت",
+    title: "چه انتظاری از نتیجه داری؟",
+    subtitle: "محدودیت‌ها و استانداردهای اجرای بازی را مشخص کن."
+  },
+  {
+    kicker: "مرحله ۸ · خروجی نهایی",
+    title: "پرامپت بازی تو آماده است!",
+    subtitle: "خلاصه را بررسی کن و پرامپت را برای AI کپی کن."
+  }
+];
+
+/* Helper: create a safe HTML option */
+GameCraft.option = function (
+  group,
+  value,
+  icon,
+  title,
+  description = "",
+  type = "checkbox"
+) {
+  const id = "gc-" + group + "-" +
+    String(value).replace(/[^a-zA-Z0-9_-]/g, "-");
+
+  return `
+    <div class="option-card">
+      <input
+        type="${type}"
+        id="${id}"
+        name="${group}"
+        value="${GameCraft.escape(value)}"
+        data-group="${group}"
+      >
+      <label for="${id}">
+        <span class="option-icon">${icon}</span>
+        <span class="option-title">${title}</span>
+        ${description
+          ? `<span class="option-description">${description}</span>`
+          : ""}
+      </label>
+    </div>
+  `;
+};
+
+GameCraft.escape = function (value) {
+  return String(value).replace(/[&<>"']/g, function (char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+};
+
+GameCraft.field = function (
+  id,
+  label,
+  placeholder,
+  hint = "",
+  type = "textarea"
+) {
+  const safeId = GameCraft.escape(id);
+  const safeLabel = GameCraft.escape(label);
+  const safePlaceholder = GameCraft.escape(placeholder);
+
+  if (type === "input") {
+    return `
+      <div class="field">
+        <label class="field-label" for="${safeId}">
+          ${safeLabel}
+        </label>
+        ${hint
+          ? `<p class="field-hint">${hint}</p>`
+          : ""}
+        <input
+          class="text-input"
+          id="${safeId}"
+          name="${safeId}"
+          type="text"
+          placeholder="${safePlaceholder}"
+          data-field="${safeId}"
+        >
+      </div>
+    `;
+  }
+
+  return `
+    <div class="field">
+      <label class="field-label" for="${safeId}">
+        ${safeLabel}
+      </label>
+      ${hint
+        ? `<p class="field-hint">${hint}</p>`
+        : ""}
+      <textarea
+        class="text-area"
+        id="${safeId}"
+        name="${safeId}"
+        placeholder="${safePlaceholder}"
+        data-field="${safeId}"
+      ></textarea>
+    </div>
+  `;
+};
+
+GameCraft.pills = function (group, options, type = "radio") {
+  return `
+    <div class="choice-group">
+      ${options.map(function (item, index) {
+        const id = "gc-pill-" + group + "-" + index;
+
+        return `
+          <div class="choice-pill">
+            <input
+              type="${type}"
+              id="${id}"
+              name="${group}"
+              value="${GameCraft.escape(item.value)}"
+              data-group="${group}"
+            >
+            <label for="${id}">
+              ${item.icon || ""}
+              ${item.label}
+            </label>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+};
+
+GameCraft.help = function (title, content) {
+  return `
+    <details class="help-box">
+      <summary>💡 ${title}</summary>
+      <div class="help-content">
+        ${content}
+      </div>
+    </details>
+  `;
+};
+
+/* =====================================================
+   STEP 1: GAME IDEA
+===================================================== */
+
+GameCraft.renderStep0 = function () {
+  const types = [
+    ["puzzle", "🧩", "معمایی", "حل مسئله و پیدا کردن پاسخ"],
+    ["quiz", "🧠", "آزمون و تست", "سؤال، انتخاب و نتیجه"],
+    ["story", "📖", "داستان تعاملی", "انتخاب مسیر داستان"],
+    ["racing", "🏎️", "مسابقه‌ای", "سرعت، رقابت و رکورد"],
+    ["strategy", "🏰", "استراتژی", "برنامه‌ریزی و تصمیم‌گیری"],
+    ["platformer", "🦘", "سکوبازی", "پرش، حرکت و عبور از موانع"],
+    ["arcade", "🎯", "آرکید و امتیازی", "بازی سریع و رکوردگیری"],
+    ["cards", "🃏", "کارتی", "کارت، ترکیب و تاکتیک"],
+    ["words", "🔤", "کلمات", "حدس کلمه و بازی زبانی"],
+    ["creative", "🎨", "خلاقیت و نقاشی", "طراحی و ساخت آزاد"],
+    ["simulation", "🏗️", "شبیه‌سازی", "مدیریت یک موقعیت واقعی"],
+    ["custom", "✨", "ایده خودم", "نوع دیگری از بازی"]
+  ];
+
+  return `
+    <div class="field">
+      <span class="field-label">
+        ۱. چه نوع بازی‌ای می‌خواهی بسازی؟
+      </span>
+      <p class="field-hint">
+        یک گزینه را انتخاب کن. اگر ایده متفاوتی داری، «ایده خودم» را بزن.
+      </p>
+
+      <div class="option-grid" id="gameTypeGrid">
+        ${types.map(function (item) {
+          return GameCraft.option(
+            "gameType",
+            item[0],
+            item[1],
+            item[2],
+            item[3],
+            "radio"
+          );
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    ${GameCraft.field(
+      "gameIdea",
+      "۲. ایده بازی‌ات را توضیح بده",
+      "مثلاً: یک بازی که بازیکن باید با حل معما از یک قلعه فرار کند...",
+      "لازم نیست اصطلاح فنی بدانی؛ با زبان خودت توضیح بده."
+    )}
+
+    ${GameCraft.field(
+      "gameName",
+      "۳. اسم بازی (اختیاری)",
+      "مثلاً: فرار از قلعه",
+      "",
+      "input"
+    )}
+
+    ${GameCraft.help(
+      "مکانیک بازی یعنی چه؟",
+      `
+        <p>
+          <strong>مکانیک</strong> یعنی کاری که بازیکن در بازی انجام می‌دهد.
+          برای مثال، پریدن، حل معما، انتخاب جواب یا جمع‌آوری سکه.
+        </p>
+        <p>
+          <strong>نمونه:</strong> «بازیکن باید ۵ کلید پیدا کند تا در خروجی باز شود.»
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   STEP 2: GOAL AND RULES
+===================================================== */
+
+GameCraft.renderStep1 = function () {
+  return `
+    ${GameCraft.field(
+      "playerGoal",
+      "۱. هدف اصلی بازیکن چیست؟",
+      "مثلاً: پیدا کردن گنج قبل از تمام شدن زمان..."
+    )}
+
+    <div class="field">
+      <span class="field-label">۲. ساختار بازی چگونه باشد؟</span>
+      ${GameCraft.pills("gameStructure", [
+        { value: "levels", icon: "🪜", label: "مرحله‌ای" },
+        { value: "endless", icon: "♾️", label: "بی‌پایان" },
+        { value: "single", icon: "🎯", label: "یک دور کوتاه" },
+        { value: "story", icon: "📖", label: "داستانی" }
+      ])}
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <span class="field-label">۳. شرایط پایان بازی</span>
+      <p class="field-hint">
+        می‌توانی چند مورد را انتخاب کنی.
+      </p>
+      <div class="option-grid">
+        ${GameCraft.option(
+          "endConditions", "win", "🏆", "شرط برد",
+          "مثلاً رسیدن به هدف"
+        )}
+        ${GameCraft.option(
+          "endConditions", "lose", "💥", "شرط باخت",
+          "مثلاً تمام شدن جان‌ها"
+        )}
+        ${GameCraft.option(
+          "endConditions", "timer", "⏱️", "پایان زمان",
+          "تمام شدن تایمر"
+        )}
+        ${GameCraft.option(
+          "endConditions", "free", "🕊️", "بدون باخت",
+          "آزادی برای تجربه کردن"
+        )}
+      </div>
+    </div>
+
+    ${GameCraft.field(
+      "gameRules",
+      "۴. قوانین ویژه (اختیاری)",
+      "مثلاً: بازیکن فقط سه فرصت دارد و هر پاسخ درست یک امتیاز می‌دهد..."
+    )}
+
+    ${GameCraft.help(
+      "چطور قوانین خوب بنویسیم؟",
+      `
+        <p>قوانین باید مشخص کنند بازیکن چه کاری می‌تواند انجام دهد.</p>
+        <p>
+          <strong>مثال:</strong> هر پاسخ درست ۱۰ امتیاز دارد؛
+          سه پاسخ اشتباه باعث پایان بازی می‌شود.
+        </p>
+        <p>
+          اگر نمی‌دانی چه قوانینی مناسب‌اند، این بخش را خالی بگذار.
+          پرامپت نهایی از AI می‌خواهد قوانین ساده و سازگار با ایده پیشنهاد کند.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   STEP 3: GAME MECHANICS
+===================================================== */
+
+GameCraft.renderStep2 = function () {
+  const mechanics = [
+    ["score", "🏆", "امتیاز", "افزایش امتیاز بازیکن"],
+    ["timer", "⏱️", "تایمر", "محدودیت زمانی"],
+    ["lives", "❤️", "جان محدود", "تعداد فرصت‌های بازیکن"],
+    ["levels", "🪜", "مراحل", "پیشروی در بازی"],
+    ["choices", "🔀", "انتخاب و پیامد", "تصمیم‌ها نتیجه دارند"],
+    ["inventory", "🎒", "کوله‌پشتی", "نگهداری آیتم‌ها"],
+    ["random", "🎲", "اتفاق تصادفی", "نتایج غیرقابل‌پیش‌بینی"],
+    ["puzzle", "🧩", "معما", "حل مسئله برای پیشروی"],
+    ["combo", "⚡", "ترکیب حرکات", "پاداش برای زنجیره حرکت‌ها"],
+    ["unlock", "🔓", "قابلیت‌های قفل‌شده", "باز شدن محتوا"],
+    ["save", "💾", "ذخیره پیشرفت", "ادامه از آخرین وضعیت"],
+    ["achievements", "🏅", "دستاوردها", "پاداش برای رسیدن به هدف"],
+    ["dragdrop", "✋", "کشیدن و رها کردن", "جابجایی با لمس یا ماوس"],
+    ["matching", "🃏", "جفت‌یابی", "پیدا کردن موارد مرتبط"],
+    ["physics", "⚙️", "حرکت و برخورد", "جاذبه و برخورد ساده"],
+    ["drawing", "✏️", "طراحی آزاد", "کشیدن شکل با ماوس یا لمس"]
+  ];
+
+  return `
+    <div class="field">
+      <span class="field-label">
+        قابلیت‌های موردنظر را انتخاب کن
+      </span>
+      <p class="field-hint">
+        انتخاب چند گزینه مجاز است. فقط مواردی را انتخاب کن که واقعاً به بازی کمک می‌کنند.
+      </p>
+
+      <div class="option-grid">
+        ${mechanics.map(function (item) {
+          return GameCraft.option(
+            "mechanics",
+            item[0],
+            item[1],
+            item[2],
+            item[3]
+          );
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <span class="field-label">
+        بازی چندنفره باشد؟
+      </span>
+      ${GameCraft.pills("multiplayer", [
+        { value: "solo", icon: "👤", label: "تک‌نفره" },
+        { value: "local", icon: "👥", label: "چندنفره روی یک دستگاه" },
+        { value: "online", icon: "🌐", label: "چندنفره آنلاین" }
+      ])}
+      <p class="field-hint">
+        بازی آنلاین معمولاً به سرور نیاز دارد و از نسخه تک‌فایلی پیچیده‌تر است.
+      </p>
+    </div>
+
+    ${GameCraft.field(
+      "customMechanics",
+      "قابلیت دیگری در نظر داری؟ (اختیاری)",
+      "مثلاً: امکان تغییر ظاهر شخصیت یا ساخت مرحله توسط بازیکن..."
+    )}
+
+    ${GameCraft.help(
+      "آیا باید همه قابلیت‌ها را انتخاب کنم؟",
+      `
+        <p>
+          نه! برای اولین نمونه، یک یا دو مکانیک اصلی کافی است.
+          قابلیت‌های زیاد ممکن است ساخت بازی را دشوار و پرخطا کند.
+        </p>
+        <p>
+          <strong>مثال:</strong> برای بازی حدس کلمه، انتخاب‌های مناسب
+          می‌توانند امتیاز، تایمر و شروع مجدد باشند.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   STEP 4: VISUAL DESIGN AND UX
+===================================================== */
+
+GameCraft.renderStep3 = function () {
+  return `
+    <div class="field">
+      <span class="field-label">۱. سبک بصری</span>
+      ${GameCraft.pills("visualStyle", [
+        { value: "minimal", icon: "◻️", label: "مینیمال" },
+        { value: "cartoon", icon: "🎨", label: "کارتونی" },
+        { value: "pixel", icon: "👾", label: "پیکسلی" },
+        { value: "handdrawn", icon: "✏️", label: "دست‌کشیده" },
+        { value: "neon", icon: "💜", label: "نئونی" },
+        { value: "3d", icon: "🧊", label: "سه‌بعدی‌نما" },
+        { value: "material", icon: "📱", label: "Material 3" }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۲. تم رنگی</span>
+      ${GameCraft.pills("colorTheme", [
+        { value: "light", icon: "☀️", label: "روشن" },
+        { value: "dark", icon: "🌙", label: "تاریک" },
+        { value: "colorful", icon: "🌈", label: "رنگارنگ" },
+        { value: "warm", icon: "🧡", label: "گرم و خاکی" },
+        { value: "custom", icon: "🎨", label: "رنگ دلخواه" }
+      ])}
+
+      <div class="conditional-field hidden" id="customColorField">
+        <label class="field-label" for="customColors">
+          رنگ‌های دلخواه
+        </label>
+        <input
+          class="text-input"
+          id="customColors"
+          data-field="customColors"
+          placeholder="مثلاً کرم، نارنجی و قهوه‌ای"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">۳. حس‌وحال بازی</span>
+      ${GameCraft.pills("gameMood", [
+        { value: "relaxing", icon: "🌿", label: "آرامش‌بخش" },
+        { value: "funny", icon: "😂", label: "بامزه" },
+        { value: "exciting", icon: "🔥", label: "هیجان‌انگیز" },
+        { value: "mysterious", icon: "🔍", label: "مرموز" },
+        { value: "competitive", icon: "🏁", label: "رقابتی" },
+        { value: "educational", icon: "📚", label: "آموزشی" }
+      ])}
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <span class="field-label">۴. انیمیشن‌ها</span>
+      ${GameCraft.pills("animationLevel", [
+        { value: "none", label: "بدون انیمیشن" },
+        { value: "simple", label: "ساده و روان" },
+        { value: "rich", label: "پیشرفته" }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۵. صدا</span>
+      ${GameCraft.pills("soundLevel", [
+        { value: "none", label: "بدون صدا" },
+        { value: "sfx", label: "افکت صوتی" },
+        { value: "music", label: "موسیقی و افکت" }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۶. اجزای رابط کاربری</span>
+      <div class="option-grid">
+        ${GameCraft.option(
+          "uiElements", "menu", "📋", "منوی اصلی",
+          "شروع و تنظیمات"
+        )}
+        ${GameCraft.option(
+          "uiElements", "hud", "📊", "نمایش وضعیت",
+          "امتیاز، جان و تایمر"
+        )}
+        ${GameCraft.option(
+          "uiElements", "progress", "📈", "نوار پیشرفت",
+          "نمایش میزان پیشروی"
+        )}
+        ${GameCraft.option(
+          "uiElements", "instructions", "💡", "راهنما",
+          "آموزش نحوه بازی"
+        )}
+        ${GameCraft.option(
+          "uiElements", "endScreen", "🏁", "صفحه پایان",
+          "نتیجه و شروع مجدد"
+        )}
+        ${GameCraft.option(
+          "uiElements", "settings", "⚙️", "تنظیمات",
+          "کنترل صدا و ظاهر"
+        )}
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">۷. دستگاه هدف</span>
+      ${GameCraft.pills("targetDevice", [
+        { value: "mobile", icon: "📱", label: "موبایل" },
+        { value: "desktop", icon: "💻", label: "کامپیوتر" },
+        { value: "both", icon: "📱💻", label: "هر دو" }
+      ])}
+    </div>
+
+    ${GameCraft.field(
+      "visualNotes",
+      "توضیحات ظاهری دلخواه (اختیاری)",
+      "مثلاً: کارت‌های گرد، پس‌زمینه کرم، دکمه‌های بزرگ و انیمیشن نرم..."
+    )}
+
+    ${GameCraft.help(
+      "UX و طراحی واکنش‌گرا یعنی چه؟",
+      `
+        <p>
+          <strong>UX</strong> یعنی تجربه کاربر؛ بازی باید قابل‌فهم،
+          راحت و لذت‌بخش باشد.
+        </p>
+        <p>
+          <strong>طراحی واکنش‌گرا</strong> یعنی ظاهر بازی متناسب با
+          اندازه صفحه موبایل یا کامپیوتر تغییر کند.
+        </p>
+        <p>
+          <strong>Microinteraction</strong> یعنی واکنش کوچک رابط کاربری؛
+          مثلاً دکمه هنگام کلیک تغییر کند یا پاسخ درست با انیمیشن نمایش داده شود.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   END OF PART 2
+   Do not close the HTML document here.
+
+   Part 3 will add:
+   - Steps 5–8 content
+   - Technology options
+   - Data and storage options
+   - Quality requirements
+   - Final prompt preview and Copy for AI interface
+===================================================== */
+</script>
+<!-- =====================================================
+     PART 3 OF 4
+     GameCraft: Wizard Steps 5–8
+     Paste directly after Part 2
+===================================================== -->
+
+<style>
+/* Part 3 additional styles */
+
+.tech-note {
+  padding: 13px 15px;
+  background: #F5F0E8;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 12px;
+}
+
+.tech-note strong {
+  color: var(--text);
+}
+
+.prompt-preview {
+  background: #292722;
+  color: #F7F1E7;
+  border-radius: 16px;
+  padding: 18px;
+  max-height: 450px;
+  overflow: auto;
+  direction: rtl;
+  text-align: right;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 2;
+  border: 1px solid #49453D;
+}
+
+.prompt-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0 10px;
+}
+
+.prompt-toolbar-title {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.prompt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-copy {
+  background: #D97757;
+  color: white;
+  border-color: #D97757;
+}
+
+.btn-copy:hover:not(:disabled) {
+  background: #BF6041;
+}
+
+.review-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.review-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #FFFEFB;
+}
+
+.review-icon {
+  font-size: 20px;
+}
+
+.review-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.review-value {
+  font-size: 12px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.complexity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.complexity-card {
+  position: relative;
+}
+
+.complexity-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.complexity-card label {
+  display: block;
+  height: 100%;
+  padding: 13px;
+  background: #FFFEFB;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.complexity-card input:checked + label {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+
+.complexity-card input:focus-visible + label {
+  outline: 3px solid rgba(201, 100, 66, .35);
+  outline-offset: 2px;
+}
+
+.complexity-card strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.complexity-card span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.review-warning {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #FBF4E5;
+  border: 1px solid #E6D7B8;
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 480px) {
+  .complexity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prompt-preview {
+    padding: 13px;
+    max-height: 350px;
+  }
+}
+</style>
+
+<script>
+/* =====================================================
+   GAMECRAFT: STEP 5 — TECHNOLOGY
+===================================================== */
+
+GameCraft.renderStep4 = function () {
+  return `
+    <div class="field">
+      <span class="field-label">۱. خروجی بازی</span>
+      <p class="field-hint">
+        برای شروع، پیشنهاد می‌کنیم گزینه اول را انتخاب کنی.
+      </p>
+
+      ${GameCraft.pills("outputFormat", [
+        {
+          value: "single",
+          icon: "📄",
+          label: "یک فایل HTML"
+        },
+        {
+          value: "multi",
+          icon: "📁",
+          label: "پروژه چندفایلی"
+        },
+        {
+          value: "ai",
+          icon: "🤖",
+          label: "انتخاب توسط AI"
+        }
+      ])}
+
+      <div class="tech-note">
+        <strong>فایل HTML مستقل:</strong>
+        کد، ظاهر و منطق بازی در یک فایل قرار می‌گیرند.
+        برای بازی‌های ساده و نمونه‌های اولیه انتخاب مناسبی است.
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">۲. فناوری ساخت</span>
+      ${GameCraft.pills("technology", [
+        {
+          value: "vanilla",
+          icon: "🌐",
+          label: "HTML + CSS + JS"
+        },
+        {
+          value: "libraries",
+          icon: "🧰",
+          label: "کتابخانه‌های کمکی"
+        },
+        {
+          value: "ai",
+          icon: "🤖",
+          label: "انتخاب توسط AI"
+        }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۳. ساختار کد</span>
+      ${GameCraft.pills("codeStructure", [
+        {
+          value: "simple",
+          icon: "🧒",
+          label: "ساده و مبتدی"
+        },
+        {
+          value: "modular",
+          icon: "🧩",
+          label: "ماژولار و قابل توسعه"
+        },
+        {
+          value: "ai",
+          icon: "🤖",
+          label: "متناسب با بازی"
+        }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۴. سطح پیچیدگی پروژه</span>
+
+      <div class="complexity-grid">
+        ${[
+          {
+            value: "poc",
+            title: "نمونه اولیه",
+            desc: "کوچک، سریع و مناسب آزمایش ایده"
+          },
+          {
+            value: "mvp",
+            title: "نسخه قابل استفاده",
+            desc: "بازی کامل با امکانات ضروری"
+          },
+          {
+            value: "advanced",
+            title: "پیشرفته",
+            desc: "امکانات بیشتر در صورت نیاز واقعی"
+          }
+        ].map(function (item, index) {
+          const id = "gc-complexity-" + index;
+
+          return `
+            <div class="complexity-card">
+              <input
+                type="radio"
+                name="complexity"
+                id="${id}"
+                value="${item.value}"
+                data-group="complexity"
+              >
+              <label for="${id}">
+                <strong>${item.title}</strong>
+                <span>${item.desc}</span>
+              </label>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">۵. کتابخانه یا ابزار خاص (اختیاری)</span>
+      <input
+        class="text-input"
+        id="preferredLibrary"
+        data-field="preferredLibrary"
+        placeholder="مثلاً GSAP برای انیمیشن یا Chart.js برای نمودار"
+      >
+      <p class="field-hint">
+        اگر ابزار خاصی مدنظر نداری، خالی بگذار.
+      </p>
+    </div>
+
+    ${GameCraft.help(
+      "کتابخانه، POC و MVP چه معنایی دارند؟",
+      `
+        <p>
+          <strong>کتابخانه:</strong>
+          کد آماده‌ای که قابلیت خاصی را ساده‌تر می‌کند.
+        </p>
+        <p>
+          <strong>POC:</strong>
+          نمونه کوچک برای بررسی اینکه ایده شدنی است یا نه.
+        </p>
+        <p>
+          <strong>MVP:</strong>
+          کوچک‌ترین نسخه‌ای که قابلیت‌های اصلی و قابل استفاده بازی را دارد.
+        </p>
+        <p>
+          برای شروع معمولاً POC بهترین انتخاب است؛
+          اول بازی را قابل اجرا کن، بعد قابلیت اضافه کن.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   GAMECRAFT: STEP 6 — DATA AND SAVING
+===================================================== */
+
+GameCraft.renderStep5 = function () {
+  return `
+    <div class="field">
+      <span class="field-label">۱. چه اطلاعاتی در بازی نیاز داری؟</span>
+      <p class="field-hint">
+        فقط موارد موردنیاز را انتخاب کن.
+      </p>
+
+      <div class="option-grid">
+        ${GameCraft.option(
+          "dataFeatures", "score", "🏆", "امتیاز و رکورد",
+          "ثبت بهترین نتیجه"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "progress", "📈", "پیشرفت مراحل",
+          "ذخیره مرحله فعلی"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "profile", "👤", "پروفایل بازیکن",
+          "مثلاً نام و آواتار"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "questions", "❓", "بانک سؤال",
+          "محتوای قابل تغییر"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "items", "🎒", "آیتم‌ها",
+          "اشیا و وسایل بازی"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "leaderboard", "🥇", "جدول رتبه‌بندی",
+          "مقایسه نتایج بازیکنان"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "report", "📊", "گزارش عملکرد",
+          "خلاصه نتیجه بازی"
+        )}
+        ${GameCraft.option(
+          "dataFeatures", "custom", "🗂️", "داده سفارشی",
+          "اطلاعات مخصوص بازی"
+        )}
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <span class="field-label">۲. اطلاعات کجا ذخیره شوند؟</span>
+      ${GameCraft.pills("storage", [
+        {
+          value: "none",
+          icon: "🚫",
+          label: "بدون ذخیره‌سازی"
+        },
+        {
+          value: "local",
+          icon: "💾",
+          label: "در مرورگر"
+        },
+        {
+          value: "cloud",
+          icon: "☁️",
+          label: "سرور یا فضای ابری"
+        },
+        {
+          value: "ai",
+          icon: "🤖",
+          label: "پیشنهاد AI"
+        }
+      ])}
+
+      <div class="conditional-field hidden" id="cloudStorageField">
+        <p class="field-hint">
+          ذخیره‌سازی ابری معمولاً به سرور، تنظیمات امنیتی و گاهی حساب کاربری نیاز دارد.
+          این بخش برای نسخه تک‌فایلی ساده مناسب نیست.
+        </p>
+
+        <label class="field-label" for="cloudNotes">
+          توضیحات ذخیره‌سازی ابری
+        </label>
+
+        <textarea
+          class="text-area"
+          id="cloudNotes"
+          data-field="cloudNotes"
+          placeholder="مثلاً: کاربران با حساب کاربری وارد شوند و پیشرفتشان روی سرور ذخیره شود..."
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">۳. محتوای بازی چگونه تعریف شود؟</span>
+      ${GameCraft.pills("contentStructure", [
+        {
+          value: "inline",
+          label: "داخل کد"
+        },
+        {
+          value: "data",
+          label: "جدا از منطق بازی"
+        },
+        {
+          value: "ai",
+          label: "انتخاب توسط AI"
+        }
+      ])}
+      <p class="field-hint">
+        جدا کردن محتوا کمک می‌کند سؤال‌ها، مراحل و آیتم‌ها را راحت‌تر تغییر بدهی.
+      </p>
+    </div>
+
+    ${GameCraft.field(
+      "dataNotes",
+      "توضیحات بیشتر درباره داده‌ها (اختیاری)",
+      "مثلاً: پاسخ‌های آزمون در یک آرایه باشند تا بعداً بتوانم سؤال‌ها را تغییر بدهم..."
+    )}
+
+    ${GameCraft.help(
+      "Local Storage و JSON یعنی چه؟",
+      `
+        <p>
+          <strong>Local Storage:</strong>
+          فضایی در مرورگر برای نگهداری اطلاعات ساده؛
+          اطلاعات به‌طور خودکار بین دستگاه‌های مختلف همگام نمی‌شوند.
+        </p>
+        <p>
+          <strong>JSON:</strong>
+          روشی متنی برای نگهداری داده‌ها به‌صورت ساختاریافته؛
+          مثلاً فهرست سؤال‌ها و پاسخ‌ها.
+        </p>
+        <p>
+          <strong>نکته:</strong>
+          Local Storage برای رمز عبور یا اطلاعات حساس مناسب نیست.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   GAMECRAFT: STEP 7 — QUALITY
+===================================================== */
+
+GameCraft.renderStep6 = function () {
+  const quality = [
+    ["working", "✅", "همه دکمه‌ها کار کنند", "بدون کنترل‌های نمایشی و بی‌عملکرد"],
+    ["restart", "🔄", "شروع مجدد", "شروع بازی از ابتدا"],
+    ["responsive", "📱", "طراحی واکنش‌گرا", "مناسب موبایل و دسکتاپ"],
+    ["touch", "👆", "کنترل لمسی", "مناسب صفحه‌های لمسی"],
+    ["keyboard", "⌨️", "پشتیبانی از کیبورد", "در صورت تناسب با بازی"],
+    ["feedback", "💬", "بازخورد فوری", "نمایش نتیجه انتخاب‌ها"],
+    ["validation", "🛡️", "مدیریت ورودی نامعتبر", "جلوگیری از خطاهای رایج"],
+    ["testing", "🧪", "آزمایش مسیرهای بازی", "بررسی شروع تا پایان"],
+    ["accessibility", "♿", "دسترس‌پذیری", "خوانایی و کنترل قابل فهم"],
+    ["reducedMotion", "🌿", "کاهش حرکت", "احترام به تنظیم کاهش انیمیشن"],
+    ["comments", "📝", "توضیحات در کد", "قابل فهم برای مبتدی"],
+    ["minimal", "🧹", "وابستگی حداقلی", "پرهیز از ابزارهای غیرضروری"]
+  ];
+
+  return `
+    <div class="field">
+      <span class="field-label">
+        ۱. الزامات کیفیت
+      </span>
+      <p class="field-hint">
+        پیشنهاد می‌شود این گزینه‌ها را فعال نگه داری.
+      </p>
+
+      <div class="option-grid">
+        ${quality.map(function (item) {
+          return GameCraft.option(
+            "quality",
+            item[0],
+            item[1],
+            item[2],
+            item[3]
+          );
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <span class="field-label">۲. سطح توضیحات کد</span>
+      ${GameCraft.pills("codeComments", [
+        {
+          value: "beginner",
+          icon: "🧒",
+          label: "مناسب مبتدی"
+        },
+        {
+          value: "normal",
+          icon: "📝",
+          label: "توضیحات ضروری"
+        },
+        {
+          value: "minimal",
+          icon: "⚡",
+          label: "حداقلی"
+        }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۳. خروجی موردانتظار از AI</span>
+      ${GameCraft.pills("delivery", [
+        {
+          value: "code",
+          label: "کد بازی"
+        },
+        {
+          value: "instructions",
+          label: "کد + راهنمای اجرا"
+        },
+        {
+          value: "full",
+          label: "کد + تست + محدودیت‌ها"
+        }
+      ])}
+    </div>
+
+    <div class="field">
+      <span class="field-label">۴. محدودیت‌های اضافی (اختیاری)</span>
+      <textarea
+        class="text-area"
+        id="constraints"
+        data-field="constraints"
+        placeholder="مثلاً: بدون اینترنت، بدون نصب نرم‌افزار، بدون API پولی و بدون حساب کاربری..."
+      ></textarea>
+    </div>
+
+    ${GameCraft.help(
+      "چرا تست بازی مهم است؟",
+      `
+        <p>
+          ممکن است بازی در ظاهر درست باشد اما دکمه‌ها کار نکنند،
+          امتیاز اشتباه محاسبه شود یا شروع مجدد وضعیت قبلی را پاک نکند.
+        </p>
+        <p>
+          از AI بخواه مسیرهای اصلی بازی را آزمایش کند و مشکلات را
+          پیش از تحویل برطرف سازد.
+        </p>
+        <p>
+          البته درخواست تست به‌تنهایی تضمین نمی‌کند که تمام خطاها پیدا شوند؛
+          بازی را در مرورگر نیز امتحان کن.
+        </p>
+      `
+    )}
+  `;
+};
+
+/* =====================================================
+   GAMECRAFT: STEP 8 — FINAL PROMPT PREVIEW
+===================================================== */
+
+GameCraft.renderStep7 = function () {
+  return `
+    <div class="review-warning">
+      ✦ این پرامپت از انتخاب‌های تو ساخته می‌شود.
+      قبل از کپی کردن، آن را بررسی کن.
+      می‌توانی به مراحل قبلی برگردی و تغییرات ایجاد کنی.
+    </div>
+
+    <div class="review-list" id="finalReview">
+      <div class="review-item">
+        <span class="review-icon">🎮</span>
+        <div>
+          <div class="review-label">ایده بازی</div>
+          <div class="review-value">در حال آماده‌سازی...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-toolbar">
+      <div class="prompt-toolbar-title">پرامپت آماده برای هوش مصنوعی</div>
+      <div class="prompt-actions">
+        <button type="button" class="btn btn-small" id="refreshPromptBtn">
+          ↻ به‌روزرسانی
+        </button>
+      </div>
+    </div>
+
+    <pre
+      class="prompt-preview"
+      id="promptPreview"
+      dir="auto"
+    >پرامپت پس از تکمیل مراحل ساخته می‌شود.</pre>
+
+    <div class="prompt-actions" style="margin-top: 15px;">
+      <button
+        type="button"
+        class="btn btn-primary btn-copy"
+        id="copyPromptBtn"
+      >
+        📋 Copy for AI
+      </button>
+
+      <button
+        type="button"
+        class="btn"
+        id="downloadPromptBtn"
+      >
+        ⬇ دریافت فایل متنی
+      </button>
+    </div>
+
+    <div class="tech-note">
+      <strong>روش استفاده:</strong>
+      پرامپت را در ابزار کدنویسی هوش مصنوعی خود قرار بده.
+      اگر ابزار از ساخت پروژه پشتیبانی می‌کند، از آن بخواه ابتدا نسخه کوچک
+      و قابل‌بازی را بسازد و سپس امکانات اضافی را مرحله‌به‌مرحله اضافه کند.
+    </div>
+  `;
+};
+
+/* =====================================================
+   END OF PART 3
+
+   Part 4 will connect:
+   - Wizard navigation
+   - Form state and persistence
+   - Live summary
+   - Final prompt generation
+   - Copy for AI
+   - Download prompt
+   - Conditional fields
+   - Reset and error handling
+
+   Do not close body/html yet.
+===================================================== */
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const GC = window.GameCraft;
+
+  if (!GC || !GC.state || !Array.isArray(GC.steps)) {
+    console.error("GameCraft initialization failed. Check Parts 1–3.");
+    return;
+  }
+
+  const STORAGE_KEY = "gamecraft-builder-v1";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+  /*
+   * توابع رندر ممکن است روی GameCraft یا در محدوده سراسری تعریف شده باشند.
+   * هر دو حالت پشتیبانی می‌شوند.
+   */
+  function getRenderer(index) {
+    const names = [
+      "renderStep0",
+      "renderStep1",
+      "renderStep2",
+      "renderStep3",
+      "renderStep4",
+      "renderStep5",
+      "renderStep6",
+      "renderStep7"
+    ];
+
+    return GC[names[index]] ||
+      window[names[index]] ||
+      GC["step" + index] ||
+      null;
+  }
+
+  const labels = {
+    gameType: {
+      puzzle: "معمایی",
+      quiz: "آزمون و اطلاعات عمومی",
+      story: "داستانی و انتخاب‌محور",
+      racing: "مسابقه‌ای",
+      strategy: "استراتژی",
+      platformer: "سکوبازی",
+      arcade: "آرکید",
+      cards: "کارتی",
+      words: "کلمات و واژه‌ها",
+      creative: "خلاقانه",
+      simulation: "شبیه‌سازی",
+      custom: "ایده اختصاصی"
+    },
+    goal: {
+      solve: "حل مسئله",
+      learn: "یادگیری",
+      score: "کسب امتیاز",
+      survive: "زنده ماندن",
+      explore: "اکتشاف",
+      create: "خلق کردن",
+      decide: "تصمیم‌گیری",
+      compete: "رقابت",
+      custom: "هدف اختصاصی"
+    },
+    structure: {
+      levels: "مرحله‌ای",
+      endless: "بدون پایان مشخص",
+      single: "یک دور بازی",
+      story: "مسیر داستانی"
+    },
+    endCondition: {
+      win: "شرط برد",
+      lose: "شرط باخت",
+      timer: "محدودیت زمانی",
+      free: "بدون برد و باخت"
+    },
+    multiplayer: {
+      solo: "تک‌نفره",
+      local: "چند بازیکن روی یک دستگاه",
+      online: "چندبازیکن آنلاین",
+      ai: "بازی با حریف هوش مصنوعی"
+    },
+    visualStyle: {
+      minimal: "مینیمال",
+      cartoon: "کارتونی",
+      pixel: "پیکسل‌آرت",
+      handdrawn: "دست‌کشیده",
+      neon: "نئونی",
+      threeD: "سه‌بعدی",
+      material: "طراحی مدرن و تمیز"
+    },
+    colorTheme: {
+      light: "روشن",
+      dark: "تیره",
+      colorful: "رنگارنگ",
+      warm: "گرم",
+      custom: "رنگ‌های سفارشی"
+    },
+    mood: {
+      calm: "آرام",
+      playful: "سرگرم‌کننده",
+      mysterious: "مرموز",
+      competitive: "رقابتی",
+      serious: "جدی",
+      educational: "آموزشی"
+    },
+    animation: {
+      none: "بدون انیمیشن اضافی",
+      subtle: "ملایم",
+      expressive: "پر تحرک",
+      polished: "روان و حرفه‌ای"
+    },
+    sound: {
+      none: "بدون صدا",
+      effects: "افکت صوتی",
+      music: "موسیقی",
+      both: "موسیقی و افکت صوتی"
+    },
+    targetDevice: {
+      mobile: "موبایل",
+      desktop: "کامپیوتر",
+      both: "موبایل و کامپیوتر"
+    },
+    outputFormat: {
+      single: "یک فایل HTML مستقل",
+      multi: "چند فایل جداگانه",
+      ai: "انتخاب ساختار مناسب توسط هوش مصنوعی"
+    },
+    technology: {
+      vanilla: "HTML، CSS و JavaScript ساده",
+      libraries: "استفاده از کتابخانه‌های مناسب",
+      ai: "انتخاب فناوری مناسب توسط هوش مصنوعی"
+    },
+    codeStructure: {
+      simple: "ساده و قابل فهم برای مبتدی",
+      modular: "ماژولار و قابل توسعه",
+      ai: "انتخاب ساختار مناسب توسط هوش مصنوعی"
+    },
+    complexity: {
+      poc: "نمونه اولیه کوچک (POC)",
+      mvp: "نسخه اولیه قابل استفاده (MVP)",
+      advanced: "نسخه پیشرفته"
+    },
+    preferredLibrary: {
+      none: "بدون کتابخانه اضافی",
+      gsap: "GSAP برای انیمیشن",
+      phaser: "Phaser برای بازی دوبعدی",
+      pixi: "PixiJS برای گرافیک دوبعدی",
+      other: "کتابخانه مناسب با انتخاب هوش مصنوعی"
+    },
+    storage: {
+      none: "بدون ذخیره‌سازی",
+      local: "ذخیره در مرورگر",
+      cloud: "ذخیره‌سازی آنلاین",
+      ai: "انتخاب روش مناسب توسط هوش مصنوعی"
+    },
+    contentStructure: {
+      inline: "محتوا داخل کد",
+      data: "جدا کردن محتوا از منطق بازی",
+      ai: "انتخاب ساختار مناسب توسط هوش مصنوعی"
+    },
+    codeComments: {
+      beginner: "توضیحات ساده و مناسب مبتدی",
+      important: "توضیح بخش‌های مهم",
+      minimal: "حداقل توضیحات"
+    },
+    delivery: {
+      code: "فقط کد نهایی",
+      instructions: "کد همراه راهنمای اجرا",
+      full: "کد، راهنما و چک‌لیست آزمایش"
+    },
+    mechanics: {
+      score: "امتیاز",
+      timer: "زمان‌سنج",
+      lives: "جان",
+      levels: "مرحله‌ها",
+      choices: "انتخاب‌ها",
+      inventory: "موجودی و آیتم‌ها",
+      random: "اتفاقات تصادفی",
+      puzzle: "معما",
+      combo: "ترکیب حرکات",
+      unlock: "باز کردن قابلیت‌ها",
+      save: "ذخیره پیشرفت",
+      achievements: "دستاوردها",
+      dragdrop: "کشیدن و رها کردن",
+      matching: "تطبیق",
+      physics: "فیزیک",
+      drawing: "نقاشی"
+    },
+    dataFeatures: {
+      score: "امتیاز",
+      progress: "پیشرفت",
+      profile: "پروفایل",
+      questions: "پرسش‌ها",
+      items: "آیتم‌ها",
+      leaderboard: "جدول رتبه‌بندی",
+      report: "گزارش نتیجه",
+      custom: "داده اختصاصی"
+    },
+    quality: {
+      buttons: "عملکرد صحیح دکمه‌ها",
+      restart: "شروع مجدد",
+      responsive: "طراحی واکنش‌گرا",
+      touch: "کنترل لمسی",
+      keyboard: "کنترل صفحه‌کلید",
+      feedback: "بازخورد فوری",
+      validation: "اعتبارسنجی ورودی‌ها",
+      testing: "آزمایش سناریوها",
+      accessibility: "دسترس‌پذیری",
+      reducedMotion: "رعایت کاهش حرکت",
+      comments: "توضیحات کد",
+      dependencies: "حداقل وابستگی"
+    },
+    uiElements: {
+      score: "نمایش امتیاز",
+      timer: "نمایش زمان",
+      progress: "نوار پیشرفت",
+      instructions: "راهنما",
+      pause: "توقف بازی",
+      restart: "شروع مجدد",
+      settings: "تنظیمات",
+      results: "صفحه نتایج"
+    }
+  };
+
+  function escapeHTML(value) {
+    if (typeof GC.escape === "function") {
+      return GC.escape(String(value ?? ""));
+    }
+
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function getAnswer(key) {
+    return GC.state.answers[key];
+  }
+
+  function getText(key, fallback = "") {
+    const value = getAnswer(key);
+
+    if (Array.isArray(value)) return value.join("، ");
+    if (value === undefined || value === null) return fallback;
+
+    const text = String(value).trim();
+    return text || fallback;
+  }
+
+  function getLabel(key, value) {
+    if (Array.isArray(value)) {
+      return value.map(item => getLabel(key, item)).filter(Boolean).join("، ");
+    }
+
+    if (value === undefined || value === null || value === "") return "";
+
+    const map = labels[key];
+
+    if (map && Object.prototype.hasOwnProperty.call(map, value)) {
+      return map[value];
+    }
+
+    return String(value);
+  }
+
+  function getChoice(key, fallback = "مشخص نشده") {
+    return getLabel(key, getAnswer(key)) || fallback;
+  }
+
+  function showToast(message) {
+    const toast = $("#toast");
+    if (!toast) {
+      console.info(message);
+      return;
+    }
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2600);
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const saved = JSON.parse(raw);
+
+      if (!saved || typeof saved !== "object") return;
+
+      if (
+        saved.answers &&
+        typeof saved.answers === "object" &&
+        !Array.isArray(saved.answers)
+      ) {
+        GC.state.answers = {
+          ...GC.state.answers,
+          ...saved.answers
+        };
+      }
+
+      if (
+        Number.isInteger(saved.currentStep) &&
+        saved.currentStep >= 0 &&
+        saved.currentStep < GC.steps.length
+      ) {
+        GC.state.currentStep = saved.currentStep;
+      }
+
+      if (Array.isArray(saved.completedSteps)) {
+        GC.state.completedSteps = saved.completedSteps.filter(
+          index => Number.isInteger(index) &&
+            index >= 0 &&
+            index < GC.steps.length
+        );
+      }
+    } catch (error) {
+      console.warn("GameCraft: could not restore saved data.", error);
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        currentStep: GC.state.currentStep,
+        answers: GC.state.answers,
+        completedSteps: GC.state.completedSteps
+      }));
+    } catch (error) {
+      // فرم حتی در صورت غیرفعال بودن localStorage قابل استفاده است.
+    }
+  }
+
+  function collectValues() {
+    const root = $("#wizardContent");
+    if (!root) return;
+
+    const groups = new Set(
+      $$("[data-group]", root).map(input => input.dataset.group)
+    );
+
+    groups.forEach(group => {
+      const inputs = $$("[data-group]", root).filter(
+        input => input.dataset.group === group
+      );
+
+      if (!inputs.length) return;
+
+      if (inputs[0].type === "checkbox") {
+        GC.state.answers[group] = inputs
+          .filter(input => input.checked)
+          .map(input => input.value);
+      } else {
+        const selected = inputs.find(input => input.checked);
+
+        if (selected) {
+          GC.state.answers[group] = selected.value;
+        } else {
+          delete GC.state.answers[group];
+        }
+      }
+    });
+
+    $$("[data-field]", root).forEach(field => {
+      const key = field.dataset.field || field.id;
+      if (key) GC.state.answers[key] = field.value;
+    });
+  }
+
+  function restoreValues() {
+    const root = $("#wizardContent");
+    if (!root) return;
+
+    $$("[data-group]", root).forEach(input => {
+      const answer = GC.state.answers[input.dataset.group];
+
+      if (input.type === "checkbox") {
+        input.checked = Array.isArray(answer) && answer.includes(input.value);
+      } else if (input.type === "radio") {
+        input.checked = answer === input.value;
+      }
+    });
+
+    $$("[data-field]", root).forEach(field => {
+      const key = field.dataset.field || field.id;
+
+      if (
+        key &&
+        GC.state.answers[key] !== undefined &&
+        GC.state.answers[key] !== null
+      ) {
+        field.value = GC.state.answers[key];
+      }
+    });
+  }
+
+  function updateConditionalFields() {
+    const customColors = $("#customColorField");
+    const cloudStorage = $("#cloudStorageField");
+
+    if (customColors) {
+      customColors.hidden = GC.state.answers.colorTheme !== "custom";
+    }
+
+    if (cloudStorage) {
+      cloudStorage.hidden = GC.state.answers.storage !== "cloud";
+    }
+  }
+
+  function updateSummary() {
+    const container = $("#summaryContent");
+    const count = $("#summaryCount");
+
+    if (!container) return;
+
+    const answers = GC.state.answers;
+
+    const rows = [
+      ["نوع بازی", getChoice("gameType", "")],
+      ["ایده", getText("gameIdea", "")],
+      ["هدف", getChoice("goal", "")],
+      ["مکانیک‌ها", getChoice("mechanics", "")],
+      ["سبک بصری", getChoice("visualStyle", "")],
+      ["خروجی", getChoice("outputFormat", "")],
+      ["ذخیره‌سازی", getChoice("storage", "")]
+    ].filter(row => row[1]);
+
+    if (count) {
+      count.textContent = String(
+        Object.values(answers).filter(value =>
+          Array.isArray(value)
+            ? value.length > 0
+            : String(value ?? "").trim() !== ""
+        ).length
+      );
+    }
+
+    if (!rows.length) {
+      container.innerHTML =
+        '<p class="summary-empty">با انتخاب گزینه‌ها، خلاصه بازی اینجا نمایش داده می‌شود.</p>';
+      return;
+    }
+
+    container.innerHTML = rows.map(([title, value]) => `
+      <div class="summary-row">
+        <span class="summary-label">${escapeHTML(title)}</span>
+        <span class="summary-value">${escapeHTML(value)}</span>
+      </div>
+    `).join("");
+  }
+
+  function updateProgress() {
+    const current = GC.state.currentStep;
+    const total = GC.steps.length;
+    const percent = Math.round(((current + 1) / total) * 100);
+
+    const progressText = $("#progressText");
+    const progressFill = $("#progressFill");
+    const progressTrack = $("#progressTrack");
+    const previous = $("#prevBtn");
+    const next = $("#nextBtn");
+    const footerHint = $("#footerHint");
+
+    if (progressText) {
+      progressText.textContent = `مرحله ${current + 1} از ${total}`;
+    }
+
+    if (progressFill) {
+      progressFill.style.width = `${percent}%`;
+    }
+
+    if (progressTrack) {
+      progressTrack.setAttribute("aria-valuenow", String(percent));
+    }
+
+    $$(".step-item[data-step]").forEach(button => {
+      const index = Number(button.dataset.step);
+
+      button.classList.toggle("active", index === current);
+      button.classList.toggle(
+        "completed",
+        index < current || GC.state.completedSteps.includes(index)
+      );
+
+      if (index === current) {
+        button.setAttribute("aria-current", "step");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+
+    if (previous) previous.disabled = current === 0;
+
+    if (next) {
+      next.textContent = current === total - 1 ? "پایان" : "مرحله بعد ←";
+      next.disabled = current === total - 1;
+    }
+
+    if (footerHint) {
+      footerHint.textContent = current === total - 1
+        ? "پرامپت را بررسی کن و برای ابزار هوش مصنوعی کپی بگیر."
+        : "انتخاب‌ها ذخیره می‌شوند؛ هر زمان خواستی می‌توانی به مراحل قبل برگردی.";
+    }
+  }
+
+  function generatePrompt() {
+    const mechanics = getLabel("mechanics", getAnswer("mechanics"));
+    const dataFeatures = getLabel("dataFeatures", getAnswer("dataFeatures"));
+    const quality = getLabel("quality", getAnswer("quality"));
+    const uiElements = getLabel("uiElements", getAnswer("uiElements"));
+
+    const idea = getText("gameIdea", "ایده دقیق هنوز مشخص نشده است.");
+    const gameName = getText("gameName", "بازی جدید");
+    const gameType = getChoice("gameType", "متناسب با ایده انتخاب شود");
+    const goal = getChoice("goal", "متناسب با ایده انتخاب شود");
+    const structure = getChoice("structure", "متناسب با ایده انتخاب شود");
+    const endCondition = getChoice("endCondition", "قوانین مناسب طراحی شود");
+    const multiplayer = getChoice("multiplayer", "تک‌نفره");
+    const visualStyle = getChoice("visualStyle", "ساده و تمیز");
+    const colorTheme = getChoice("colorTheme", "هماهنگ با موضوع بازی");
+    const mood = getChoice("mood", "");
+    const animation = getChoice("animation", "");
+    const sound = getChoice("sound", "");
+    const device = getChoice("targetDevice", "موبایل و کامپیوتر");
+    const output = getChoice("outputFormat", "یک فایل HTML مستقل");
+    const technology = getChoice("technology", "HTML، CSS و JavaScript ساده");
+    const structureCode = getChoice("codeStructure", "ساده و قابل فهم برای مبتدی");
+    const complexity = getChoice("complexity", "نمونه اولیه کوچک (POC)");
+    const library = getChoice("preferredLibrary", "");
+    const storage = getChoice("storage", "بدون ذخیره‌سازی");
+    const contentStructure = getChoice("contentStructure", "جدا کردن محتوا از منطق بازی");
+    const comments = getChoice("codeComments", "توضیحات مناسب مبتدی");
+    const delivery = getChoice("delivery", "کد، راهنما و چک‌لیست آزمایش");
+
+    const sections = [];
+
+    sections.push(
+      "# پرامپت ساخت بازی وب",
+      "",
+      "نقش تو: طراح بازی، طراح تجربه کاربری و توسعه‌دهنده وب هستی. یک بازی واقعاً قابل اجرا و منسجم بساز، نه صرفاً یک طرح ظاهری.",
+      "",
+      "## ۱. ایده و هدف",
+      `- نام بازی: ${gameName}`,
+      `- نوع بازی: ${gameType}`,
+      `- ایده: ${idea}`,
+      `- هدف بازیکن: ${goal}`,
+      `- ساختار بازی: ${structure}`,
+      `- شرایط پایان: ${endCondition}`,
+      "",
+      "## ۲. قوانین و مکانیک‌ها",
+      getText("rules", "قوانین را بر اساس ایده طراحی کن و پیش از پیاده‌سازی مطمئن شو با یکدیگر تناقض ندارند."),
+      `- مکانیک‌ها: ${mechanics || "مکانیک‌های ضروری و متناسب با ایده"}`,
+      `- حالت بازی: ${multiplayer}`,
+      `- مکانیک اختصاصی: ${getText("customMechanics", "مورد خاصی تعیین نشده است.")}`,
+      "",
+      "## ۳. طراحی بصری و تجربه کاربری",
+      `- سبک: ${visualStyle}`,
+      `- رنگ‌بندی: ${colorTheme}`,
+      `- حس‌وحال: ${mood || "متناسب با موضوع بازی"}`,
+      `- انیمیشن: ${animation || "در حد نیاز"}`,
+      `- صدا: ${sound || "در صورت نیاز"}`,
+      `- دستگاه هدف: ${device}`,
+      `- اجزای رابط کاربری: ${uiElements || "اجزای ضروری و کاربردی"}`,
+      `- رنگ‌های سفارشی: ${getText("customColors", "تعیین نشده")}`,
+      `- نکات طراحی: ${getText("visualNotes", "رابطی خوانا، هماهنگ، خلوت و متناسب با موضوع بازی طراحی کن.")}`,
+      "",
+      "الزامات تجربه کاربری:",
+      "- بازیکن باید بداند چه کاری انجام دهد و نتیجه هر اقدام را ببیند.",
+      "- وضعیت بازی، امتیاز، پیشرفت و نتیجه را در صورت نیاز نمایش بده.",
+      "- کنترل‌ها باید واضح و قابل استفاده باشند.",
+      "- از قابلیت‌ها و افکت‌های غیرضروری پرهیز کن.",
+      "",
+      "## ۴. فناوری و ساختار",
+      `- قالب خروجی: ${output}`,
+      `- فناوری: ${technology}`,
+      `- ساختار کد: ${structureCode}`,
+      `- پیچیدگی: ${complexity}`,
+      `- کتابخانه پیشنهادی: ${library}`,
+      `- توضیحات کد: ${comments}`
+    );
+
+    if (output === "یک فایل HTML مستقل") {
+      sections.push(
+        "- HTML، CSS و JavaScript را در یک فایل HTML قرار بده.",
+        "- تا حد امکان از وابستگی خارجی، نصب و راه‌اندازی پیچیده پرهیز کن.",
+        "- اگر کتابخانه خارجی لازم است، وابستگی به اینترنت را مشخص کن."
+      );
+    } else if (output === "چند فایل جداگانه") {
+      sections.push(
+        "- فایل‌ها را با نام و مسئولیت مشخص ارائه کن.",
+        "- ساختار پوشه‌ها و دستورالعمل اجرای پروژه را توضیح بده.",
+        "- تمام فایل‌های لازم را کامل ارائه کن."
+      );
+    }
+
+    sections.push(
+      "",
+      "## ۵. داده و ذخیره‌سازی",
+      `- روش ذخیره‌سازی: ${storage}`,
+      `- ساختار محتوا: ${contentStructure}`,
+      `- اطلاعات موردنیاز: ${dataFeatures || "فقط اطلاعات ضروری"}`,
+      `- توضیحات داده‌ها: ${getText("dataNotes", "ساختار داده را متناسب با نیاز بازی طراحی کن.")}`
+    );
+
+    if (storage === "ذخیره در مرورگر") {
+      sections.push(
+        "- برای ذخیره محلی از localStorage یا راهکار ساده مناسب استفاده کن.",
+        "- ذخیره، بارگذاری مجدد و نبود داده قبلی را آزمایش کن."
+      );
+    }
+
+    if (storage === "ذخیره‌سازی آنلاین") {
+      sections.push(
+        "- ذخیره‌سازی آنلاین به سرویس سمت سرور یا API نیاز دارد و با HTML مستقل به‌تنهایی فراهم نمی‌شود.",
+        `- جزئیات موردنیاز: ${getText("cloudNotes", "سرویس و معماری مناسب را پیشنهاد بده.")}`,
+        "- هیچ کلید محرمانه‌ای را در کد سمت کاربر قرار نده.",
+        "- اگر زیرساخت آماده نیست، محدودیت را اعلام کن و نسخه اولیه قابل اجرا بساز."
+      );
+    }
+
+    if (multiplayer === "چندبازیکن آنلاین") {
+      sections.push(
+        "- بازی آنلاین چندنفره به ارتباط شبکه‌ای و معمولاً سرویس سمت سرور نیاز دارد.",
+        "- آنلاین بودن را صرفاً به‌صورت ظاهری شبیه‌سازی نکن؛ زیرساخت موردنیاز را توضیح بده."
+      );
+    }
+
+    sections.push(
+      "",
+      "## ۶. کیفیت و آزمایش",
+      `موارد مورد تأکید: ${quality || "عملکرد صحیح، واکنش‌گرایی و امکان شروع مجدد"}`,
+      "",
+      "پیش از تحویل:",
+      "۱. تمام دکمه‌ها و تعاملات را بررسی کن.",
+      "۲. مسیر بازی را از شروع تا پایان آزمایش کن.",
+      "۳. شرایط برد، باخت، امتیازدهی و شروع مجدد را بررسی کن.",
+      "۴. نمایش و کنترل‌ها را روی موبایل و کامپیوتر بررسی کن.",
+      "۵. خطاهای JavaScript و مشکلات رابط کاربری را رفع کن.",
+      "۶. قابلیت‌هایی را که پیاده‌سازی نشده‌اند، آماده و کامل معرفی نکن.",
+      "",
+      "## ۷. محدودیت‌ها",
+      getText("constraints", "پیاده‌سازی را ساده نگه دار و از قابلیت‌های غیرضروری پرهیز کن."),
+      "",
+      "## ۸. روش تحویل",
+      `- خروجی مورد انتظار: ${delivery}`,
+      "- اگر جزئیات کوچکی نامشخص است، فرضی منطقی و ساده انتخاب کن و آن را اعلام کن.",
+      "- ابتدا یک نسخه کوچک، کامل و قابل اجرا بساز.",
+      "- راهنمای اجرا و کنترل‌های بازی را توضیح بده.",
+      "- اگر امکان آزمایش واقعی نداری، صادقانه اعلام کن چه مواردی آزمایش نشده‌اند.",
+      "",
+      "معیار موفقیت: بازی قابل اجرا، قابل فهم و متناسب با ایده کاربر؛ نه صرفاً یک رابط زیبا."
+    );
+
+    return sections.join("\n");
+  }
+
+  function updateFinalReview() {
+    const prompt = generatePrompt();
+    const preview = $("#promptPreview");
+    const review = $("#finalReview");
+
+    if (preview) preview.textContent = prompt;
+
+    if (review) {
+      review.innerHTML = `
+        <div class="review-item">
+          <span class="review-label">نام بازی</span>
+          <strong>${escapeHTML(getText("gameName", "بازی جدید"))}</strong>
+        </div>
+        <div class="review-item">
+          <span class="review-label">نوع بازی</span>
+          <strong>${escapeHTML(getChoice("gameType", "مشخص نشده"))}</strong>
+        </div>
+        <div class="review-item">
+          <span class="review-label">ایده</span>
+          <p>${escapeHTML(getText("gameIdea", "ایده هنوز تکمیل نشده است."))}</p>
+        </div>
+        <div class="review-item">
+          <span class="review-label">قالب خروجی</span>
+          <strong>${escapeHTML(getChoice("outputFormat", "یک فایل HTML مستقل"))}</strong>
+        </div>
+        <div class="review-item">
+          <span class="review-label">پیچیدگی</span>
+          <strong>${escapeHTML(getChoice("complexity", "نمونه اولیه کوچک (POC)"))}</strong>
+        </div>
+      `;
+    }
+  }
+
+  function renderCurrentStep() {
+    const index = GC.state.currentStep;
+    const step = GC.steps[index];
+    const content = $("#wizardContent");
+
+    if (!step || !content) return;
+
+    const kicker = $("#stepKicker");
+    const heading = $("#stepHeading");
+    const subtitle = $("#stepSubtitle");
+
+    if (kicker) kicker.textContent = `مرحله ${index + 1}`;
+    if (heading) heading.textContent = step.title || step.heading || step.name || "";
+    if (subtitle) subtitle.textContent = step.subtitle || step.description || "";
+
+    const renderer = getRenderer(index);
+
+    if (typeof renderer !== "function") {
+      content.innerHTML = `
+        <div class="error-message">
+          <p>تابع ساخت محتوای این مرحله پیدا نشد.</p>
+          <p>نام تابع مورد انتظار: <code>renderStep${index}</code></p>
+        </div>
+      `;
+      console.error(`GameCraft: renderStep${index} is missing.`);
+      updateProgress();
+      return;
+    }
+
+    content.innerHTML = renderer();
+
+    restoreValues();
+    updateConditionalFields();
+    updateProgress();
+    updateSummary();
+
+    if (index === 7) updateFinalReview();
+
+    saveState();
+  }
+
+  function markStepComplete() {
+    const current = GC.state.currentStep;
+
+    if (!GC.state.completedSteps.includes(current)) {
+      GC.state.completedSteps.push(current);
+    }
+  }
+
+  function goToStep(index) {
+    collectValues();
+
+    if (!Number.isInteger(index) || index < 0 || index >= GC.steps.length) {
+      return;
+    }
+
+    if (index > GC.state.currentStep) markStepComplete();
+
+    GC.state.currentStep = index;
+    saveState();
+    renderCurrentStep();
+  }
+
+  function nextStep() {
+    collectValues();
+
+    if (GC.state.currentStep === 0) {
+      if (!getText("gameIdea", "") && !getText("gameType", "")) {
+        showToast("برای شروع، نوع بازی یا ایده‌ات را وارد کن.");
+        return;
+      }
+    }
+
+    if (GC.state.currentStep < GC.steps.length - 1) {
+      markStepComplete();
+      goToStep(GC.state.currentStep + 1);
+    }
+  }
+
+  function previousStep() {
+    if (GC.state.currentStep > 0) {
+      goToStep(GC.state.currentStep - 1);
+    }
+  }
+
+  async function copyPrompt() {
+    collectValues();
+
+    const prompt = generatePrompt();
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(prompt);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = prompt;
+        textarea.readOnly = true;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+
+        const copied = document.execCommand("copy");
+        textarea.remove();
+
+        if (!copied) throw new Error("Clipboard copy failed");
+      }
+
+      showToast("پرامپت کپی شد؛ حالا آن را در ابزار هوش مصنوعی قرار بده.");
+    } catch (error) {
+      showToast("کپی خودکار ناموفق بود؛ متن پیش‌نمایش را دستی کپی کن.");
+      const preview = $("#promptPreview");
+      if (preview) {
+        preview.focus();
+        preview.select?.();
+      }
+    }
+  }
+
+  function downloadPrompt() {
+    collectValues();
+
+    const prompt = generatePrompt();
+    const blob = new Blob([prompt], {
+      type: "text/plain;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    const fileName = getText("gameName", "gamecraft-prompt")
+      .replace(/[\\/:*?"<>|]/g, "-")
+      .trim()
+      .slice(0, 60) || "gamecraft-prompt";
+
+    link.href = url;
+    link.download = `${fileName}.txt`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    showToast("فایل پرامپت دانلود شد.");
+  }
+
+  function resetWizard() {
+    const confirmed = window.confirm(
+      "تمام انتخاب‌های ذخیره‌شده پاک شوند و از ابتدا شروع کنی؟"
+    );
+
+    if (!confirmed) return;
+
+    GC.state.currentStep = 0;
+    GC.state.answers = {};
+    GC.state.completedSteps = [];
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {}
+
+    renderCurrentStep();
+    showToast("فرم از ابتدا شروع شد.");
+  }
+
+  function bindEvents() {
+    const previous = $("#prevBtn");
+    const next = $("#nextBtn");
+
+    if (previous) previous.addEventListener("click", previousStep);
+    if (next) next.addEventListener("click", nextStep);
+
+    $$(".step-item[data-step]").forEach(button => {
+      button.addEventListener("click", () => {
+        goToStep(Number(button.dataset.step));
+      });
+    });
+
+    const content = $("#wizardContent");
+
+    if (content) {
+      content.addEventListener("input", event => {
+        if (!event.target.matches("[data-field]")) return;
+
+        collectValues();
+        updateConditionalFields();
+        updateSummary();
+
+        if (GC.state.currentStep === 7) updateFinalReview();
+
+        saveState();
+      });
+
+      content.addEventListener("change", event => {
+        if (!event.target.matches("[data-group], [data-field]")) return;
+
+        collectValues();
+        updateConditionalFields();
+        updateSummary();
+
+        if (GC.state.currentStep === 7) updateFinalReview();
+
+        saveState();
+      });
+    }
+
+    const refresh = $("#refreshPromptBtn");
+    const copy = $("#copyPromptBtn");
+    const download = $("#downloadPromptBtn");
+
+    if (refresh) {
+      refresh.addEventListener("click", () => {
+        collectValues();
+        updateFinalReview();
+        showToast("پرامپت به‌روزرسانی شد.");
+      });
+    }
+
+    if (copy) copy.addEventListener("click", copyPrompt);
+    if (download) download.addEventListener("click", downloadPrompt);
+
+    const header = $("header") || $(".app-header") || $(".topbar");
+
+    if (header && !$("#gameCraftResetButton")) {
+      const reset = document.createElement("button");
+
+      reset.id = "gameCraftResetButton";
+      reset.type = "button";
+      reset.className = "reset-button";
+      reset.textContent = "شروع مجدد";
+      reset.style.cssText = [
+        "border:1px solid var(--border,#e5d9ca)",
+        "border-radius:10px",
+        "padding:8px 12px",
+        "background:transparent",
+        "color:var(--text,#3d3028)",
+        "cursor:pointer",
+        "font:inherit",
+        "font-size:13px"
+      ].join(";");
+
+      reset.addEventListener("click", resetWizard);
+      header.appendChild(reset);
+    }
+  }
+
+  function init() {
+    loadState();
+    bindEvents();
+    renderCurrentStep();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
