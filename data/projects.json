@@ -130,6 +130,10 @@
     {
       "id": "Website",
       "label": "Website"
+    },
+    {
+      "id": "Game",
+      "label": "Game"
     }
   ],
   "projects": [
@@ -281,27 +285,8 @@
     },
     {
       "id": "project-mvcqv5c0",
-      "subtitle": "",
-      "sortOrder": 0,
-      "cover": {
-        "thumbnail": "assets/thumbnails/سید_علی_خامنه_ای_۱۸.jpg",
-        "gradient": null,
-        "accent": null,
-        "icon": null
-      },
-      "meta": {
-        "version": null,
-        "author": null,
-        "createdAt": "2026-10-17",
-        "updatedAt": "2026-10-17",
-        "language": null,
-        "direction": null,
-        "status": null,
-        "estimatedMinutes": null,
-        "notes": "",
-        "custom": {}
-      },
       "title": "یادبودی از رهبر فقید ایران",
+      "subtitle": "",
       "description": "۲۰ سخن از سخنان سیدعلی خامنه ای به صورت scrolly telling",
       "categoryId": "prototypes",
       "tags": [
@@ -313,8 +298,67 @@
       },
       "launchTarget": "local",
       "previewMode": "iframe",
+      "cover": {
+        "thumbnail": "assets/thumbnails/سید_علی_خامنه_ای_۱۸.jpg",
+        "gradient": null,
+        "accent": null,
+        "icon": null
+      },
       "featured": false,
-      "visibility": "visible"
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-17",
+        "updatedAt": "2026-10-17",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
+    },
+    {
+      "id": "game-craft",
+      "title": "Game Craft",
+      "subtitle": "",
+      "description": "چک لیست ساخت بازی های سریع",
+      "categoryId": "tools",
+      "tags": [
+        "Game"
+      ],
+      "entry": {
+        "localPath": "projects/game-craft/game-craft.html",
+        "deployedUrl": null
+      },
+      "launchTarget": "local",
+      "previewMode": "thumbnail",
+      "cover": {
+        "thumbnail": "assets/thumbnails/gamecraft.png",
+        "gradient": null,
+        "accent": null,
+        "icon": {
+          "emoji": "🎯",
+          "tabler": null
+        }
+      },
+      "featured": false,
+      "visibility": "visible",
+      "sortOrder": 0,
+      "meta": {
+        "version": null,
+        "author": null,
+        "createdAt": "2026-10-23",
+        "updatedAt": "2026-10-23",
+        "language": null,
+        "direction": null,
+        "status": null,
+        "estimatedMinutes": null,
+        "notes": "",
+        "custom": {}
+      }
     }
   ]
 }
